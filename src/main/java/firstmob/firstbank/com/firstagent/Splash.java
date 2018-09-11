@@ -26,7 +26,7 @@ public class Splash extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newsplash);
         session = new SessionManagement(this);
-
+//Test Github commit
         gm = (TextView) findViewById(R.id.gm);
 
         session.putURL(NET_URL);
