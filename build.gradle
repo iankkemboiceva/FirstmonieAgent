@@ -20,8 +20,8 @@ android {
         applicationId "firstmob.firstbank.com.firstagent"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 17
-        versionName "1.5.1"
+        versionCode 19
+        versionName "1.5.3"
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -105,6 +105,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.retrofit2:converter-scalars:2.0.2'
 
+    implementation 'com.google.firebase:firebase-messaging:17.3.0'
     compile 'com.github.shell-software:fab:1.1.2'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.android.support:design:25.3.0'
@@ -115,6 +116,7 @@ dependencies {
 
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.2'
+    compile 'com.google.android.gms:play-services-gcm:10.2.0'
 
 
     compile 'com.google.firebase:firebase-crash:15.0.2'
@@ -142,4 +144,5 @@ configurations.all {
             }
         }
     }
+
 }

@@ -216,9 +216,11 @@ public class StateCollectActivity extends BaseActivity implements View.OnClickLi
                                             intent.putExtra("serviceid", serviceid);
                                             intent.putExtra("servicename", servicename);
                                             intent.putExtra("label", servlabel);
-                                            intent.putExtra("packId", packid);
+                                            intent.putExtra("packId", narra);
                                             intent.putExtra("paymentCode", paycode);
                                             intent.putExtra("marketname", marketname);
+
+                                            Log.v("new packid",narra);
                                             startActivity(intent);
 
                                      /*   BillMenuParcelable bcp = new BillMenuParcelable(serviceid,servicename,billid,blname,null,servlabel,null,paycode,packid,charge,null,recanno,amou,narra,ednamee,ednumbb);

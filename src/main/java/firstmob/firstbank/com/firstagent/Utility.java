@@ -211,7 +211,7 @@ public static JSONArray getNubanAlgo(String account){
 	JSONArray arr = new JSONArray();
 		try {
 			String nubanprefix = "044|014|023|063|050|040|011|214|070|085|058|069|056|082|076|084|221|068|232|033|032|035|057|215";
-			String respectivebanks = "Access Bank|Afribank|Citibank|Diamond Bank|Ecobank|Equitorial Trust|First Bank|FCMB|Fidelity Bank|Finbank|Guaranty Trust Bank|Intercontinental Bank|Oceanic Bank|BankPhb|Skye Bank|Spring Bank|StanbicIBTC|Standard Chartered Bank|Sterling Bank|United Bank of Africa|Union Bank|Wema Bank|Zenith Bank|Unity Bank";
+			String respectivebanks = "Access Bank|Afribank|Citibank|Diamond Bank|Ecobank|Equitorial Trust|First Bank|FCMB|Fidelity Bank|Finbank|Guaranty Trust Bank|Intercontinental Bank|Oceanic Bank|Keystone Bank|Skye Bank|Spring Bank|StanbicIBTC|Standard Chartered Bank|Sterling Bank|United Bank of Africa|Union Bank|Wema Bank|Zenith Bank|Unity Bank";
 		//	String account = "2009415379";
 			String nubanserial = account.substring(0, account.length() - 1);
 			int checkdigit = Integer.parseInt(account.substring(account.length() - 1)); //9
@@ -434,7 +434,15 @@ public static JSONArray getNubanAlgo(String account){
 		String build = Build.SERIAL;
 		return build;
 	}
-
+	public static boolean checkStateCollect(String servid){
+		boolean trf = false;
+		if(servid.equals("3")){
+			trf = true;
+		}else{
+			trf = false;
+		}
+		return trf;
+	}
 	public static String getDevVersion(){
 		int bld = Build.VERSION.SDK_INT;
 		String blid = Integer.toString(bld);
@@ -839,6 +847,22 @@ changeddate = dateFormat.format(datefrom);
 
 	return changeddate;
 }
+public static boolean compareversionsupdate(String server,String device){
+	String[] v1 = device.split("\\.");
+	String[] v2 = server.split("\\.");
+boolean chk = false;
+	if (v1.length == v2.length)
+		chk =false;
 
+	for (int pos = 0; pos < v1.length; pos++) {
+		// compare v1[pos] with v2[pos] as necessary
+		if (Integer.parseInt(v1[pos]) > Integer.parseInt(v2[pos])) {
+			chk =   false;
+		} else if (Integer.parseInt(v1[pos]) < Integer.parseInt(v2[pos])) {
+			chk = true;
+		}
+	}
+	return  chk;
+}
 
 }

@@ -398,6 +398,7 @@ SecurityLayer.Log("encappid",encappid);
 System.out.println(imei);
 SecurityLayer.Log("Imei chosen",imei);
             String year = Utility.getAppVersion(c);
+            Log("vers",year);
             try {
                 encryptedpkey = toHex(AESCBCEncryption.encrypt(base64Decode(pkey), base64Decode(piv), AESCBCEncryption.base64Encode(AESCBCEncryption.generateSessionKey())));
                 encryptedrandomIV = toHex(AESCBCEncryption.encrypt(base64Decode(pkey), base64Decode(piv), AESCBCEncryption.base64Encode(AESCBCEncryption.generateIV())));
@@ -406,7 +407,7 @@ SecurityLayer.Log("Imei chosen",imei);
                 hash = Utility.generateHashString(params);
                 encryptedimei = toHex(AESCBCEncryption.encrypt(base64Decode(skey), base64Decode(siv), imei));
                 fsess = toHex(AESCBCEncryption.encrypt(base64Decode(skey), base64Decode(siv), fsess));
-                year = toHex(year);
+               // year = toHex(year);
             } catch (Exception e) {
                 e.printStackTrace();
             }

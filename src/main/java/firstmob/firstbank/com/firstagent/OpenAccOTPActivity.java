@@ -977,10 +977,10 @@ String title = "Bank Info";
 
 
             String encrypted = Utility.b64_sha256(edpin);
-            if (Utility.isNotNull(strmidnm) && strmidnm.equals("")) {
+            if (Utility.isNotNull(strmidnm) || strmidnm.equals("")) {
                 strmidnm = "NA";
             }
-            if (Utility.isNotNull(stremail) && stremail.equals("")) {
+            if (Utility.isNotNull(stremail) || stremail.equals("")) {
                 stremail = "NA";
             }
             finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted;
@@ -988,7 +988,7 @@ String title = "Bank Info";
             if (!((refnumber == null))) {
                 if (!(refnumber.equals(""))) {
                     invokeAccOTP(finparams);
-                }
+                }/**/
             }
 
         }

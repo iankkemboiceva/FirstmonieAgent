@@ -738,7 +738,34 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                 })
                 .show();
     }
+    public void setBillDialog(String message){
+        new MaterialDialog.Builder(TransactionProcessingActivity.this)
+                .title("Notice")
+                .content(message)
 
+                .negativeText("Dismiss")
+                .callback(new MaterialDialog.ButtonCallback()  {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        dialog.dismiss();
+                        finish();
+                        Intent intent = new Intent(getApplicationContext(), FMobActivity.class);
+
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        dialog.dismiss();
+                        finish();
+                        Intent intent = new Intent(getApplicationContext(), FMobActivity.class);
+
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                })
+                .show();
+    }
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.button2) {
@@ -1498,7 +1525,7 @@ String datetimee = "";
 
     private void PayBillResp(String params) {
         prgDialog2.show();
-        String endpoint = "billpayment/dobillpayment.action";
+        String endpoint = "billpayment/billpayment.action";
 
 
         String usid = Utility.gettUtilUserId(getApplicationContext());
@@ -1628,7 +1655,12 @@ String datetimee = "";
 
                                     setAlertDialog();
                                 }else {
-                                    setDialog(responsemessage);
+                                    if(Utility.checkStateCollect(serviceid)){
+                                        setBillDialog(responsemessage);
+                                    }else{
+                                        setDialog(responsemessage);
+                                    }
+
                                     txstatus.setText("TRANSACTION FAILURE");
                                     txdesc.setText(responsemessage);
 

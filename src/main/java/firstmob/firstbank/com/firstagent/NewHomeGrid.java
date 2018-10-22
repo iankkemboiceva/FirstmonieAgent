@@ -123,9 +123,9 @@ if(Utility.isNotNull(cntopen)) {
         checkAppvers();
         String chkappvs = session.getString("APPVERSBOOL");
         SecurityLayer.Log("chkappvs",chkappvs);
-        if(chkappvs.equals("Y")) {
+    //    if(chkappvs.equals("Y")) {
             GetAppversion();
-        }
+       // }
         return root;
     }
 
@@ -1051,10 +1051,10 @@ pro.show();
 
                                         String minversion = servdata.optString("minVersion");
                                         SecurityLayer.Log("Min version", minversion);
-                                        double dbvers = Double.parseDouble(minversion);
+                                     //   double dbvers = Double.parseDouble(minversion);
                                         String currvers = Utility.getAppVersion(getActivity());
-                                        double dbcurrvers = Double.parseDouble(currvers);
-                                        if( dbcurrvers < dbvers) {
+                                      //  double dbcurrvers = Double.parseDouble(currvers);
+                                        if( Utility.compareversionsupdate("1.3.6",currvers)) {
                                             final String packageName = "firstmob.firstbank.com.firstagent";
                                             new MaterialDialog.Builder(getActivity())
                                                     .title(getActivity().getString(R.string.appupd_verstitle))

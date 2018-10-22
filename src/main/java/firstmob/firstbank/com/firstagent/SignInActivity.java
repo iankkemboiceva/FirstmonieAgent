@@ -155,6 +155,7 @@ boolean chkv = false;
 	private FingerprintManager.CryptoObject cryptoObject;
 	private PinLockView mPinLockView;
 	private IndicatorDots mIndicatorDots;
+	TextView txappvers;
 
 String finpin;
 	private PinLockListener mPinLockListener = new PinLockListener() {
@@ -196,6 +197,7 @@ pro = new ProgressDialog(this);
         prvpin = (TextView) findViewById(R.id.txt5);
         opacc = (TextView) findViewById(R.id.numbers);
         succt = (TextView) findViewById(R.id.succtrans);
+		txappvers = (TextView) findViewById(R.id.versname);
 		registeruser = (TextView) findViewById(R.id.text17);
 		registeruser.setOnClickListener(this);
 		session = new SessionManagement(getApplicationContext());
@@ -247,7 +249,8 @@ pro = new ProgressDialog(this);
 
 onKeyMetric();
 	//	IntentPrint("\nThis is me testing this app\n Hello World, it's John Oke\n Testing Bluetooth Printing\n");
-
+		String appvers = Utility.getAppVersion(getApplicationContext());
+		txappvers.setText("Version "+appvers);
 	}
 
 
@@ -960,7 +963,7 @@ public void loginRetrofit(){
 
 	}
 
-
+/*
 	public void IntentPrint(String txtvalue)
 	{
 		byte[] buffer = txtvalue.getBytes();
@@ -987,8 +990,8 @@ public void loginRetrofit(){
 				Toast.makeText(this, value, Toast.LENGTH_LONG).show();
 			}
 		}
-	}
-	public void InitPrinter()
+	}*/
+/*	public void InitPrinter()
 	{
 		bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		try
@@ -1104,7 +1107,7 @@ public void loginRetrofit(){
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 
 	@Override

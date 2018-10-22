@@ -347,6 +347,10 @@ public class ApiSecurityClient {
                         return true;
                     }
                 });
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+// set your desired log level
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                builder.addInterceptor(logging);
                 okHttpClient = builder
                         .connectTimeout(240, TimeUnit.SECONDS)
                         .writeTimeout(240, TimeUnit.SECONDS)

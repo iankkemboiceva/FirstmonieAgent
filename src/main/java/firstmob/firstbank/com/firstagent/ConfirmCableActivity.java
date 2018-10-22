@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
     String txtcustid, amou, narra, ednamee, ednumbb, serviceid, billid, strlabl, servicename, billname, packid, paymentCode, bs,agbalance;
     String finalrespfee;
     ProgressDialog  prgDialog2;
+    RelativeLayout rlreceipt;
     EditText amon, edacc, pno, txtamount, txtnarr, edname, ednumber;
     EditText etpin;
     boolean chkfee = false;
@@ -75,6 +77,7 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
         recnarr = (TextView)findViewById(R.id.textViewrr);
 
         txtanarr = (TextView)findViewById(R.id.textViewr);
+        rlreceipt = (RelativeLayout) findViewById(R.id.rlreceipt);
         txtlabel = (TextView) findViewById(R.id.textViewnb);
         recsendnam = (TextView) findViewById(R.id.sendnammm);
         recsendnum = (TextView) findViewById(R.id.sendno);
@@ -121,12 +124,16 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
             recsendnum.setText(ednumbb);
             txtlabel.setText(strlabl);
 
-            if(serviceid.equals("3")){
+            if(Utility.checkStateCollect(serviceid)){
                 txtanarr.setText("Market");
                 String marketnm = intent.getStringExtra("marketname");
                 recnarr.setText(marketnm);
+                stt.setText(ednamee);
+                rlreceipt.setVisibility(View.GONE);
+                chkfee = true;
             }else{
                 recnarr.setText(narra);
+                rlreceipt.setVisibility(View.VISIBLE);
             }
             amou = Utility.convertProperNumber(amou);
             getFeeSec();
@@ -195,13 +202,11 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
                                                 String agentid = Utility.gettUtilAgentId(getApplicationContext());
                                                 String emaill = Utility.gettUtilEmail(getApplicationContext());
                                                 final String mobnoo = "0" + Utility.gettUtilMobno(getApplicationContext());
-                                                if (Utility.isNotNull(paymentCode) || paymentCode.equals("")) {
-                                                    paymentCode = billid + "01";
-                                                }
+
                                                 if ((!Utility.isNotNull(packid)) || packid.equals("")) {
                                                     packid = "01";
                                                 }
-                                                String params = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + billid + "/" + serviceid + "/" + amou + "/" + packid + "/" + ednumbb + "/" + emaill + "/" + txtcustid + "/" + paymentCode;
+                                                String params = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + billid + "/" + serviceid + "/" + amou + "/" + packid + "/" + ednumbb + "/" + ednamee + "/" + txtcustid + "/" + paymentCode;
 
 
                                                 Intent intent  = new Intent(ConfirmCableActivity.this,TransactionProcessingActivity.class);
@@ -535,7 +540,9 @@ onBackPressed();
                 } finally {
 
                 }
-                validatecust();
+                if(!(Utility.checkStateCollect(serviceid))) {
+                    validatecust();
+                }
             }
 
             @Override
