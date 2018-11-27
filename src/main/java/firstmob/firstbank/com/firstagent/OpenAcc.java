@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,7 +48,7 @@ import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 
 
-public class OpenAcc extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class OpenAcc extends Fragment implements View.OnClickListener{
 
 
     Button sigin;
@@ -71,7 +71,7 @@ public class OpenAcc extends Fragment implements View.OnClickListener, DatePicke
     TextView tnc;
     List<String> mobopname  = new ArrayList<String>();
     List<String> mobopid  = new ArrayList<String>();
-    DatePickerDialog datePickerDialog;
+
     TextView tvdate;
     public static final String DATEPICKER_TAG = "datepicker";
 
@@ -147,9 +147,7 @@ public class OpenAcc extends Fragment implements View.OnClickListener, DatePicke
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
       //  sp4.setAdapter(adapter4);
         final Calendar calendar = Calendar.getInstance();
-        datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(YEAR), calendar.get(MONTH), calendar.get(Calendar.DAY_OF_MONTH), false);
-int maxyear = calendar.get(YEAR) - 18;
-        datePickerDialog.setYearRange(1903,maxyear);
+
         // checkInternetConnection2();
 
         if(!(getArguments() == null)) {
@@ -326,7 +324,7 @@ int maxyear = calendar.get(YEAR) - 18;
 
 
         if(view.getId()==  R.id.button4){
-            datePickerDialog.show(getFragmentManager(), DATEPICKER_TAG);
+
         }
         if(view.getId() == R.id.tdispedit){
 
@@ -382,25 +380,7 @@ int maxyear = calendar.get(YEAR) - 18;
         cal.setTime(date);
         return cal;
     }
-    @Override
-    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        String finalmon = null;
-        String finalday = null;
-        int nwm = month + 1;
-        finalmon = Integer.toString(nwm);
-        finalday = Integer.toString(day);
-        if (nwm < 10) {
-            finalmon = "0" + nwm;
-        }
-        if (day < 10) {
-            finalday = "0" + finalday;
-        }
-        String tdate = day+"-"+finalmon + "-" +year ;
-    fintdate = year+finalmon+finalday;
-//fintdate = tdate;
-        chosdate = tdate;
-        tvdate.setText(tdate);
-    }
+
 
 
 

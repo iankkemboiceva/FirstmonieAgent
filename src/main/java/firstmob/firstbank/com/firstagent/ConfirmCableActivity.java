@@ -42,7 +42,7 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
     TextView reccustid, recamo, recnarr, recsendnum, recsendnam, txtfee, txtlabel,acbal,txtanarr;
     TextView step2, step1, step3, stt;
     Button btnsub;
-    String txtcustid, amou, narra, ednamee, ednumbb, serviceid, billid, strlabl, servicename, billname, packid, paymentCode, bs,agbalance;
+    String txtcustid, amou, narra, ednamee, ednumbb, serviceid, billid, strlabl, servicename, billname, packid, paymentCode, bs,agbalance,marketnm;
     String finalrespfee;
     ProgressDialog  prgDialog2;
     RelativeLayout rlreceipt;
@@ -126,7 +126,7 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
 
             if(Utility.checkStateCollect(serviceid)){
                 txtanarr.setText("Market");
-                String marketnm = intent.getStringExtra("marketname");
+                 marketnm = intent.getStringExtra("marketname");
                 recnarr.setText(marketnm);
                 stt.setText(ednamee);
                 rlreceipt.setVisibility(View.GONE);
@@ -229,6 +229,9 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
                                                 intent.putExtra("params", params);
                                                 intent.putExtra("fee", finalrespfee);
                                                 intent.putExtra("txpin", encrypted);
+                                                if(Utility.checkStateCollect(serviceid)) {
+                                                    intent.putExtra("marketnm", marketnm);
+                                                }
                                                 intent.putExtra("serv", "CABLETV");
                                                 startActivity(intent);
                                                /* Fragment fragment = new TransactingProcessing();

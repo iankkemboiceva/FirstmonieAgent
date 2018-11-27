@@ -18,7 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,9 +33,9 @@ import retrofit2.Response;
 import security.SecurityLayer;
 
 
-public class LogComplaint extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class LogComplaint extends Fragment implements View.OnClickListener{
     ImageView imageView1;
-    DatePickerDialog datePickerDialog;
+
     TextView tvdate;
     Button btn4,btnok;
     EditText edreason;
@@ -118,34 +118,6 @@ if(Utility.isNotNull(reas)){
 }
         }
     }
-
-    @Override
-    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        Calendar cal = Calendar.getInstance();
-        Calendar now = Calendar.getInstance();
-
-        cal.set(year, month, day);
-        if (cal.after(now)) {
-            String finalmon = null;
-
-            int nwm = month + 1;
-            finalmon = Integer.toString(nwm);
-            if (nwm < 10) {
-                finalmon = "0" + nwm;
-            }
-
-            String tdate = day + "-" + finalmon + "-" + year;
-dateset = tdate;
-
-            tvdate.setText(tdate);
-        } else {
-            Toast.makeText(
-                    getActivity(),
-                    "Please set a date for  after today ",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
-
 
 
 

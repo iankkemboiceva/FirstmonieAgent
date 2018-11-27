@@ -37,7 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -79,7 +79,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
     TextView tnc;
     List<String> mobopname  = new ArrayList<String>();
     List<String> mobopid  = new ArrayList<String>();
-    DatePickerDialog datePickerDialog;
+
     TextView tvdate;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
@@ -87,7 +87,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
     boolean uploadpic = false;
     public static final String DATEPICKER_TAG = "datepicker";
     ImageView img;
-    String strfname,strlname,strmidnm,stryob,stremail,strhmdd,strmobn,strsalut,strmarst,strcity,strstate,strgender;
+    String strfname,strlname,strmidnm,stryob,stremail,strhmdd,strmobn,strsalut,strmarst,strcity,strstate,strgender,straddr;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
 
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
@@ -142,6 +142,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
             strcity = intent.getStringExtra("city");
             strstate = intent.getStringExtra("state");
             strgender = intent.getStringExtra("gender");
+            straddr = intent.getStringExtra("straddr");
         }
 
         step2 = (TextView) findViewById(R.id.tv2);
@@ -380,7 +381,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
 
 
         if(view.getId()==  R.id.button4){
-            datePickerDialog.show(getSupportFragmentManager(), DATEPICKER_TAG);
+
         }
         if(view.getId() == R.id.buttonnxt){
             if(uploadpic) {
@@ -405,7 +406,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
                 intent.putExtra("city", strcity);
                 intent.putExtra("state", strstate);
 
-
+                intent.putExtra("straddr", straddr);
 
                 startActivity(intent);
                /* Bundle bundle = new Bundle();

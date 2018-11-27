@@ -4,7 +4,6 @@
     package="firstmob.firstbank.com.firstagent">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
@@ -18,13 +17,8 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
-
-
     <!-- GCM requires a Google account. -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
-
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -40,15 +34,6 @@
             </intent-filter>
         </receiver>
 
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.android.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
 
         <activity
             android:name=".MainActivity"
@@ -92,14 +77,14 @@
         <activity
             android:name=".ChangeAcNameActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:label="Stats" />
+            android:label="Stats"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".GetHelpActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
             android:label="Get Help"
-            android:parentActivityName=".SignInActivity">
+            android:parentActivityName=".SignInActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="firstmob.firstbank.com.firstagent.SignInActivity" />
@@ -130,14 +115,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:noHistory="true" />
-        <activity
-            android:name=".ListViewMultiChartActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="Statistics" />
-        <activity
-            android:name=".Sign_In"
-            android:label="Sign In"
-            android:windowSoftInputMode="stateHidden" />
+
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -260,7 +238,8 @@
             android:value="98ecaa0447eb5f57e65b83301fc2f8e13d31f313" />
 
         <activity android:name=".BluetoothPrinterTwo" />
-       <!-- <activity android:name=".USBPrintingActivity">
+        <!--
+        <activity android:name=".USBPrintingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
@@ -270,12 +249,13 @@
             <meta-data
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
-        </activity>-->
+        </activity>
+        -->
         <activity android:name=".USBPrintTwo" />
         <activity
             android:name=".MyPerfActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".FMobActivity">
+            android:parentActivityName=".FMobActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".FMobActivity" />
@@ -292,95 +272,149 @@
             android:label="" />
         <activity
             android:name=".CommissionActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".FMobActivity">
+            android:parentActivityName=".FMobActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".FMobActivity" />
         </activity>
         <activity
             android:name=".MinistatActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".FMobActivity">
+            android:parentActivityName=".FMobActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".FMobActivity" />
         </activity>
-        <activity android:name=".CashDepoActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ConfirmCashDepoActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".TransactionProcessingActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FinalConfDepoActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FTMenuActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".CashDepoTransActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ConfirmCashtransActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FinalConfDepoTransActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SendOTBActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ConfirmSendOTBActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FinalConfSendOTBActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".WithdrawActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ConfirmWithdrawalActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FinalConfWithdrawActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".CashDepoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConfirmCashDepoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TransactionProcessingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FinalConfDepoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FTMenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CashDepoTransActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConfirmCashtransActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FinalConfDepoTransActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SendOTBActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConfirmSendOTBActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FinalConfSendOTBActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WithdrawActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConfirmWithdrawalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FinalConfWithdrawActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AirtimeTransfActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme" />
-        <activity android:name=".ConfirmAirtimeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FinalConfAirtimeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".BillMenuActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SpecBillerMenuActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".GetBillPaymentsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".CableTVActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ConfirmCableActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FinalConfirmCableTVActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OpenAccActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OpenAccStepTwoActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OpenAccUpPicActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ConfirmAirtimeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FinalConfAirtimeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BillMenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SpecBillerMenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GetBillPaymentsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CableTVActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConfirmCableActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FinalConfirmCableTVActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OpenAccActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OpenAccStepTwoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OpenAccUpPicActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".OpenAccTestCameraActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".OpenAccCustPicActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OpenAccOTPActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SendOtherWalletActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OtherWalletsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ConfirmOtherWalletActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FinalConfOtherWalletsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".OpenAccCustPicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OpenAccOTPActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SendOtherWalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OtherWalletsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConfirmOtherWalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FinalConfOtherWalletsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".StateCollectActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ChangePinActivity"
-            android:screenOrientation="portrait"></activity>
-    </application>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangePinActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".TestfaceDetector"></activity>
+
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="face" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+
+
+
+        android:authorities="${applicationId}.provider"
+
+
+
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/provider"/>
+    </provider>
+
+</application>
 
 </manifest>

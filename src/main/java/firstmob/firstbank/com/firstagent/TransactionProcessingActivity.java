@@ -49,7 +49,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class TransactionProcessingActivity extends BaseActivity implements View.OnClickListener {
     Button btnsub;
     String recanno, amou ,narra, ednamee,ednumbb,txtname,strfee,stragcms,bankname,bankcode,txpin,newparams,serv ;
-    String txtcustid,serviceid,billid,txtfee,strtref,strlabel,strbillnm,fullname,telcoop;
+    String txtcustid,serviceid,billid,txtfee,strtref,strlabel,strbillnm,fullname,telcoop,marketnm;
 
     ProgressDialog prgDialog2;
     RelativeLayout rlsendname,rlsendno;
@@ -242,6 +242,9 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                 fullname = intent.getStringExtra("fullname");
                 String params  = intent.getStringExtra("params");
                 txpin = intent.getStringExtra("txpin");
+                if(Utility.checkStateCollect(serviceid)) {
+
+                }
                 newparams = params;
                 Log.v("Params",newparams+"/"+txpin);
 

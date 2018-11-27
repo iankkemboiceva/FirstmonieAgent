@@ -410,7 +410,7 @@ android:visibility="gone"
 
                                 android:background="@android:color/transparent"
 
-                                android:hint="Middle Name"
+                                android:hint="Middle Name(Optional)"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </RelativeLayout>
@@ -629,9 +629,9 @@ android:layout_below="@+id/textView7"
                             android:layout_marginTop="5dp"
                             android:layout_below="@+id/textView7"
                             android:layout_alignParentRight="true"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="14sp"
                             android:textColor="@color/colorPrimary"
-                            android:text="N/A"
+                            android:text="DD-MM-YYYY"
                             />
                     </RelativeLayout>
 

@@ -16,7 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +33,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LogCompActivity extends BaseActivity implements View.OnClickListener {
     ImageView imageView1;
-    DatePickerDialog datePickerDialog;
+
     TextView tvdate;
     Button btn4,btnok;
     EditText edreason;

@@ -38,7 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -82,7 +82,7 @@ public class OpenAccTestCameraActivity extends BaseActivity  {
     TextView tnc;
     List<String> mobopname  = new ArrayList<String>();
     List<String> mobopid  = new ArrayList<String>();
-    DatePickerDialog datePickerDialog;
+
     TextView tvdate;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;

@@ -13,6 +13,9 @@
     <string name="appupd_verstitle">New Version Available</string>
     <string name="appupd_vers">There is a newer version available for download! Please update the app by visiting Google Play Store.</string>
 
+
+    <string name="camera_denied">Camera Denied</string>
+    <string name="storage_denied">Storage Denied</string>
     <string-array name="nav_drawer_items">
         <item>Open Account</item>
         <item>Banking Information</item>
@@ -46,7 +49,7 @@
 
     </string-array>
     <string-array name="malesalut">
-        <item>Select Salutation</item>
+        <item>Select Title</item>
         <item>Mr.</item>
 
         <item>Dr.</item>
@@ -54,7 +57,7 @@
 
     </string-array>
     <string-array name="femsalut">
-        <item>Select Salutation</item>
+        <item>Select Title</item>
 
         <item>Mrs.</item>
         <item>Ms.</item>
@@ -64,7 +67,7 @@
     </string-array>
 
     <string-array name="salut">
-        <item>Select Salutation</item>
+        <item>Select Title</item>
         <item>Mr.</item>
 
         <item>Dr.</item>

@@ -30,7 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -61,7 +61,7 @@ import security.SecurityLayer;
 import static android.app.Activity.RESULT_CANCELED;
 
 
-public class OpenAccCustPic extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class OpenAccCustPic extends Fragment implements View.OnClickListener{
     File finalFile;
     int REQUEST_CAMERA =3293;
     ProgressDialog pDialog;
@@ -80,7 +80,7 @@ public class OpenAccCustPic extends Fragment implements View.OnClickListener, Da
     TextView tnc;
     List<String> mobopname  = new ArrayList<String>();
     List<String> mobopid  = new ArrayList<String>();
-    DatePickerDialog datePickerDialog;
+
     TextView tvdate;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
@@ -628,7 +628,7 @@ String params = "1/"+usid+"/"+agentid+"/"+strmobn;
             }
 
         if(view.getId()==  R.id.button4){
-            datePickerDialog.show(getFragmentManager(), DATEPICKER_TAG);
+
         }
         if(view.getId() == R.id.tdispedit){
 
@@ -889,22 +889,6 @@ String title = "Bank Info";
      //   yob.setText(" ");
     }
 
-
-    @Override
-    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        String finalmon = null;
-
-        int nwm = month + 1;
-        finalmon = Integer.toString(nwm);
-        if (nwm < 10) {
-            finalmon = "0" + nwm;
-        }
-
-        String tdate = day+"/"+finalmon + "/" +year ;
-
-
-        tvdate.setText(tdate);
-    }
 
 
 

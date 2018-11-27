@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,9 +32,9 @@ import retrofit2.Response;
 import security.SecurityLayer;
 
 
-public class RequestbankVisit extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class RequestbankVisit extends Fragment implements View.OnClickListener{
     ImageView imageView1;
-    DatePickerDialog datePickerDialog;
+
     TextView tvdate;
     Button btn4,btnok;
     EditText edreason;
@@ -64,7 +64,6 @@ public class RequestbankVisit extends Fragment implements View.OnClickListener, 
         prgDialog2 = new ProgressDialog(getActivity());
         prgDialog2.setMessage("Loading....");
         prgDialog2.setCancelable(false);
-        datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), false);
 
 
         return root;
@@ -87,7 +86,7 @@ public class RequestbankVisit extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.button4) {
-            datePickerDialog.show(getFragmentManager(), DATEPICKER_TAG);
+
         }
 
         if (v.getId() == R.id.button2) {
@@ -97,34 +96,6 @@ if(Utility.isNotNull(reas)){
 }
         }
     }
-
-    @Override
-    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        Calendar cal = Calendar.getInstance();
-        Calendar now = Calendar.getInstance();
-
-        cal.set(year, month, day);
-        if (cal.after(now)) {
-            String finalmon = null;
-
-            int nwm = month + 1;
-            finalmon = Integer.toString(nwm);
-            if (nwm < 10) {
-                finalmon = "0" + nwm;
-            }
-
-            String tdate = day + "-" + finalmon + "-" + year;
-dateset = tdate;
-
-            tvdate.setText(tdate);
-        } else {
-            Toast.makeText(
-                    getActivity(),
-                    "Please set a date for  after today ",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
-
 
 
 

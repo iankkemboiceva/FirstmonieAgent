@@ -31,7 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -79,7 +79,7 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
     TextView tnc;
     List<String> mobopname  = new ArrayList<String>();
     List<String> mobopid  = new ArrayList<String>();
-    DatePickerDialog datePickerDialog;
+
     TextView tvdate;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
@@ -87,7 +87,7 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
     boolean uploadpic = false;
     public static final String DATEPICKER_TAG = "datepicker";
     ImageView img;
-    String strfname,strlname,strmidnm,stryob,stremail,strhmdd,strmobn,strsalut,strmarst,strcity,strstate,strgender;
+    String strfname,strlname,strmidnm,stryob,stremail,strhmdd,strmobn,strsalut,strmarst,strcity,strstate,strgender,straddr;
     TextView step2, step1, step3, stt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +134,8 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
             strcity = intent.getStringExtra("city");
             strstate = intent.getStringExtra("state");
             strgender = intent.getStringExtra("gender");
+            straddr = intent.getStringExtra("straddr");
+
         }
         step2 = (TextView) findViewById(R.id.tv2);
         step2.setOnClickListener(this);
@@ -252,7 +254,7 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
                                     intent.putExtra("mobn", strmobn);
                                     intent.putExtra("salut", strsalut);
                                     intent.putExtra("marstatus", strmarst);
-
+                                    intent.putExtra("straddr", straddr);
                                     intent.putExtra("gender", strgender);
                                     intent.putExtra("city", strcity);
                                     intent.putExtra("state", strstate);
@@ -679,7 +681,7 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
         }
 
         if(view.getId()==  R.id.button4){
-            datePickerDialog.show(getSupportFragmentManager(), DATEPICKER_TAG);
+
         }
         if(view.getId() == R.id.tdispedit){
 

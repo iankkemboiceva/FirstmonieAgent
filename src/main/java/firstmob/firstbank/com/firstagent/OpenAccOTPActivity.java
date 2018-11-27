@@ -35,7 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -103,7 +103,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
     TextView tnc;
     List<String> mobopname  = new ArrayList<String>();
     List<String> mobopid  = new ArrayList<String>();
-    DatePickerDialog datePickerDialog;
+
     TextView tvdate;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
@@ -112,7 +112,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
     public static final String DATEPICKER_TAG = "datepicker";
     ImageView img;
     String finparams = null;
-    String strfname,strlname,strmidnm,stryob,stremail,strhmdd,strmobn,strsalut,strmarst,strgender,strcity,strstate;
+    String strfname,strlname,strmidnm,stryob,stremail,strhmdd,strmobn,strsalut,strmarst,strgender,strcity,strstate,straddr;
     TextView step2, step1, step3, step4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +162,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
             strcity = intent.getStringExtra("city");
             strstate = intent.getStringExtra("state");
             strgender = intent.getStringExtra("gender");
+            straddr = intent.getStringExtra("straddr");
         }
         String getsign = session.getString("CUSTSIGNPATH");
         Bitmap bitmapsign = BitmapFactory.decodeFile(getsign);
@@ -243,7 +244,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
 
 
 
-        String endpoint= "core/openaccount.action";
+        String endpoint= "core/openaccountnew.action";
 
         String url = "";
         try {
@@ -766,7 +767,7 @@ String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/"+strsalut+"/"+strfname+"/"+s
         }
 
         if(view.getId()==  R.id.button4){
-            datePickerDialog.show(getSupportFragmentManager(), DATEPICKER_TAG);
+
         }
         if (view.getId() == R.id.tv2) {
 
@@ -977,13 +978,9 @@ String title = "Bank Info";
 
 
             String encrypted = Utility.b64_sha256(edpin);
-            if (Utility.isNotNull(strmidnm) || strmidnm.equals("")) {
-                strmidnm = "NA";
-            }
-            if (Utility.isNotNull(stremail) || stremail.equals("")) {
-                stremail = "NA";
-            }
-            finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted;
+
+
+            finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted+"/"+straddr;
             SecurityLayer.Log("Before InvokeAcc");
             if (!((refnumber == null))) {
                 if (!(refnumber.equals(""))) {

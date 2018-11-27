@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -58,7 +58,7 @@ import retrofit2.Response;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClickListener,DatePickerDialog.OnDateSetListener  {
+public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClickListener {
     File finalFile;
     int REQUEST_CAMERA =3293;
     Button sigin;
@@ -77,13 +77,13 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
 
     List<String> mobopname  = new ArrayList<String>();
     List<String> mobopid  = new ArrayList<String>();
-    DatePickerDialog datePickerDialog;
+
     TextView tvdate;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
     String strfname,strlname,strmidnm,stryob,strcity,strstate,strgender,stremail,strhmadd,strsalut,strmarstat,strmno;
-    EditText edemail,edmobno,edhm;
+    EditText edemail,edmobno,edhm,edstraddr;
     public static final String DATEPICKER_TAG = "datepicker";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +114,7 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
         edemail = (EditText) findViewById(R.id.email);
         edhm = (EditText) findViewById(R.id.hmaddr);
         edmobno = (EditText) findViewById(R.id.mobno);
+        edstraddr = (EditText) findViewById(R.id.straddr);
 
 
 
@@ -333,6 +334,7 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
             String strmobn = edmobno.getText().toString();
             String strhmadd = edhm.getText().toString();
             String stremail = edemail.getText().toString();
+            String straddr = edstraddr.getText().toString();
             String salut = sp1.getSelectedItem().toString();
             String marstatus = sp2.getSelectedItem().toString();
 
@@ -361,7 +363,9 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
                             if(!(sp2.getSelectedItemPosition() == 0)){
                                 if(!(sp1.getSelectedItemPosition() == 0)){
                                     if(boolemail){
-
+                                        if (!(Utility.isNotNull(stremail)) || stremail.equals("")) {
+                                            stremail = "NA";
+                                        }
                                         strmobn = "234"+Utility.convertMobNumber(strmobn);
 
 
@@ -376,6 +380,7 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
                                         intent.putExtra("gender", strgender);
                                         intent.putExtra("city", strcity);
                                         intent.putExtra("state", strstate);
+                                        intent.putExtra("straddr", straddr);
                                         intent.putExtra("email", stremail);
                                         intent.putExtra("hmadd", strhmadd);
                                         intent.putExtra("mobn", strmobn);
@@ -408,7 +413,7 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
                                 } else {
                                     Toast.makeText(
                                             getApplicationContext(),
-                                            "Please select a valid Salutation",
+                                            "Please select a valid Title",
                                             Toast.LENGTH_LONG).show();
                                 }
                             } else {
@@ -476,7 +481,7 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
 
 
         if(view.getId()==  R.id.button4){
-            datePickerDialog.show(getSupportFragmentManager(), DATEPICKER_TAG);
+
         }
         if(view.getId() == R.id.tdispedit){
 
@@ -721,23 +726,6 @@ String title = "Bank Info";
         fnam.setText(" ");
         lnam.setText(" ");
         //   yob.setText(" ");
-    }
-
-
-    @Override
-    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        String finalmon = null;
-
-        int nwm = month + 1;
-        finalmon = Integer.toString(nwm);
-        if (nwm < 10) {
-            finalmon = "0" + nwm;
-        }
-
-        String tdate = day+"/"+finalmon + "/" +year ;
-
-
-        tvdate.setText(tdate);
     }
 
 

@@ -273,6 +273,10 @@ public class OpenAccActivity extends BaseActivity implements View.OnClickListene
                                         if(dtdiff >= 18){
 
 
+                                            if (!(Utility.isNotNull(midnamee)) || midnamee.equals("")) {
+                                                midnamee = "NA";
+                                            }
+Log.v("Midnamee",midnamee);
                                             Intent intent  = new Intent(OpenAccActivity.this,OpenAccStepTwoActivity.class);
 
 

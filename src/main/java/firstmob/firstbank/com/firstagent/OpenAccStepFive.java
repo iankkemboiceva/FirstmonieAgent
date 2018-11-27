@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -34,7 +34,7 @@ import java.util.List;
 import security.SecurityLayer;
 
 
-public class OpenAccStepFive extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class OpenAccStepFive extends Fragment implements View.OnClickListener {
 
 
     Button sigin;
@@ -52,7 +52,7 @@ public class OpenAccStepFive extends Fragment implements View.OnClickListener, D
     TextView tnc;
     List<String> mobopname  = new ArrayList<String>();
     List<String> mobopid  = new ArrayList<String>();
-    DatePickerDialog datePickerDialog;
+
     TextView tvdate;
     public static final String DATEPICKER_TAG = "datepicker";
 
@@ -107,7 +107,7 @@ public class OpenAccStepFive extends Fragment implements View.OnClickListener, D
 
 
         if(view.getId()==  R.id.button4){
-            datePickerDialog.show(getFragmentManager(), DATEPICKER_TAG);
+
         }
         if(view.getId() == R.id.tdispedit){
 
@@ -334,22 +334,6 @@ String title = "Bank Info";
      //   yob.setText(" ");
     }
 
-
-    @Override
-    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        String finalmon = null;
-
-        int nwm = month + 1;
-        finalmon = Integer.toString(nwm);
-        if (nwm < 10) {
-            finalmon = "0" + nwm;
-        }
-
-        String tdate = day+"/"+finalmon + "/" +year ;
-
-
-        tvdate.setText(tdate);
-    }
 
 
     public void SetDialog(String msg,String title){
