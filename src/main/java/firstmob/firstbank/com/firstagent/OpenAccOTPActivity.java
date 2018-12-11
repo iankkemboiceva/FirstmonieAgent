@@ -212,13 +212,9 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
     private String saveToInternalStorage(Bitmap bitmapImage){
         ContextWrapper cw = new ContextWrapper(this);
         // path to /data/data/yourapp/app_data/imageDir
-        File directory =
-                Environment.getExternalStoragePublicDirectory
-                        (
-                                "/FirstAgent/"
-                        );
+        File directory = new File(getFilesDir(),"Firstagent");
         // Create imageDir
-        File mypath=new File(Environment.getExternalStorageDirectory(), "/FirstAgent/profile.jpg");
+        File mypath=new File(getFilesDir(), "/FirstAgent/profile.jpg");
 
         FileOutputStream fos = null;
         try {

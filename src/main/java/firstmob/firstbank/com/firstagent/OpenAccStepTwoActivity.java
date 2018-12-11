@@ -363,10 +363,11 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
                             if(!(sp2.getSelectedItemPosition() == 0)){
                                 if(!(sp1.getSelectedItemPosition() == 0)){
                                     if(boolemail){
+                                        if(Utility.isNotNull(straddr)){
                                         if (!(Utility.isNotNull(stremail)) || stremail.equals("")) {
                                             stremail = "NA";
                                         }
-                                        strmobn = "234"+Utility.convertMobNumber(strmobn);
+
 
 
                                         Intent intent  = new Intent(OpenAccStepTwoActivity.this,OpenAccUpPicActivity.class);
@@ -404,6 +405,13 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
                                         ((FMobActivity) getApplicationContext())
                                                 .setActionBarTitle("Step Three");
                                         fragmentTransaction.commit(); */
+                                    } else {
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                "Please enter a valid value for Street Number",
+                                                Toast.LENGTH_LONG).show();
+                                    }
+
                                     } else {
                                         Toast.makeText(
                                                 getApplicationContext(),

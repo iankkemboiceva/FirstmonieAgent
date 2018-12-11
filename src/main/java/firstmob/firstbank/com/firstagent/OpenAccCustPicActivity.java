@@ -486,7 +486,7 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
             String filename = System.currentTimeMillis() + ".jpg";
-            finalFile = new File(Environment.getExternalStorageDirectory(), filename);
+            finalFile = new File(getFilesDir(),"FirstAgent/"+filename);
             FileOutputStream fo;
             try {
                 finalFile.createNewFile();

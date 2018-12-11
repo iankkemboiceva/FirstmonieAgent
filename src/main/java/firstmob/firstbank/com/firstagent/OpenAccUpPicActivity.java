@@ -26,6 +26,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -221,20 +222,16 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
             thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
             String filename = System.currentTimeMillis() + ".jpg";
 
-            final File path =
-                    Environment.getExternalStoragePublicDirectory
-                            (
-                                    //Environment.DIRECTORY_PICTURES
-                                    "/FirstAgent/"
-                            );
+            final File path = new File(getFilesDir(),"FirstAgent");
 
             // Make sure the path directory exists.
             if(!path.exists())
             {
                 // Make it, if it doesn't exit
                 path.mkdirs();
+                Log.v("was it crated","created");
             }
-            finalFile = new File(Environment.getExternalStorageDirectory(), "/FirstAgent/"+filename);
+            finalFile = new File(getFilesDir(),"FirstAgent/"+filename);
             FileOutputStream fo;
             try {
                 finalFile.createNewFile();
@@ -307,8 +304,11 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
             if(camresult) {
                 boolean result=checkPermission(OpenAccUpPicActivity.this);
                 if(result) {
-                    //  dispatchTakePictureIntent();
-                    cameraIntent();
+                    boolean readresult=Utility.checkWritePermission(OpenAccUpPicActivity.this);
+                    if(readresult) {
+                        //  dispatchTakePictureIntent();
+                        cameraIntent();
+                    }
                 }
             }
         }
@@ -553,12 +553,12 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
                 }
             }
         }*/
-      prgDialog2.show();
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //  intent.setPackage(defaultCameraPackage);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, REQUEST_CAMERA);
-            prgDialog2.dismiss();
+
         }
     }
     /* private void captureImage() {
