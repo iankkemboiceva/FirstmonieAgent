@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -38,6 +39,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+
+import com.google.android.gms.tasks.OnFailureListener;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -64,22 +67,23 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickListener {
     File finalFile;
-    int REQUEST_CAMERA =3293;
-    Button sigin,next;
+    int REQUEST_CAMERA = 3293;
+    Button sigin, next;
+    int fcsizes = 0;
     TextView gendisp;
     SessionManagement session;
-    EditText idno,mobno,fnam,lnam,yob;
+    EditText idno, mobno, fnam, lnam, yob;
     List<String> planetsList = new ArrayList<String>();
     List<String> prodid = new ArrayList<String>();
     ArrayAdapter<String> mArrayAdapter;
-    Spinner sp1,sp2,sp5,sp3,sp4;
+    Spinner sp1, sp2, sp5, sp3, sp4;
     Button btn4;
     static Hashtable<String, String> data1;
     String paramdata = "";
-    ProgressDialog prgDialog,prgDialog2,prgDialog7;
+    ProgressDialog prgDialog, prgDialog2, prgDialog7;
     TextView tnc;
-    List<String> mobopname  = new ArrayList<String>();
-    List<String> mobopid  = new ArrayList<String>();
+    List<String> mobopname = new ArrayList<String>();
+    List<String> mobopid = new ArrayList<String>();
 
     TextView tvdate;
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -88,18 +92,19 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
     boolean uploadpic = false;
     public static final String DATEPICKER_TAG = "datepicker";
     ImageView img;
-    String strfname,strlname,strmidnm,stryob,stremail,strhmdd,strmobn,strsalut,strmarst,strcity,strstate,strgender,straddr;
+    String strfname, strlname, strmidnm, stryob, stremail, strhmdd, strmobn, strsalut, strmarst, strcity, strstate, strgender, straddr;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
 
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
     private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
-    TextView step2,step1;
+    TextView step2, step1;
     // directory name to store captured images and videos
     private static final String IMAGE_DIRECTORY_NAME = "Hello Camera";
 
     private Uri fileUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,7 +154,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
         step2 = (TextView) findViewById(R.id.tv2);
         step2.setOnClickListener(this);
 
-        step1 = (TextView)findViewById(R.id.tv);
+        step1 = (TextView) findViewById(R.id.tv);
         step1.setOnClickListener(this);
 
 
@@ -165,9 +170,9 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode != RESULT_CANCELED){
+        if (resultCode != RESULT_CANCELED) {
             if (requestCode == REQUEST_CAMERA) {
-                if(data != null) {
+                if (data != null) {
                     onCaptureImageResult(data);
                 }
             }
@@ -199,8 +204,8 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
     public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
         int width = bm.getWidth();
         int height = bm.getHeight();
-        float neww = ((float)width)*((float)0.6);
-        float newh = ((float)height)*((float)0.6);
+        float neww = ((float) width) * ((float) 0.6);
+        float newh = ((float) height) * ((float) 0.6);
         float scaleWidth = ((float) newWidth) / width;
         float scaleHeight = ((float) newHeight) / height;
         // CREATE A MATRIX FOR THE MANIPULATION
@@ -215,37 +220,156 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
         return resizedBitmap;
     }
 
-    private void onCaptureImageResult(Intent data) {
-        if(!(data == null)) {
-            Bitmap thumbnail = getResizedBitmap((Bitmap) data.getExtras().get("data"), 150, 150);
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-            String filename = System.currentTimeMillis() + ".jpg";
+  /*  private void runFaceContourDetection(final Bitmap myBitmap, Bitmap origbit) {
 
-            final File path = new File(getFilesDir(),"FirstAgent");
+        FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(origbit);
+        FirebaseVisionFaceDetectorOptions options =
+                new FirebaseVisionFaceDetectorOptions.Builder()
+                        .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
+                        .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
+                        .build();
 
-            // Make sure the path directory exists.
-            if(!path.exists())
-            {
-                // Make it, if it doesn't exit
-                path.mkdirs();
-                Log.v("was it crated","created");
-            }
-            finalFile = new File(getFilesDir(),"FirstAgent/"+filename);
-            FileOutputStream fo;
-            try {
-                finalFile.createNewFile();
-                fo = new FileOutputStream(finalFile);
-                fo.write(bytes.toByteArray());
-                fo.close();
-                SecurityLayer.Log("Filename stored", filename);
-                String filePath = finalFile.getPath();
-                Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-                if(img != null) {
-                    img.setImageBitmap(bitmap);
+        //   mFaceButton.setEnabled(false);
+        FirebaseVisionFaceDetector detector = FirebaseVision.getInstance().getVisionFaceDetector(options);
+        detector.detectInImage(image)
+                .addOnSuccessListener(
+                        new OnSuccessListener<List<FirebaseVisionFace>>() {
+                            @Override
+                            public void onSuccess(List<FirebaseVisionFace> faces) {
+
+                                int facesizes = faces.size();
+                                fcsizes = facesizes;
+                                Log.v("Faces found", "There are" + Integer.toString(facesizes) + " faces here");
+
+                                if (fcsizes > 0) {
+                                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                                    myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+                                    String filename = System.currentTimeMillis() + ".jpg";
+
+                                    final File path = new File(getFilesDir(), "FirstAgent");
+
+                                    // Make sure the path directory exists.
+                                    if (!path.exists()) {
+                                        // Make it, if it doesn't exit
+                                        path.mkdirs();
+                                        Log.v("was it crated", "created");
+                                    }
+                                    finalFile = new File(getFilesDir(), "FirstAgent/" + filename);
+                                    FileOutputStream fo;
+                                    try {
+                                        finalFile.createNewFile();
+                                        fo = new FileOutputStream(finalFile);
+                                        fo.write(bytes.toByteArray());
+                                        fo.close();
+                                        SecurityLayer.Log("Filename stored", filename);
+                                        String filePath = finalFile.getPath();
+                                        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+                                        if (img != null) {
+                                            img.setImageBitmap(bitmap);
+                                        }
+                                        session.setString("CUSTIMGFILEPATH", filePath);
+                                        uploadpic = true;
+           *//* new Thread(new Runnable() {
+                public void run() {
+
+
+                    uploadFile(finalFile);
+
                 }
-                session.setString("CUSTIMGFILEPATH", filePath);
-                uploadpic = true;
+            }).start();*//*
+                                        //    new FragmentDrawer.AsyncUplImg().execute();
+           *//* getApplicationContext().finish();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Image Set Successfully",
+                    Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getApplicationContext(),FMobActivity.class));*//*
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    //   iv.setImageBitmap(thumbnail);
+
+                                } else {
+                                    img.setImageBitmap(myBitmap);
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            "Please ensure you have taken a clear picture of the customer's face"
+                                            , Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        })
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Task failed with an exception
+
+                                e.printStackTrace();
+
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        "There was an error running facial detection on the image.Please retake the photo again"
+                                        , Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+    }*/
+
+    private void onCaptureImageResult(Intent data) {
+        if (!(data == null)) {
+
+            Bitmap origbit = (Bitmap) data.getExtras().get("data");
+            int srcWidth = origbit.getWidth();
+            int srcHeight = origbit.getHeight();
+            int dstWidth = (int) (srcWidth * 0.8f);
+            int dstHeight = (int) (srcHeight * 0.8f);
+            Bitmap thumbnail = getResizedBitmap((Bitmap) data.getExtras().get("data"), dstHeight, dstWidth);
+          //  runFaceContourDetection(thumbnail, origbit);
+            if (img != null) {
+                img.setImageBitmap(origbit);
+            }
+            finalizeup(thumbnail);
+
+        }
+
+    }
+
+    private void finalizeup(Bitmap myBitmap) {
+
+
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    myBitmap.compress(Bitmap.CompressFormat.JPEG,90,bytes);
+    String filename = System.currentTimeMillis() + ".jpg";
+
+    final File path = new File(getFilesDir(), "FirstAgent");
+
+    // Make sure the path directory exists.
+    if(!path.exists())
+
+    {
+        // Make it, if it doesn't exit
+        path.mkdirs();
+        Log.v("was it crated", "created");
+    }
+
+    finalFile = new File(getFilesDir(), "FirstAgent/"+filename);
+    FileOutputStream fo;
+                                    try
+
+    {
+        finalFile.createNewFile();
+        fo = new FileOutputStream(finalFile);
+        fo.write(bytes.toByteArray());
+        fo.close();
+        SecurityLayer.Log("Filename stored", filename);
+        String filePath = finalFile.getPath();
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+
+        session.setString("CUSTIMGFILEPATH", filePath);
+        uploadpic = true;
            /* new Thread(new Runnable() {
                 public void run() {
 
@@ -254,26 +378,27 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
 
                 }
             }).start();*/
-                //    new FragmentDrawer.AsyncUplImg().execute();
+        //    new FragmentDrawer.AsyncUplImg().execute();
            /* getApplicationContext().finish();
             Toast.makeText(
                     getApplicationContext(),
                     "Image Set Successfully",
                     Toast.LENGTH_LONG).show();
             startActivity(new Intent(getApplicationContext(),FMobActivity.class));*/
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    } catch(
+    FileNotFoundException e)
 
-            //   iv.setImageBitmap(thumbnail);
+    {
+        e.printStackTrace();
+    } catch(
+    IOException e)
 
-        }
-
+    {
+        e.printStackTrace();
     }
 
-
+    //   iv.setImageBitmap(thumbnail);
+}
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -300,6 +425,8 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
             ((FMobActivity)getApplicationContext())
                     .setActionBarTitle("Step Three");
             fragmentTransaction.commit();*/
+           fcsizes = 0;
+           uploadpic = false;
             boolean camresult= checkCameraPermission(OpenAccUpPicActivity.this);
             if(camresult) {
                 boolean result=checkPermission(OpenAccUpPicActivity.this);

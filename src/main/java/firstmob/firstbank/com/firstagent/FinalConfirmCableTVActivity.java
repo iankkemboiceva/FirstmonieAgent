@@ -265,7 +265,7 @@ public class FinalConfirmCableTVActivity extends BaseActivity implements View.On
                 //now call the main working function ;) and hold the returned image in bitmap
 
                 bitmap=layout_to_image.convert_layout();
-                if(Utility.checkPermission(FinalConfirmCableTVActivity.this)) {
+                if(Utility.checkWriteStoragePermission(FinalConfirmCableTVActivity.this)) {
                     shareImage(getImageUri(getApplicationContext(), bitmap));
                 }
 

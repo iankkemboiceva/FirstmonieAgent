@@ -27,7 +27,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 import com.google.android.gms.security.ProviderInstaller;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -56,7 +56,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import security.EncryptTransactionPin;
 import security.SecurityLayer;
-import sms.IncomingOTPSMS;
+
 import sqlite.DbHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -65,7 +65,7 @@ Button btnnext;
 TextView btnresp;
     EditText agentid,agentpin,phonenumber;
 
-    GoogleCloudMessaging gcmObj;
+
     //Context applicationContext;
     SessionManagement session;
     String regId ;
@@ -97,14 +97,7 @@ TextView btnresp;
 
         pDialog.setCancelable(false);
 
-        IncomingOTPSMS.bindListener(new IncomingOTPSMS.SmsListener() {
-            @Override
-            public void messageReceived(String messageText) {
 
-                phonenumber.setText(messageText);
-
-            }
-        });
 
        // testResp();
     }

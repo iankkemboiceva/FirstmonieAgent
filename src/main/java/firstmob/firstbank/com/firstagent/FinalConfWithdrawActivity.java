@@ -200,7 +200,7 @@ public class FinalConfWithdrawActivity extends BaseActivity implements View.OnCl
                 //now call the main working function ;) and hold the returned image in bitmap
 
                 bitmap=layout_to_image.convert_layout();
-                if(Utility.checkPermission(FinalConfWithdrawActivity.this)) {
+                if(Utility.checkWriteStoragePermission(FinalConfWithdrawActivity.this)) {
                     shareImage(getImageUri(getApplicationContext(), bitmap));
                 }
 

@@ -171,7 +171,7 @@ public class FinalConfSendOTBActivity extends BaseActivity implements View.OnCli
                 //now call the main working function ;) and hold the returned image in bitmap
 
                 bitmap=layout_to_image.convert_layout();
-                if(Utility.checkPermission(FinalConfSendOTBActivity.this)) {
+                if(Utility.checkWriteStoragePermission(FinalConfSendOTBActivity.this)) {
                     shareImage(getImageUri(getApplicationContext(), bitmap));
                 }
 

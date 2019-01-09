@@ -137,7 +137,7 @@ public class FinalConfOtherWalletsActivity extends BaseActivity implements View.
                 //now call the main working function ;) and hold the returned image in bitmap
 
                 bitmap=layout_to_image.convert_layout();
-                if(Utility.checkPermission(FinalConfOtherWalletsActivity.this)) {
+                if(Utility.checkWriteStoragePermission(FinalConfOtherWalletsActivity.this)) {
                     shareImage(getImageUri(getApplicationContext(), bitmap));
                 }
 

@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -28,6 +30,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -74,7 +79,7 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
     static Hashtable<String, String> data1;
     String paramdata = "";
     ProgressDialog prgDialog,prgDialog2,prgDialog7;
-
+    int fcsize = 0;
     List<String> mobopname  = new ArrayList<String>();
     List<String> mobopid  = new ArrayList<String>();
 
@@ -368,7 +373,7 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
                                             stremail = "NA";
                                         }
 
-
+strmobn = strmobn.substring(strmobn.length() - 10);
 
                                         Intent intent  = new Intent(OpenAccStepTwoActivity.this,OpenAccUpPicActivity.class);
 
@@ -405,13 +410,13 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
                                         ((FMobActivity) getApplicationContext())
                                                 .setActionBarTitle("Step Three");
                                         fragmentTransaction.commit(); */
-                                    } else {
-                                        Toast.makeText(
-                                                getApplicationContext(),
-                                                "Please enter a valid value for Street Number",
-                                                Toast.LENGTH_LONG).show();
-                                    }
 
+                                        } else {
+                                            Toast.makeText(
+                                                    getApplicationContext(),
+                                                    "Please enter a valid street address value",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
                                     } else {
                                         Toast.makeText(
                                                 getApplicationContext(),

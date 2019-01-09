@@ -231,7 +231,7 @@ public class FinalConfAirtimeActivity extends BaseActivity implements View.OnCli
                 //now call the main working function ;) and hold the returned image in bitmap
 
                 bitmap=layout_to_image.convert_layout();
-                if(Utility.checkPermission(FinalConfAirtimeActivity.this)) {
+                if(Utility.checkWriteStoragePermission(FinalConfAirtimeActivity.this)) {
                     shareImage(getImageUri(getApplicationContext(), bitmap));
                 }
 

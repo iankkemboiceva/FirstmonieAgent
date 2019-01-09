@@ -482,6 +482,10 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
 
     private void onCaptureImageResult(Intent data) {
         if(!(data == null)) {
+            Bitmap origbit = (Bitmap) data.getExtras().get("data");
+            if(img != null) {
+                img.setImageBitmap(origbit);
+            }
             Bitmap thumbnail = getResizedBitmap((Bitmap) data.getExtras().get("data"), 150, 150);
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
@@ -496,9 +500,7 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
                 SecurityLayer.Log("Filename stored", filename);
                 String filePath = finalFile.getPath();
                 Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-                if(img != null) {
-                    img.setImageBitmap(bitmap);
-                }
+
                 session.setString("CUSTSIGNPATH", filePath);
                 uploadpic = true;
            /* new Thread(new Runnable() {

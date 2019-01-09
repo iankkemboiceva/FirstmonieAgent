@@ -105,10 +105,17 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.retrofit2:converter-scalars:2.0.2'
 
-    implementation 'com.google.firebase:firebase-messaging:17.3.0'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
     compile 'com.github.shell-software:fab:1.1.2'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.android.support:design:25.3.0'
+
+
+ //   implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
+
+  //  implementation 'com.google.firebase:firebase-ml-vision-face-model:17.0.2'
+   
+
 
 
     compile 'commons-codec:commons-codec:1.10'
@@ -116,12 +123,12 @@ dependencies {
 
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.2'
-    compile 'com.google.android.gms:play-services-gcm:10.2.0'
 
 
-    compile 'com.google.firebase:firebase-crash:16.0.0'
 
-    compile 'com.google.android.gms:play-services-auth:10.2.0'
+    compile 'com.google.firebase:firebase-crash:16.2.1'
+
+
     compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
         transitive = true;
     }
@@ -129,7 +136,7 @@ dependencies {
         transitive = true;
     }
 
-    implementation 'com.google.firebase:firebase-core:16.0.0'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
 
     // Add dependency
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'

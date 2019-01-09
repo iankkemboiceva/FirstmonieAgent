@@ -26,7 +26,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 import com.google.android.gms.security.ProviderInstaller;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -60,7 +60,7 @@ public class ActivateAgentOld extends AppCompatActivity implements View.OnClickL
 Button btnnext;
     EditText agentid,agentpin,phonenumber;
     ProgressDialog pDialog;
-    GoogleCloudMessaging gcmObj;
+
     //Context applicationContext;
     SessionManagement session;
     String regId ;

@@ -25,11 +25,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 
-public class TestfaceDetector extends AppCompatActivity  {
-   /* public ImageView myImageView;
+import java.io.File;
+import java.util.List;
+
+
+public class TestfaceDetector extends AppCompatActivity implements View.OnClickListener {
+    public ImageView myImageView;
  public TextView myTextView;
     private Bitmap myBitmap;
     public static final int WRITE_STORAGE = 100;
@@ -38,17 +41,17 @@ public class TestfaceDetector extends AppCompatActivity  {
     public static final int TAKE_PHOTO = 104;
     public static final String ACTION_BAR_TITLE = "action_bar_title";
     public File photoFile;
-    Button btnsub;*/
+    Button btnsub;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testface_detector);
-      /*  myTextView = (TextView) findViewById(R.id.textViewab);
+        myTextView = (TextView) findViewById(R.id.textViewab);
         myImageView = (ImageView) findViewById(R.id.imageViewab);
         btnsub = (Button)findViewById(R.id.button2);
-        btnsub.setOnClickListener(this);*/
+        btnsub.setOnClickListener(this);
     }
-/*
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -71,7 +74,7 @@ public class TestfaceDetector extends AppCompatActivity  {
                     if (myBitmap != null) {
                         myTextView.setText(null);
                         myImageView.setImageBitmap(myBitmap);
-                        runFaceDetector(myBitmap);
+                     //   runFaceContourDetection();
                     }
                     break;
                 case TAKE_PHOTO:
@@ -79,20 +82,22 @@ public class TestfaceDetector extends AppCompatActivity  {
                     if (myBitmap != null) {
                         myTextView.setText(null);
                         myImageView.setImageBitmap(myBitmap);
-                        runFaceDetector(myBitmap);
+                     //   runFaceContourDetection();
                     }
                     break;
             }
         }
     }
+/*
 
     private void runFaceDetector(Bitmap bitmap) {
         FirebaseVisionFaceDetectorOptions options = new FirebaseVisionFaceDetectorOptions.Builder()
-                .setModeType(FirebaseVisionFaceDetectorOptions.FAST_MODE)
-                .setClassificationType(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
-                .setLandmarkType(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
+               // .setModeType(FirebaseVisionFaceDetectorOptions.FAST_MODE)
+
+                .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
+                .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
                 .setMinFaceSize(0.1f)
-                .setTrackingEnabled(false)
+                .enableTracking()
                 .build();
 
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(myBitmap);
@@ -111,7 +116,44 @@ public class TestfaceDetector extends AppCompatActivity  {
             }
         });
     }
+    private void runFaceContourDetection() {
+        FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(myBitmap);
+        FirebaseVisionFaceDetectorOptions options =
+                new FirebaseVisionFaceDetectorOptions.Builder()
+                        .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
+                        .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
+                        .build();
 
+     //   mFaceButton.setEnabled(false);
+        FirebaseVisionFaceDetector detector = FirebaseVision.getInstance().getVisionFaceDetector(options);
+        detector.detectInImage(image)
+                .addOnSuccessListener(
+                        new OnSuccessListener<List<FirebaseVisionFace>>() {
+                            @Override
+                            public void onSuccess(List<FirebaseVisionFace> faces) {
+
+                                int facesizes = faces.size();
+
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        "There are"+Integer.toString(facesizes)+" faces here"
+                                        , Toast.LENGTH_LONG).show();
+                            }
+                        })
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Task failed with an exception
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        "There are NO faces here"
+                                        , Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                            }
+                        });
+
+    }
     private String runFaceRecog(List<FirebaseVisionFace> faces) {
         StringBuilder result = new StringBuilder();
         float smilingProbability = 0;
@@ -152,6 +194,7 @@ public class TestfaceDetector extends AppCompatActivity  {
         }
         return result.toString();
     }
+*/
 
 
     @Override
@@ -256,5 +299,10 @@ public class TestfaceDetector extends AppCompatActivity  {
         if (view.getId() == R.id.button2) {
             checkPermission(WRITE_STORAGE);
         }
-    }*/
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
 }

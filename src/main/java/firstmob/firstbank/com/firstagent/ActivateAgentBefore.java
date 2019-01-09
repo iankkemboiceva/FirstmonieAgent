@@ -25,7 +25,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 import com.google.android.gms.security.ProviderInstaller;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -57,7 +57,7 @@ public class ActivateAgentBefore extends AppCompatActivity implements View.OnCli
 Button btnnext;
     EditText agentid;
     ProgressDialog pDialog;
-    GoogleCloudMessaging gcmObj;
+
     //Context applicationContext;
     SessionManagement session;
     String regId ;
@@ -224,8 +224,7 @@ pDialog.hide();
 
         if (!addPermission(permissionsList, Manifest.permission.READ_PHONE_STATE))
             permissionsNeeded.add("Read Phone State");
-        if (!addPermission(permissionsList, Manifest.permission.READ_SMS))
-            permissionsNeeded.add("Read SMS");
+
         if (permissionsList.size() > 0) {
             if (permissionsNeeded.size() > 0) {
                 // Need Rationale

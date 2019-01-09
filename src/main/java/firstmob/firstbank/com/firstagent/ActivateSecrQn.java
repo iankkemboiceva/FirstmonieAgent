@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 
 import java.io.IOException;
 import java.security.KeyStore;
@@ -31,7 +31,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class ActivateSecrQn extends AppCompatActivity implements View.OnClickListener {
     Button btnnext;
     String agid,agpin,agphn;
-    GoogleCloudMessaging gcmObj;
+
     //Context applicationContext;
     String regId = "";
     SessionManagement session;
@@ -52,7 +52,7 @@ public class ActivateSecrQn extends AppCompatActivity implements View.OnClickLis
         prgDialog2 = new ProgressDialog(this);
         prgDialog2.setMessage("Loading....");
         prgDialog2.setCancelable(false);
-       registerInBackground();
+
         btnnext = (Button) findViewById(R.id.button1);
         btnnext.setOnClickListener(this);
 
@@ -66,45 +66,8 @@ public class ActivateSecrQn extends AppCompatActivity implements View.OnClickLis
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    private void registerInBackground() {
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                String msg = "";
-                try {
-                    if (gcmObj == null) {
 
-                        gcmObj = GoogleCloudMessaging
-                                .getInstance(getApplicationContext());
-                    }
-                    regId = gcmObj
-                            .register(ApplicationConstants.GOOGLE_PROJ_ID);
-                    msg = "Registration ID :" + regId;
-                    SecurityLayer.Log("Reg Gotten ID",msg);
 
-                } catch (IOException ex) {
-                    msg = "Error :" + ex.getMessage();
-                }
-                return msg;
-            }
-
-            @Override
-            protected void onPostExecute(String msg) {
-                if (!TextUtils.isEmpty(regId)) {
-
-                   /* Toast.makeText(
-                            getApplicationContext(),
-                            "Registered with GCM Server successfully.\n\n"
-                                    + msg, Toast.LENGTH_SHORT).show();*/
-                } else {
-                    Toast.makeText(
-                           getApplicationContext(),
-                            "Reg ID Creation Failed.\n\nEither you haven't enabled Internet or GCM server is busy right now. Make sure you enabled Internet and try registering again after some time."
-                                    + msg, Toast.LENGTH_LONG).show();
-                }
-            }
-        }.execute(null, null, null);
-    }
 
     @Override
     public void onClick(View v) {

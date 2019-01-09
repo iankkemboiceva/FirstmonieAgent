@@ -172,7 +172,7 @@ RelativeLayout rlsave,rlshare;
                 //now call the main working function ;) and hold the returned image in bitmap
 
                 bitmap=layout_to_image.convert_layout();
-                if(Utility.checkPermission(FinalConfDepoActivity.this)) {
+                if(Utility.checkWriteStoragePermission(FinalConfDepoActivity.this)) {
                     if(!(getApplicationContext() == null)) {
                         shareImage(getImageUri(getApplicationContext(), bitmap));
                     }

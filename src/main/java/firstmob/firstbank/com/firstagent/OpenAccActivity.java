@@ -260,8 +260,7 @@ public class OpenAccActivity extends BaseActivity implements View.OnClickListene
 
             String strcity = "01";
             if (planetsList.size() > 0){
-                String strstate = arrangelist.get(sp3.getSelectedItemPosition()).getstateCode();
-                strcity = citylist.get(sp3.getSelectedItemPosition()-1).getcitycode();
+
                 if (Utility.checkInternetConnection(getApplicationContext())) {
                     if (Utility.isNotNull(fname)) {
                         if (Utility.isNotNull(lname)) {
@@ -269,6 +268,9 @@ public class OpenAccActivity extends BaseActivity implements View.OnClickListene
 
                             if (Utility.isNotNull(chosdate)) {
                                 if(!(sp5.getSelectedItemPosition() == 0)){
+                                    if(!(sp3.getSelectedItemPosition() == 0)){
+                                        String strstate = arrangelist.get(sp3.getSelectedItemPosition()).getstateCode();
+                                        strcity = citylist.get(sp3.getSelectedItemPosition()-1).getcitycode();
                                     if(!(strstate.equals("0000"))){
                                         if(dtdiff >= 18){
 
@@ -321,7 +323,12 @@ Log.v("Midnamee",midnamee);
                                                 "Please choose a valid State",
                                                 Toast.LENGTH_LONG).show();
                                     }
-
+                                    } else {
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                "Please choose a valid State",
+                                                Toast.LENGTH_LONG).show();
+                                    }
                                 } else {
                                     Toast.makeText(
                                             getApplicationContext(),
