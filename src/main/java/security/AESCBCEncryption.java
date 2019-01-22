@@ -36,7 +36,7 @@ public class AESCBCEncryption implements SecurityConstants {
     public static byte[] dummy_siv = base64Decode("l6Zy71TDy2BMiyPNuNCjcA==");
 
     static {
-        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+
     }
 
     public static String encrypt(byte[] key, byte[] initVector, String value) {

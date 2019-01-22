@@ -33,7 +33,7 @@ public class ActivateSecrQn extends AppCompatActivity implements View.OnClickLis
     String agid,agpin,agphn;
 
     //Context applicationContext;
-    String regId = "";
+  /*  String regId = "";*/
     SessionManagement session;
     ProgressDialog prgDialog,prgDialog2;
     ProgressDialog pDialog;

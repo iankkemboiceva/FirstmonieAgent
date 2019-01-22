@@ -5,13 +5,8 @@ import android.support.v7.app.ActionBarActivity;
 
 
 
-import java.util.Random;
 
 public abstract class BaseSampleActivity extends ActionBarActivity {
-    private static final Random RANDOM = new Random();
-
-    TestFragmentAdapter mAdapter;
-    ViewPager mPager;
 
 
   /*  @Override
