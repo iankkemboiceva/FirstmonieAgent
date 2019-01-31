@@ -17,16 +17,6 @@ public class EncryptTransactionPin {
 	}
 
 
-	public static String decrypt(String key, String password) throws Exception
-	{
-
-		byte [] byteKey = hex2byte(key);
-		byte [] bytePwd = hex2byte(password);
-		byte[] enc = CryptoUtil.desede(bytePwd,byteKey,Cipher.DECRYPT_MODE);
-
-		return Util.hexString(enc);
-	}
-
 	public static byte[] hex2byte (String s) {
 	    if (s.length() % 2 == 0) {
 	        return hex2byte (s.getBytes(), 0, s.length() >> 1);

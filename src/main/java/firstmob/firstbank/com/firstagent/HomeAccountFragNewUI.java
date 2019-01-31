@@ -2,18 +2,14 @@ package firstmob.firstbank.com.firstagent;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Html;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +30,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,9 +37,7 @@ import java.util.List;
 
 import adapter.Dashboard;
 import adapter.DashboardAdapter;
-import adapter.LvList;
 import adapter.ServicesMenuAdapt;
-import adapter.adapter.LvListAdapt;
 import adapter.adapter.OTBRetroAdapt;
 import model.BalInquiryData;
 import model.BalanceInquiry;
@@ -67,11 +58,11 @@ public class HomeAccountFragNewUI extends Fragment implements View.OnClickListen
     ListView lv;
     TextView tv,tvacco,tvcomm,txttogrid;
     List<GetBanksData> planetsList = new ArrayList<GetBanksData>();
-    List<LvList> lvlist = new ArrayList<LvList>();
+
     List<Dashboard> servicesList = new ArrayList<Dashboard>();
     List<GetServicesData> servicesdata = new ArrayList<GetServicesData>();
     OTBRetroAdapt aAdpt;
-    LvListAdapt lvadapt;
+
     Button btn1,btn2,btn3;
     ProgressDialog pro ;
     TextView curbal,lastl,greet,commamo;
@@ -309,25 +300,7 @@ Pop();
 
     public void SetPop(){
         planetsList.clear();
-       /* planetsList.add(new Dashboard("FirstBank", R.drawable.ic_ftblue));
-        planetsList.add(new Dashboard("Other Banks", R.drawable.ic_ftblue));
-        planetsList.add(new Dashboard("FirstMonie",R.drawable.ic_ftblue));
 
-
-        planetsList.add(new Dashboard("Other Wallets",R.drawable.ic_ftblue));
-
-
-
-       *//* planetsList.add(new Dashboard("My Profile",R.drawable.icons40));*//*
-
-        aAdpt = new DashboardAdapter( planetsList,getActivity());
-        gridView.setAdapter(aAdpt);*/
-
-        lvlist.add(new LvList("FirstBank",R.drawable.agacbalnce));
-        lvlist.add(new LvList("Other Banks",R.drawable.comacbalance));
-
-        lvadapt = new LvListAdapt(lvlist, getActivity());
-//        lv.setAdapter(aAdpt);
     }
     @Override
     public void onClick(View view) {
@@ -867,92 +840,9 @@ Pop();
 
      }
  */
-    class DownloadImg extends AsyncTask<String, String, String> {
-        Bitmap bmp=null;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // prgDialog.show();
-        }
-
-        // Download Music File from Internet
-        @Override
-        protected String doInBackground(String... f_url) {
-
-
-            try{
-                //   http://localhost:9399/agencyapi/app/adverts/pic.action/1/CEVA/PAND0000000001/9493818389/2
-                String usid = Utility.gettUtilUserId(getActivity());
-                String agentid = Utility.gettUtilAgentId(getActivity());
-                String mobnoo = Utility.gettUtilMobno(getActivity());
-                //  http://localhost:9399/agencyapi/app/adverts/pic.action/1/CEVA/PAND0000000001/9493818389/2
-                String url = ApplicationConstants.UNENC_URL+"adverts/pic.action/1/"+usid+"/"+agentid+"/9493818389/"+agid;
-                bmp = downloadBitmap(url);
-
-                SecurityLayer.Log("Download Pic Url",url);
-            }catch(Exception e){
-                SecurityLayer.Log("ERROR While Downloadin", e.getLocalizedMessage());
-//                Toast.makeText(getActivity(), "Error While Downloading File", Toast.LENGTH_LONG);
-            }
-            return "34";
-        }
-
-
-        private Bitmap downloadBitmap(String url) {
-            HttpURLConnection urlConnection = null;
-            try {
-                Log.i("thumb", url);
-                URL uri = new URL(url);
-                urlConnection = (HttpURLConnection) uri.openConnection();
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setDoInput(true);
-                urlConnection.setDoOutput(true);
-                urlConnection.setUseCaches(false);
-                urlConnection.connect();
-
-           /* int statusCode = urlConnection.getResponseCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                return null;
-            }*/
-
-                InputStream inputStream = urlConnection.getInputStream();
-                if (inputStream != null) {
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    return bitmap;
-                }
-            } catch (Exception e) {
-                urlConnection.disconnect();
-                Log.w("thumb dnwld", "Error downloading image from " + url);
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-            }
-            return null;
-        }
 
 
 
-
-
-        @Override
-        protected void onPostExecute(String file_url) {
-            //  prgDialog.dismiss();
-            //     pDialog.setVisibility(View.INVISIBLE);
-            if(bmp != null)
-            {
-
-                iv.setVisibility(View.VISIBLE);
-                iv.setImageBitmap(bmp);
-            }
-            else
-            {
-                iv.setImageBitmap(null);
-            }
-            prgbar.setVisibility(View.GONE);
-
-        }
-    }
 
     private void GetServv() {
       //  prgDialog2.show();

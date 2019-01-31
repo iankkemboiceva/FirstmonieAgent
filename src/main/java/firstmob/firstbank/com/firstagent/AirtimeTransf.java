@@ -33,8 +33,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import adapter.FavList;
-import adapter.TopFavAdapter;
 import model.GetAirtimeBillers;
 import model.GetAirtimeBillersData;
 import rest.ApiClient;
@@ -135,10 +133,10 @@ public class AirtimeTransf extends Fragment implements View.OnClickListener {
     Spinner sp1, sp5, sp7;
   //  RecyclerView lvbann;
   ArrayAdapter<GetAirtimeBillersData> mobadapt;
-    TopFavAdapter FavAdapt;
+
     TextView tx;
     LinearLayoutManager layoutManager,layoutManager2;
-    List<FavList> favlist = new ArrayList<FavList>();
+
     Button btn2;
     String telcochosen;
     ProgressDialog prgDialog;
@@ -369,14 +367,6 @@ public class AirtimeTransf extends Fragment implements View.OnClickListener {
 
         }
     }
-public void Pop(){
-    favlist.add(new FavList("Airtel", R.drawable.airtel,"ATM",""));
-    favlist.add(new FavList("Etisalat", R.drawable.etisalat,"ATM",""));
-    favlist.add(new FavList("GLO", R.drawable.glo,"ATM",""));
-    favlist.add(new FavList("MTN", R.drawable.mtn,"ATM",""));
-    FavAdapt = new TopFavAdapter( getActivity(),favlist);
-    //lvbann.setAdapter(FavAdapt);
-}
 
     public void SetAirtimStored(){
         planetsList.clear();

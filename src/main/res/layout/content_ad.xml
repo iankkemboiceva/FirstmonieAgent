@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
    tools:context=".AdActivity"
     android:background="@drawable/fbnbackground"
+    android:filterTouchesWhenObscured ="true"
     tools:showIn="@layout/activity_ad">
 
     <RelativeLayout

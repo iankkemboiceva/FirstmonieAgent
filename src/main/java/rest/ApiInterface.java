@@ -102,9 +102,7 @@ public interface ApiInterface {
     Call<GetPerf> getPerfData(@Path("channel") String channel, @Path("userId") String userId, @Path("merchantId") String merchantId, @Path("mobileNumber") String mobileNumber,@Path("rpttype") String rpttype, @Path("fromDate") String fromDate,@Path("endDate") String endDate);
 
 
-    @Multipart
-    @POST("profile/pic.action/1/CEVA")
-    Call<UploadPic> uppic (@Part MultipartBody.Part file );
+
 
    // http://localhost:9399/agencyapi/app/adverts/ads.action/1/CEVA/PAND00000000019493818389
     @POST("adverts/ads.action/{channel}/{userId}/{merchantId}/{mobileNumber}")

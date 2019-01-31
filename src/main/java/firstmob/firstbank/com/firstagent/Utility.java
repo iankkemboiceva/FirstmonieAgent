@@ -915,9 +915,9 @@ public static boolean compareversionsupdate(String server,String device){
 	String[] v1 = device.split("\\.");
 	String[] v2 = server.split("\\.");
 boolean chk = false;
-	if (v1.length == v2.length)
-		chk =false;
-
+	if (v1.length == v2.length) {
+		chk = false;
+	}
 	for (int pos = 0; pos < v1.length; pos++) {
 		// compare v1[pos] with v2[pos] as necessary
 		if (Integer.parseInt(v1[pos]) > Integer.parseInt(v2[pos])) {
@@ -929,4 +929,19 @@ boolean chk = false;
 	return  chk;
 }
 
+
+	public static boolean compareversionsupdatenew(String server,String device){
+		String dev = device.replace(".","");
+		String serv = server.replace(".","");
+
+
+		boolean chk = false;
+		if (Integer.parseInt(dev) < Integer.parseInt(serv)) {
+			chk = true;
+		}else{
+			chk = false;
+		}
+
+		return  chk;
+	}
 }

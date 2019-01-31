@@ -1,10 +1,7 @@
 package firstmob.firstbank.com.firstagent;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,9 +16,7 @@ import android.widget.Toast;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
-import adapter.FHomeAdapter;
 import security.SecurityLayer;
 import tablayout.SlidingTabLayout;
 
@@ -32,7 +27,7 @@ int count = 1;
     SessionManagement session;
 
     ViewPager pager;
-    FHomeAdapter adapter;
+
     SlidingTabLayout tabs;
     CharSequence Titles[] = {"HOME","ACTIVITIES","OFFERS","PRODUCTS"};
     int Numboftabs =4;
@@ -48,13 +43,13 @@ int count = 1;
 
         super.onCreate(savedInstanceState);
        // session = new SessionManagement(this);
-        setContentView(R.layout.activity_main);
+
        // setupWindowAnimations();
-        adapter =  new FHomeAdapter(getSupportFragmentManager(),Titles,Numboftabs);
+
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(adapter);
+
 
         // Assiging the Sliding Tab Layout View
 

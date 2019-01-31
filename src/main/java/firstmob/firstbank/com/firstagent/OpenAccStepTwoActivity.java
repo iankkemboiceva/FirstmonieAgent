@@ -665,15 +665,7 @@ String title = "Bank Info";
         String url =   ApplicationConstants.NET_URL+ApplicationConstants.AND_ENPOINT+"agencyopenAccount/1/01261/"+ msisdn+"/1/"+id+"/"+fname+"/"+lname+"/"+yearob+"/ANDROID/"+username;
 
         SecurityLayer.Log("Open Acc URL",url);
-        try {
-            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            trustStore.load(null, null);
-            MySSLSocketFactory  sf = new MySSLSocketFactory(trustStore);
-            sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-            client.setSSLSocketFactory(sf);
-        }
-        catch (Exception e) {
-        }
+
         client.post(url,new AsyncHttpResponseHandler() {
             // When the response returned by REST has Http response code '200'
             @Override

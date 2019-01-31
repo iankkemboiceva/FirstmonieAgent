@@ -136,16 +136,7 @@ public class ConfirmCashTransf extends Fragment  implements View.OnClickListener
                                         if(!(prgDialog2 == null)) {
                                          //   prgDialog2.show();
                                         }
-                                                    OkHttpClient client = new OkHttpClient();
-                                                    try {
-                                                        KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-                                                        trustStore.load(null, null);
-                                                        MySSLSocketFactory  sf = new MySSLSocketFactory(trustStore);
-                                                        sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                                                        client.sslSocketFactory();
-                                                    }
-                                                    catch (Exception e) {
-                                                    }
+
                                         String usid = Utility.gettUtilUserId(getActivity());
                                         String agentid = Utility.gettUtilAgentId(getActivity());
                                         String mobnoo = Utility.gettUtilMobno(getActivity());

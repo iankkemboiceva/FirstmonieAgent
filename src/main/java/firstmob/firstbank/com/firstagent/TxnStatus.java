@@ -86,22 +86,7 @@ ImageView imageView1;
             SecurityLayer.Log("encryptionerror",e.toString());
         }
 
-        try {
-            MySSLSocketFactory.SecureURL(client, getActivity());
-        } catch (KeyStoreException e) {
-            SecurityLayer.Log(e.toString());
-            SecurityLayer.Log(e.toString());
-        } catch (IOException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (NoSuchAlgorithmException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (CertificateException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (UnrecoverableKeyException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (KeyManagementException e) {
-            SecurityLayer.Log(e.toString());
-        }
+
 
         client.post(url, new AsyncHttpResponseHandler() {
             // When the response returned by REST has Http response code '200'

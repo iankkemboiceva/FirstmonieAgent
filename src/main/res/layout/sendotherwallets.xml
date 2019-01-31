@@ -7,6 +7,7 @@
     android:gravity="left"
     android:orientation="vertical"
     android:background="@color/white"
+    android:filterTouchesWhenObscured ="true"
     >
 
 
@@ -668,6 +669,7 @@ android:visibility="gone"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:background="@color/nbkyellow"
+
                     android:padding="5dp"
                     android:text="OK"
 android:layout_marginBottom="20dp"

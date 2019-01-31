@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="left"
     android:orientation="vertical"
+    android:filterTouchesWhenObscured ="true"
     tools:context=".Main">
 
           <!--  <tablayout.SlidingTabLayout

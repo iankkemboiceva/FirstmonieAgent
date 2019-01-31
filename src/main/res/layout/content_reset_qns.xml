@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
+    android:filterTouchesWhenObscured ="true"
     tools:showIn="@layout/activity_reset_qns">
 
     <LinearLayout
@@ -269,7 +269,7 @@
                                 android:background="@drawable/mybutton"
                                 android:padding="5dp"
                                 android:text="Save"
-
+                                android:filterTouchesWhenObscured ="true"
                                 android:layout_marginTop="10dip"
                                 android:layout_marginBottom="10dip"
                                 android:textColor="@color/colorPrimary" />

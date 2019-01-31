@@ -52,13 +52,13 @@ public class MySSLSocketFactory extends SSLSocketFactory {
         return sslContext.getSocketFactory().createSocket();
     }
 
-    public static void SecureURL(AsyncHttpClient client, Context context) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableKeyException, KeyManagementException {
+  /*  public static void SecureURL(AsyncHttpClient client, Context context) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableKeyException, KeyManagementException {
         KeyStore trustStore = KeyStore.getInstance("BKS");
-       /* InputStream instream = context.getResources().openRawResource(
-                R.raw.digital_unionbankng_com);*/
+       *//* InputStream instream = context.getResources().openRawResource(
+                R.raw.digital_unionbankng_com);*//*
         trustStore.load(null, null);
         MySSLSocketFactory sf = new MySSLSocketFactory(trustStore);
         sf.setHostnameVerifier(MySSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
         client.setSSLSocketFactory(sf);
-    }
+    }*/
 }

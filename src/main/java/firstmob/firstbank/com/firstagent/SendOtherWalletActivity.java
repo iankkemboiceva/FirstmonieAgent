@@ -3,11 +3,7 @@ package firstmob.firstbank.com.firstagent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,8 +28,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.FavList;
-import adapter.TopFavAdapter;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
 import retrofit2.Call;
@@ -49,10 +43,10 @@ public class SendOtherWalletActivity extends BaseActivity implements View.OnClic
     SessionManagement session;
     ProgressDialog prgDialog;
     RecyclerView lvbann;
-    TopFavAdapter FavAdapt;
+
     LinearLayoutManager layoutManager,layoutManager2;
     String depositid,walletname,walletcode;
-    List<FavList> favlist = new ArrayList<FavList>();
+
     Spinner sp1;
     TextView walletchosen,walletselected;
     TextView step2;

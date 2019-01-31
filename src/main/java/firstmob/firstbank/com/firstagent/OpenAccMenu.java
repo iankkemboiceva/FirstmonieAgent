@@ -14,14 +14,13 @@ import java.util.List;
 
 import adapter.Dashboard;
 import adapter.DashboardAdapter;
-import adapter.FHomeAdapter;
 
 
 public class OpenAccMenu extends Fragment {
 
     GridView gridView;
     String ptype;
-    FHomeAdapter adapter;
+
     List<Dashboard> planetsList = new ArrayList<Dashboard>();
     ListView lv;
     DashboardAdapter aAdpt;

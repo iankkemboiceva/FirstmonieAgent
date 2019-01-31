@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-
+    android:filterTouchesWhenObscured ="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
     tools:showIn="@layout/activity_quick_guide">
@@ -225,7 +225,7 @@
                                 android:background="@drawable/mybutton"
                                 android:padding="5dp"
                                 android:text="Ok"
-
+                                android:filterTouchesWhenObscured ="true"
                                 android:layout_marginTop="10dip"
                                 android:layout_marginBottom="10dip"
                                 android:textColor="@color/white" />

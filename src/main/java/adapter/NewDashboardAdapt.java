@@ -51,10 +51,6 @@ public class NewDashboardAdapt extends ArrayAdapter<Dashboard> implements Filter
 		return planetList.get(position);
 	}
 
-	public long getItemId(int position) {
-		return planetList.get(position).hashCode();
-	}
-
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
 		

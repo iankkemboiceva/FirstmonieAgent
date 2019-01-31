@@ -174,7 +174,7 @@ String tken = newjs.optString("token");
         DbHelper db = new DbHelper(context);
         db.addContact(new AppIDPojo(0, nwappid));
 
-
+session.setString("NWAPPID",nwappid);
         session.setString(KEY_TOKEN, tken);
             SecurityLayer.Log("pkey_dec [" + pkey_dec + "]");
             SecurityLayer.Log("pvoke_dec [" + pvoke_dec + "");
@@ -231,7 +231,7 @@ String tken = newjs.optString("token");
             AppIDPojo pj = db2.getContact(count);
             String appid = pj.getAppID();
 
-            //  String appid = session.getString(SecurityLayer.KEY_APP_ID);
+
 
             SecurityLayer.Log("appid gott", appid);
             StringBuffer sb = new StringBuffer();

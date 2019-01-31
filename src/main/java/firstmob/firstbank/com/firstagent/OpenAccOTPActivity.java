@@ -108,10 +108,11 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
-    String upurl = ApplicationConstants.IMG_URL+"image/acimg?userId=";
+
     public static final String DATEPICKER_TAG = "datepicker";
     ImageView img;
     String finparams = null;
+    String upurl = ApplicationConstants.IMG_UPURL;
     String strfname,strlname,strmidnm,stryob,stremail,strhmdd,strmobn,strsalut,strmarst,strgender,strcity,strstate,straddr;
     TextView step2, step1, step3, step4;
     @Override
@@ -1006,15 +1007,7 @@ String title = "Bank Info";
         String url =   ApplicationConstants.NET_URL+ApplicationConstants.AND_ENPOINT+"agencyopenAccount/1/01261/"+ msisdn+"/1/"+id+"/"+fname+"/"+lname+"/"+yearob+"/ANDROID/"+username;
 
         SecurityLayer.Log("Open Acc URL",url);
-        try {
-            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            trustStore.load(null, null);
-            MySSLSocketFactory  sf = new MySSLSocketFactory(trustStore);
-            sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-            client.setSSLSocketFactory(sf);
-        }
-        catch (Exception e) {
-        }
+
         client.post(url,new AsyncHttpResponseHandler() {
             // When the response returned by REST has Http response code '200'
             @Override

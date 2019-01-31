@@ -13,16 +13,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.ProdAdapter;
-import adapter.ProdList;
-
 
 public class LayoutTwo extends Fragment implements View.OnClickListener {
     ImageView imageView1;
     ListView lv;
     TextView tv;
-    List<ProdList> planetsList = new ArrayList<ProdList>();
-    ProdAdapter aAdpt;
+
     public LayoutTwo() {
         // Required empty public constructor
     }
@@ -40,28 +36,13 @@ public class LayoutTwo extends Fragment implements View.OnClickListener {
         tv = (TextView) root.findViewById(R.id.txt);
         tv.setOnClickListener(this);
 
-        SetPop();
+
 
 
         return root;
     }
 
 
-    public void SetPop(){
-        planetsList.clear();
-        planetsList.add(new ProdList("Clark Shoes","13000 naira",R.drawable.clarks));
-        planetsList.add(new ProdList("Loafers","5000 Naira", R.drawable.loafers));
-
-
-
-
-
-
-       /* planetsList.add(new Dashboard("My Profile",R.drawable.icons40));*/
-
-        aAdpt = new ProdAdapter( planetsList,getActivity());
-        lv.setAdapter(aAdpt);
-    }
     public void StartChartAct(int i){
 
 

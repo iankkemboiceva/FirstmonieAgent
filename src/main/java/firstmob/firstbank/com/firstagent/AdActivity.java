@@ -30,7 +30,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
+
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -99,15 +99,7 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
                 startActivity(new Intent(getApplicationContext(),FMobActivity.class));
             }
         });   OkHttpClient client = new OkHttpClient();
-        try {
-            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            trustStore.load(null, null);
-            MySSLSocketFactory  sf = new MySSLSocketFactory(trustStore);
-            sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-            client.sslSocketFactory();
-        }
-        catch (Exception e) {
-        }
+
 
 if(Utility.checkInternetConnection(getApplicationContext())){
   //  getAgentIDs();
@@ -377,89 +369,7 @@ if(!(plan.get(0) == null)) {
 
 }*/
 
-    class DownloadImg extends AsyncTask<String, String, String> {
-        Bitmap bmp=null;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // prgDialog.show();
-        }
 
-        // Download Music File from Internet
-        @Override
-        protected String doInBackground(String... f_url) {
-
-
-            try{
-             //   http://localhost:9399/agencyapi/app/adverts/pic.action/1/CEVA/PAND00000000019493818389/2
-                String usid = Utility.gettUtilUserId(getApplicationContext());
-                String agentid = Utility.gettUtilAgentId(getApplicationContext());
-                String mobnoo = Utility.gettUtilMobno(getApplicationContext());
-              //  http://localhost:9399/agencyapi/app/adverts/pic.action/1/CEVA/PAND00000000019493818389/2
-                String url = ApplicationConstants.UNENC_URL+"adverts/pic.action/1/"+usid+"/"+agentid+"9493818389/"+agid;
-                bmp = downloadBitmap(url);
-
-                SecurityLayer.Log("Download Pic Url",url);
-            }catch(Exception e){
-                SecurityLayer.Log("ERROR While Downloadin", e.getLocalizedMessage());
-                Toast.makeText(getApplicationContext(), "Error While Downloading File", Toast.LENGTH_LONG);
-            }
-            return "34";
-        }
-
-
-        private Bitmap downloadBitmap(String url) {
-            HttpURLConnection urlConnection = null;
-            try {
-                Log.i("thumb", url);
-                URL uri = new URL(url);
-                urlConnection = (HttpURLConnection) uri.openConnection();
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setDoInput(true);
-                urlConnection.setDoOutput(true);
-                urlConnection.setUseCaches(false);
-                urlConnection.connect();
-
-           /* int statusCode = urlConnection.getResponseCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                return null;
-            }*/
-
-                InputStream inputStream = urlConnection.getInputStream();
-                if (inputStream != null) {
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    return bitmap;
-                }
-            } catch (Exception e) {
-                urlConnection.disconnect();
-                Log.w("thumb dnwld", "Error downloading image from " + url);
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-            }
-            return null;
-        }
-
-
-
-
-
-        @Override
-        protected void onPostExecute(String file_url) {
-            //  prgDialog.dismiss();
-
-            if(bmp != null)
-            {
-                iv.setImageBitmap(bmp);
-            }
-            else
-            {
-                iv.setImageBitmap(null);
-            }
-            prgbar.setVisibility(View.GONE);
-        }
-    }
 
 
     @Override
@@ -500,22 +410,7 @@ if(!(plan.get(0) == null)) {
             SecurityLayer.Log("encryptionerror",e.toString());
         }
 
-        try {
-            MySSLSocketFactory.SecureURL(client, getApplicationContext());
-        } catch (KeyStoreException e) {
-            SecurityLayer.Log(e.toString());
-            SecurityLayer.Log(e.toString());
-        } catch (IOException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (NoSuchAlgorithmException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (CertificateException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (UnrecoverableKeyException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (KeyManagementException e) {
-            SecurityLayer.Log(e.toString());
-        }
+
 
         client.post(url, new AsyncHttpResponseHandler() {
             // When the response returned by REST has Http response code '200'

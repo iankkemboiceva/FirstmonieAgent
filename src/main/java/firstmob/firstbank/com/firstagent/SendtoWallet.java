@@ -23,9 +23,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.FavList;
-import adapter.TopFavAdapter;
-
 
 public class SendtoWallet extends Fragment implements View.OnClickListener {
 ImageView imageView1;
@@ -34,11 +31,11 @@ ImageView imageView1;
     SessionManagement session;
     ProgressDialog prgDialog;
     RecyclerView lvbann;
-    TopFavAdapter FavAdapt;
+
     EditText amon, phonenumb,pno,txtamount,txtnarr,edname,ednumber;
     LinearLayoutManager layoutManager,layoutManager2;
     String depositid;
-    List<FavList> favlist = new ArrayList<FavList>();
+
     TextView step2;
     public SendtoWallet() {
         // Required empty public constructor
@@ -122,14 +119,7 @@ ImageView imageView1;
             }
         }
     }
-    public void Pop(){
-        favlist.add(new FavList("Airtel", R.drawable.airtel,"ATM",""));
-        favlist.add(new FavList("Etisalat", R.drawable.etisalat,"ATM",""));
-        favlist.add(new FavList("GLO", R.drawable.glo,"ATM",""));
-        favlist.add(new FavList("MTN", R.drawable.mtn,"ATM",""));
-        FavAdapt = new TopFavAdapter( getActivity(),favlist);
-        lvbann.setAdapter(FavAdapt);
-    }
+
     @Override
     public void onClick(View view) {
 

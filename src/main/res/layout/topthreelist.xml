@@ -4,7 +4,7 @@
     android:layout_height="25dp"
     xmlns:card_view="http://schemas.android.com/tools"
 
-
+    android:filterTouchesWhenObscured ="true"
 
     android:descendantFocusability="beforeDescendants">
 

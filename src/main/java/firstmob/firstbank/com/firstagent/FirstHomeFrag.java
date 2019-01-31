@@ -12,7 +12,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.FHomeAdapter;
 import adapter.TxnAdapter;
 import adapter.TxnList;
 import tablayout.SlidingTabLayout;
@@ -24,7 +23,7 @@ public class FirstHomeFrag extends Fragment {
 
     SessionManagement session;
     ViewPager pager;
-    FHomeAdapter adapter;
+
     SlidingTabLayout tabs;
     CharSequence Titles[] = {"HOME","ACTIVITIES","OFFERS","PRODUCTS"};
     int Numboftabs =4;
@@ -44,11 +43,10 @@ public class FirstHomeFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.homefrag, null);
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new FHomeAdapter(getFragmentManager(),Titles,Numboftabs);
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) root.findViewById(R.id.pager);
-        pager.setAdapter(adapter);
+
 
 
 

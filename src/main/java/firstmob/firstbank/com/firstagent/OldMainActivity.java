@@ -178,8 +178,6 @@ int count = 1;
 
            case 40:
 
-                    fragment = new MyAccountFrag();
-               title = "FirstAgent";
 
                 break;
             case 0:
@@ -348,21 +346,7 @@ int count = 1;
                         @Override
                         public void onNegative(MaterialDialog dialog)
                         {
-                            // dialog.dismiss();
 
-String title = "Welcome";
-                            Fragment    fragment = new MyAccountFrag();
-                            FragmentManager fragmentManager = getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            //  String tag = Integer.toString(title);
-                            fragmentTransaction.replace(R.id.container_body, fragment,title);
-                            if(!(title.equals("Welcome"))) {
-                                fragmentTransaction.addToBackStack(title);
-                            }
-                            fragmentTransaction.commit();
-
-                            // set the toolbar title
-                            getSupportActionBar().setTitle(title);
                         }
                     })
                     .show();

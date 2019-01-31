@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -44,6 +45,7 @@ public class ChangePinActivity extends BaseActivity implements View.OnClickListe
     EditText et,et2,oldpin;
     Button btnok;
     SessionManagement session;
+    ProgressDialog prgDialog2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +62,9 @@ public class ChangePinActivity extends BaseActivity implements View.OnClickListe
         ab.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
         ab.setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
 
+        prgDialog2 = new ProgressDialog(this);
+        prgDialog2.setMessage("Loading....");
+        prgDialog2.setCancelable(false);
 
 
         session = new SessionManagement(this);
@@ -108,14 +113,7 @@ public class ChangePinActivity extends BaseActivity implements View.OnClickListe
                                     //    pDialog.show();
                                     if(Utility.findweakPin(npin)){
                                         OkHttpClient client = new OkHttpClient();
-                                        try {
-                                            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-                                            trustStore.load(null, null);
-                                            MySSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-                                            sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                                            client.sslSocketFactory();
-                                        } catch (Exception e) {
-                                        }
+
 
 
                                         String encrypted1 = null;
@@ -250,6 +248,185 @@ public class ChangePinActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    private void changepinsec(String params) {
+        if(!(prgDialog2 == null) ) {
+            prgDialog2.show();
+        }
+        Log.v("In chpinsec","Innn");
+        String endpoint= "login/changepin.action";
+
+
+        String usid = Utility.gettUtilUserId(getApplicationContext());
+        String agentid = Utility.gettUtilAgentId(getApplicationContext());
+
+
+        String urlparams = "";
+        try {
+            urlparams = SecurityLayer.genURLCBC(params,endpoint,getApplicationContext());
+            //SecurityLayer.Log("cbcurl",url);
+            SecurityLayer.Log("RefURL",urlparams);
+            SecurityLayer.Log("refurl", urlparams);
+            SecurityLayer.Log("params", params);
+        } catch (Exception e) {
+            SecurityLayer.Log("encryptionerror",e.toString());
+        }
+
+
+
+
+
+        ApiInterface apiService =
+                ApiSecurityClient.getClient(getApplicationContext()).create(ApiInterface.class);
+
+
+        Call<String> call = apiService.setGenericRequestRaw(urlparams);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                try {
+                    // JSON Object
+
+                    SecurityLayer.Log("response..:", response.body());
+                    JSONObject obj = new JSONObject(response.body());
+                    //obj = Utility.onresp(obj,getApplicationContext());
+                    obj = SecurityLayer.decryptTransaction(obj, getApplicationContext());
+                    SecurityLayer.Log("decrypted_response", obj.toString());
+
+                    String respcode = obj.optString("responseCode");
+                    String responsemessage = obj.optString("message");
+                    String respfee = obj.optString("fee");
+
+
+                    //session.setString(SecurityLayer.KEY_APP_ID,appid);
+
+                    if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+                        if (!(Utility.checkUserLocked(respcode))) {
+                            if (!(response.body() == null)) {
+                                if (respcode.equals("00")) {
+                                    finish();
+                                    Intent i = new Intent(getApplicationContext(), SignInActivity.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(i);
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            "Pin change successful.Proceed to sign in with your new pin" ,
+                                            Toast.LENGTH_LONG).show();
+
+                                } else if (respcode.equals("93")) {
+
+
+
+                                   /* Fragment fragment = new CashDepoTrans();
+                                    String title = "Cash Transfer";
+
+                                    FragmentManager fragmentManager = getFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                    //  String tag = Integer.toString(title);
+                                    fragmentTransaction.replace(R.id.container_body, fragment, title);
+                                    fragmentTransaction.addToBackStack(title);
+                                    ((FMobActivity) getApplicationContext())
+                                            .setActionBarTitle(title);
+                                    fragmentTransaction.commit();*/
+                                    onBackPressed();
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            responsemessage,
+                                            Toast.LENGTH_LONG).show();
+
+                                } else {
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            responsemessage,
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        responsemessage,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }else{
+                            LogOut();
+                        }
+                    }
+
+
+
+                } catch (JSONException e) {
+                    SecurityLayer.Log("encryptionJSONException", e.toString());
+                    // TODO Auto-generated catch block
+                    if(!(getApplicationContext() == null)) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                        SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                    }
+                    // SecurityLayer.Log(e.toString());
+
+                } catch (Exception e) {
+                    SecurityLayer.Log("encryptionJSONException", e.toString());
+                    if(!(getApplicationContext() == null)) {
+                        SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                    }
+                    // SecurityLayer.Log(e.toString());
+                }
+                if(!(prgDialog2 == null) && prgDialog2.isShowing() && getApplicationContext() != null) {
+                    prgDialog2.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // Log error here since request failed
+                SecurityLayer.Log("Throwable error",t.toString());
+
+                if(!(prgDialog2 == null) && prgDialog2.isShowing() && getApplicationContext() != null) {
+                    prgDialog2.dismiss();
+                }
+                if(!(getApplicationContext() == null)) {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "There was an error processing your request",
+                            Toast.LENGTH_LONG).show();
+                    SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+
+                }
+            }
+        });
+
+    }
+
+    public void SetForceOutDialog(String msg, final String title, final Context c) {
+        if (!(c == null)) {
+            new MaterialDialog.Builder(this)
+                    .title(title)
+                    .content(msg)
+
+                    .negativeText("CONTINUE")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+
+                            dialog.dismiss();
+                            finish();
+                            session.logoutUser();
+
+                            // After logout redirect user to Loing Activity
+                            Intent i = new Intent(c, SignInActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            // Staring Login Activity
+                            startActivity(i);
+
+                        }
+                    })
+                    .show();
+        }
+    }
+
     private void invokeCheckRef(final String params) {
         final ProgressDialog pro = new ProgressDialog(this);
         pro.setMessage("Loading...");
@@ -272,22 +449,7 @@ public class ChangePinActivity extends BaseActivity implements View.OnClickListe
             SecurityLayer.Log("encryptionerror",e.toString());
         }
 
-        try {
-            MySSLSocketFactory.SecureURL(client, this);
-        } catch (KeyStoreException e) {
-            SecurityLayer.Log(e.toString());
-            SecurityLayer.Log(e.toString());
-        } catch (IOException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (NoSuchAlgorithmException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (CertificateException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (UnrecoverableKeyException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (KeyManagementException e) {
-            SecurityLayer.Log(e.toString());
-        }
+
 
         client.post(url, new AsyncHttpResponseHandler() {
             // When the response returned by REST has Http response code '200'
@@ -386,7 +548,9 @@ public class ChangePinActivity extends BaseActivity implements View.OnClickListe
 
     private void LogRetro(final String params,final String chgpinparams,final  String npin) {
 
-        pDialog.show();
+        if(!(prgDialog2 == null) ) {
+            prgDialog2.show();
+        }
         String endpoint= "login/login.action/";
 
         String urlparams = "";
@@ -439,6 +603,7 @@ public class ChangePinActivity extends BaseActivity implements View.OnClickListe
                         SecurityLayer.Log("Response Message", responsemessage);
 
                         if (respcode.equals("00")) {
+                            prgDialog2.dismiss();
                             if (!(datas == null)) {
                                 session.setString(SessionManagement.CHKLOGIN,"Y");
 
@@ -484,7 +649,7 @@ public class ChangePinActivity extends BaseActivity implements View.OnClickListe
                                 }*/
 String finalparams = chgpinparams+encryptednewpin;
                                 Log.v("Final params",finalparams);
-                                invokeCheckRef(finalparams);
+                                changepinsec(finalparams);
                             }
                         }
                         else {
@@ -494,7 +659,7 @@ String finalparams = chgpinparams+encryptednewpin;
                                     responsemessage,
                                     Toast.LENGTH_LONG).show();
 
-
+prgDialog2.dismiss();
                         }
 
                     }
@@ -505,7 +670,7 @@ String finalparams = chgpinparams+encryptednewpin;
                                 "There was an error on your request",
                                 Toast.LENGTH_LONG).show();
 
-
+prgDialog2.dismiss();
                     }
 
                 } catch (JSONException e) {
@@ -518,7 +683,7 @@ String finalparams = chgpinparams+encryptednewpin;
                     SecurityLayer.Log("encryptionJSONException", e.toString());
                     // SecurityLayer.Log(e.toString());
                 }
-                pDialog.dismiss();
+                prgDialog2.dismiss();
             }
 
             @Override
@@ -530,7 +695,7 @@ String finalparams = chgpinparams+encryptednewpin;
                         "There was an error processing your request",
                         Toast.LENGTH_LONG).show();
 
-                pDialog.dismiss();
+                prgDialog2.dismiss();
 
             }
         });

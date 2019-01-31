@@ -70,9 +70,6 @@ public class InboxListAdapter extends ArrayAdapter<GetCommPerfData> implements F
 		return planetList.get(position);
 	}
 
-	public long getItemId(int position) {
-		return planetList.get(position).hashCode();
-	}
 
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		View v = convertView;

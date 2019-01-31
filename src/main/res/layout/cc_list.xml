@@ -5,7 +5,7 @@
     android:layout_height="170dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-
+    android:filterTouchesWhenObscured ="true"
 
     android:descendantFocusability="beforeDescendants">
     <RelativeLayout

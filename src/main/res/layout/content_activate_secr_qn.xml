@@ -10,6 +10,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ActivateSecrQn"
     android:background="@color/white"
+    android:filterTouchesWhenObscured ="true"
     tools:showIn="@layout/activity_activate_secr_qn">
     <LinearLayout
         android:layout_width="match_parent"
@@ -230,6 +231,7 @@ android:layout_marginTop="10dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="15dip"
                         android:background="@color/nbkyellow"
+                        android:filterTouchesWhenObscured ="true"
                         android:textColor="@color/white"
                         android:text="Finish" />
 

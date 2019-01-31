@@ -258,7 +258,7 @@ public class ConfirmCashDepoActivity extends BaseActivity implements View.OnClic
                             }
 
                         }else{
-                            ((FMobActivity) getApplicationContext()).LogOut();
+                            LogOut();
                         }
                     }
 
@@ -333,16 +333,6 @@ public class ConfirmCashDepoActivity extends BaseActivity implements View.OnClic
                                             if(dbamo <= dbagbal){
                                                 String encrypted = null;
                                                 encrypted = Utility.b64_sha256(agpin);
-                                                OkHttpClient client = new OkHttpClient();
-                                                try {
-                                                    KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-                                                    trustStore.load(null, null);
-                                                    MySSLSocketFactory  sf = new MySSLSocketFactory(trustStore);
-                                                    sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                                                    client.sslSocketFactory();
-                                                }
-                                                catch (Exception e) {
-                                                }
 
                                                 ApiInterface apiService =
                                                         ApiClient.getClient().create(ApiInterface.class);
@@ -646,7 +636,7 @@ public class ConfirmCashDepoActivity extends BaseActivity implements View.OnClic
 
         // After logout redirect user to Loing Activity
         finish();
-        Intent i = new Intent(getApplicationContext(), SignInActivity.class);
+        Intent i = new Intent(ConfirmCashDepoActivity.this, SignInActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         // Staring Login Activity
         startActivity(i);

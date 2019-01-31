@@ -5,13 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -32,11 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adapter.AccountList;
-import adapter.AccountSetDefAdapter;
-import adapter.BioList;
-import adapter.BioListAdapter;
-import adapter.ImeiList;
-import adapter.ImeiRvAdapter;
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -63,12 +53,10 @@ public class ChangeAcNameActivity extends BaseActivity implements View.OnClickLi
     CardView cvlast;
     LinearLayout lyf;
     SessionManagement session;
-    AccountSetDefAdapter aAdpt;
-    ImeiRvAdapter adap;
-    BioListAdapter bioadap;
+
+
     List<AccountList> planetsList = new ArrayList<AccountList>();
-    List<ImeiList> imeilist = new ArrayList<ImeiList>();
-    List<BioList> biolist = new ArrayList<BioList>();
+
 
     int serverResponseCode = 0;
     public  String acc,defac;

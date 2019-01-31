@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="left"
-
+    android:filterTouchesWhenObscured ="true"
     android:orientation="vertical"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -408,7 +408,7 @@ android:visibility="gone"
                                 android:background="@drawable/mybutton"
                                 android:padding="5dp"
                                 android:text="OK"
-
+                                android:filterTouchesWhenObscured ="true"
                                 android:layout_marginTop="10dip"
                                 android:layout_marginBottom="10dip"
                                 android:textColor="@color/colorPrimary" />

@@ -12,6 +12,7 @@ public interface ApplicationConstants {
 	static final String PROD_ENV = "N";
 	static final String HOSTNAME = "http://firstmonieagent1.firstbanknigeria.com";
 	static final String UNENC_URL = "http://196.11.150.20:1111/agencyapi/app/";
+	static final String IMG_UPURL = ApplicationConstants.IMG_URL+"image/acimg?userId=";
 
 
 	/*static final String NET_URL = "http://196.11.150.200:7777/agencyapi/app/";

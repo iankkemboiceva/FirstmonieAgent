@@ -51,9 +51,6 @@ public class BillerPayMenuAdapt extends ArrayAdapter<GetBillPayData> implements 
 		return planetList.get(position);
 	}
 
-	public long getItemId(int position) {
-		return planetList.get(position).hashCode();
-	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;

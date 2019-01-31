@@ -18,7 +18,7 @@ import java.util.List;
 
 import adapter.Dashboard;
 import adapter.DashboardAdapter;
-import adapter.FHomeAdapter;
+
 import adapter.ImagesBean;
 import tablayout.SlidingTabLayout;
 
@@ -29,7 +29,7 @@ public class MyHomeFrag extends Fragment {
 
     SessionManagement session;
     ViewPager pager;
-    FHomeAdapter adapter;
+
     SlidingTabLayout tabs;
     CharSequence Titles[] = {"HOME","ACTIVITIES","OFFERS","PRODUCTS"};
     int Numboftabs =4;

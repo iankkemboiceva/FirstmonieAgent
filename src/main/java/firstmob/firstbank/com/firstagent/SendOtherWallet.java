@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +29,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.FavList;
-import adapter.TopFavAdapter;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
 import retrofit2.Call;
@@ -47,10 +44,10 @@ ImageView imageView1;
     SessionManagement session;
     ProgressDialog prgDialog;
     RecyclerView lvbann;
-    TopFavAdapter FavAdapt;
+
     LinearLayoutManager layoutManager,layoutManager2;
     String depositid,walletname,walletcode;
-    List<FavList> favlist = new ArrayList<FavList>();
+
     Spinner sp1;
     TextView walletchosen,walletselected;
     TextView step2;
@@ -160,16 +157,6 @@ ImageView imageView1;
             }
         });
         return root;
-    }
-
-
-    public void Pop(){
-        favlist.add(new FavList("Airtel", R.drawable.airtel,"ATM",""));
-        favlist.add(new FavList("Etisalat", R.drawable.etisalat,"ATM",""));
-        favlist.add(new FavList("GLO", R.drawable.glo,"ATM",""));
-        favlist.add(new FavList("MTN", R.drawable.mtn,"ATM",""));
-        FavAdapt = new TopFavAdapter( getActivity(),favlist);
-        lvbann.setAdapter(FavAdapt);
     }
 
 

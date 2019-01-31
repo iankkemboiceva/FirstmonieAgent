@@ -186,15 +186,6 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
                                                 if (!(prgDialog2 == null)) {
                                                     //  prgDialog2.show();
                                                 }
-                                                OkHttpClient client = new OkHttpClient();
-                                                try {
-                                                    KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-                                                    trustStore.load(null, null);
-                                                    MySSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-                                                    sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                                                    client.sslSocketFactory();
-                                                } catch (Exception e) {
-                                                }
 
                                                 ApiInterface apiService =
                                                         ApiClient.getClient().create(ApiInterface.class);

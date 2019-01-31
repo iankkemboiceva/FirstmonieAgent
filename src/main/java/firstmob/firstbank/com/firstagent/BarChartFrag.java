@@ -163,15 +163,6 @@ return  data;
 
         SecurityLayer.Log("Bar Chart URL",url);
 
-        try {
-            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            trustStore.load(null, null);
-            MySSLSocketFactory  sf = new MySSLSocketFactory(trustStore);
-            sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-            client.setSSLSocketFactory(sf);
-        }
-        catch (Exception e) {
-        }
         client.post(url,new AsyncHttpResponseHandler() {
             // When the response returned by REST has Http response code '200'
             @Override

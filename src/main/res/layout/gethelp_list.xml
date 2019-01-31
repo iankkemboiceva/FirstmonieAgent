@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:descendantFocusability="beforeDescendants"
+    android:filterTouchesWhenObscured ="true"
   >
 
     <RelativeLayout

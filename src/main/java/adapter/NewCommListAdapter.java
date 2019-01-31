@@ -53,9 +53,6 @@ public class NewCommListAdapter extends ArrayAdapter<GetCommPerfData> implements
 		return planetList.get(position);
 	}
 
-	public long getItemId(int position) {
-		return planetList.get(position).hashCode();
-	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;

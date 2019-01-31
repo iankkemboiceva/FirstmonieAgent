@@ -3,6 +3,7 @@
     android:id="@+id/rlContainer"
     android:layout_width="match_parent"
     android:background="@drawable/fbnbackground"
+    android:filterTouchesWhenObscured ="true"
     android:layout_height="42dp">
     <ImageView
         android:id="@+id/icon"

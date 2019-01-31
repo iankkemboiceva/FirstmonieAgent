@@ -32,7 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.net.HttpURLConnection;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -708,151 +708,8 @@ prgDialog2.show();
         });
 
     }
-   /* public void getAgentIDs(){
 
 
-
-
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-        String usid = Utility.gettUtilUserId(getActivity());
-        String agentid = Utility.gettUtilAgentId(getActivity());
-        String mobnoo = Utility.gettUtilMobno(getActivity());
-        Call<GetAgentId> call = apiService.GetAgId("1", usid, agentid, "0000");
-        call.enqueue(new Callback<GetAgentId>() {
-            @Override
-            public void onResponse(Call<GetAgentId> call, Response<GetAgentId> response) {
-                String responsemessage = response.body().getMessage();
-
-                SecurityLayer.Log("Response Message", responsemessage);
-
-                plan = response.body().getData();
-//                                    SecurityLayer.Log("Respnse getResults",datas.toString());
-                if (!(plan == null)) {
-                    for(int sw = 0;sw < plan.size();sw++) {
-                        if (!(plan.get(sw) == null)) {
-                            String imgloc = plan.get(sw).getimgLoc();
-                            if (imgloc.equals("FOOTER")) {
-                                agid = plan.get(sw).getId();
-                                new DownloadImg().execute("");
-                            }
-                        }else{
-                            if(!(getActivity() == null)) {
-                                Picasso.with(getActivity()).load(R.drawable.fbankdebitcard).into(iv);
-                                prgbar.setVisibility(View.GONE);
-                            }
-                        }
-                    }
-                }
-                else{
-                    Toast.makeText(
-                            getActivity(),
-                            "There was an error loading ad image",
-                            Toast.LENGTH_LONG).show();
-                }
-           //     pDialog.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onFailure(Call<GetAgentId> call, Throwable t) {
-                // Log error here since request failed
-                SecurityLayer.Log("Throwable error",t.toString());
-                Toast.makeText(
-                        getActivity(),
-                        "There was an error processing your request",
-                        Toast.LENGTH_LONG).show();
-            //    pDialog.setVisibility(View.INVISIBLE);
-            }
-        });
-
-    }
-*/
-    class DownloadImg extends AsyncTask<String, String, String> {
-        Bitmap bmp=null;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // prgDialog.show();
-        }
-
-        // Download Music File from Internet
-        @Override
-        protected String doInBackground(String... f_url) {
-
-
-            try{
-                //   http://localhost:9399/agencyapi/app/adverts/pic.action/1/CEVA/PAND00000000019493818389/2
-                String usid = Utility.gettUtilUserId(getActivity());
-                String agentid = Utility.gettUtilAgentId(getActivity());
-                String mobnoo = Utility.gettUtilMobno(getActivity());
-                //  http://localhost:9399/agencyapi/app/adverts/pic.action/1/CEVA/PAND00000000019493818389/2
-                String url = ApplicationConstants.UNENC_URL+"adverts/pic.action/1/"+usid+"/"+agentid+"9493818389/"+agid;
-                bmp = downloadBitmap(url);
-
-                SecurityLayer.Log("Download Pic Url",url);
-            }catch(Exception e){
-                SecurityLayer.Log("ERROR While Downloadin", e.getLocalizedMessage());
-//                Toast.makeText(getActivity(), "Error While Downloading File", Toast.LENGTH_LONG);
-            }
-            return "34";
-        }
-
-
-        private Bitmap downloadBitmap(String url) {
-            HttpURLConnection urlConnection = null;
-            try {
-                Log.i("thumb", url);
-                URL uri = new URL(url);
-                urlConnection = (HttpURLConnection) uri.openConnection();
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setDoInput(true);
-                urlConnection.setDoOutput(true);
-                urlConnection.setUseCaches(false);
-                urlConnection.connect();
-
-           /* int statusCode = urlConnection.getResponseCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                return null;
-            }*/
-
-                InputStream inputStream = urlConnection.getInputStream();
-                if (inputStream != null) {
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    return bitmap;
-                }
-            } catch (Exception e) {
-                urlConnection.disconnect();
-                Log.w("thumb dnwld", "Error downloading image from " + url);
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-            }
-            return null;
-        }
-
-
-
-
-
-        @Override
-        protected void onPostExecute(String file_url) {
-            //  prgDialog.dismiss();
-       //     pDialog.setVisibility(View.INVISIBLE);
-            if(bmp != null)
-            {
-
-                iv.setVisibility(View.VISIBLE);
-                iv.setImageBitmap(bmp);
-            }
-            else
-            {
-                iv.setImageBitmap(null);
-            }
-            prgbar.setVisibility(View.GONE);
-
-        }
-    }
     private void startCountAnimation(double from,double end) {
         ValueAnimator animator = new ValueAnimator();
         animator.setObjectValues(from, end);

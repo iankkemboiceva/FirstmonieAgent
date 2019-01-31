@@ -3,8 +3,6 @@ package firstmob.firstbank.com.firstagent;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -13,13 +11,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -30,18 +26,11 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import adapter.AccountList;
-import adapter.AccountSetDefAdapter;
-import adapter.BioList;
-import adapter.BioListAdapter;
-import adapter.ImeiList;
-import adapter.ImeiRvAdapter;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -64,12 +53,10 @@ public class ChangeACName extends Fragment implements View.OnClickListener {
     CardView cvlast;
     LinearLayout lyf;
     SessionManagement session;
-    AccountSetDefAdapter aAdpt;
-    ImeiRvAdapter adap;
-    BioListAdapter bioadap;
+
+
     List<AccountList> planetsList = new ArrayList<AccountList>();
-    List<ImeiList> imeilist = new ArrayList<ImeiList>();
-    List<BioList> biolist = new ArrayList<BioList>();
+
 
     int serverResponseCode = 0;
     public  String acc,defac;
@@ -310,9 +297,6 @@ RelativeLayout rlbutton;
         }
         if(v.getId() == R.id.tdispedit){
 
-            Fragment  fragment = new ActivitiesFrag();
-            String title = "My Actions";
-            ((FMobActivity)getActivity()).addFragment(fragment,title);
 
         }
 
@@ -327,106 +311,14 @@ RelativeLayout rlbutton;
                 .negativeText("Close")
                 .show();
     }
-    public void SetHome(){
-        Fragment fragment = new MyAccountFrag();
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //  String tag = Integer.toString(title);
-        fragmentTransaction.replace(R.id.container_body, fragment, "Welcome");
-        fragmentTransaction.addToBackStack("Welcome");
-        fragmentTransaction.commit();
-        ((MainActivity)getActivity())
-                .setActionBarTitle("Welcome");
-    }
     public void SetLastL(){
 
     }
 
-    public void loadImage(){
-        File destination = new File(Environment.getExternalStorageDirectory(),
-                "FBNProf.jpg");
-
-        new DownloadImg().execute("");
-
-    }
-    class DownloadImg extends AsyncTask<String, String, String> {
-        Bitmap bmp=null;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // prgDialog.show();
-        }
-
-        // Download Music File from Internet
-        @Override
-        protected String doInBackground(String... f_url) {
-
-
-            try{
-                if(!(getActivity() == null)) {
-                    String url = ApplicationConstants.UNENC_URL + "profile/getpic.action/1/";
-                    String usid = Utility.gettUtilUserId(getActivity());
-                    url = url + usid;
-                    bmp = downloadBitmap(url);
-                }
-            }catch(Exception e){
-
-
-               // Toast.makeText(getContext(), "Error While Downloading File", Toast.LENGTH_LONG);
-            }
-            return "34";
-        }
-
-
-        private Bitmap downloadBitmap(String url) {
-            HttpURLConnection urlConnection = null;
-            try {
-                Log.i("thumb", url);
-                URL uri = new URL(url);
-                urlConnection = (HttpURLConnection) uri.openConnection();
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setDoInput(true);
-                urlConnection.setDoOutput(true);
-                urlConnection.setUseCaches(false);
-                urlConnection.connect();
-
-           /* int statusCode = urlConnection.getResponseCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                return null;
-            }*/
-
-                InputStream inputStream = urlConnection.getInputStream();
-                if (inputStream != null) {
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    return bitmap;
-                }
-            } catch (Exception e) {
-                urlConnection.disconnect();
-                Log.w("thumb dnwld", "Error downloading image from " + url);
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-            }
-            return null;
-        }
 
 
 
 
-
-        @Override
-        protected void onPostExecute(String file_url) {
-            //  prgDialog.dismiss();
-
-            if(bmp != null)
-            {
-                iv.setImageBitmap(bmp);
-            }
-
-
-        }
-    }
 
 }

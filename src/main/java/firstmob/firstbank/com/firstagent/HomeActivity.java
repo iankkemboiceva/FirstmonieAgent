@@ -18,7 +18,7 @@ public class HomeActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home);
+
 
 		// Intent Message sent from Broadcast Receiver
 		String str = getIntent().getStringExtra("msg");
@@ -28,7 +28,7 @@ public class HomeActivity extends Activity {
 				Context.MODE_PRIVATE);
 		String eMailId = prefs.getString("eMailId", "");
 		// Set Title
-		usertitleET = (TextView) findViewById(R.id.usertitle);
+
 		
 		if (!checkPlayServices()) {
 			Toast.makeText(

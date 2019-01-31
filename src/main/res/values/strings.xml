@@ -77,12 +77,7 @@
 
 
     </string-array>
-    <string-array name="theatres">
-        <item>Silverbird Galleria</item>
-        <item>Shoprite Ikeja</item>
 
-
-    </string-array>
 
     <string-array name="branches">
         <item>Aba</item>

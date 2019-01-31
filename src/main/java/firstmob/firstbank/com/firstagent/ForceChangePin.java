@@ -102,16 +102,7 @@ public class ForceChangePin extends AppCompatActivity implements View.OnClickLis
                             if(npin.length() == 5 && oldpinn.length() == 5){
                      //   pDialog.show();
                                 if(Utility.findweakPin(npin)){
-                        OkHttpClient client = new OkHttpClient();
-                        try {
-                            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-                            trustStore.load(null, null);
-                            MySSLSocketFactory  sf = new MySSLSocketFactory(trustStore);
-                            sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                            client.sslSocketFactory();
-                        }
-                        catch (Exception e) {
-                        }
+
 
 
                         String encrypted1 = null;
@@ -321,23 +312,6 @@ String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/"+encrypted1+"/";
 SecurityLayer.Log("encryptionerror",e.toString());
         }
 
-        try {
-            MySSLSocketFactory.SecureURL(client, getApplicationContext());
-        } catch (KeyStoreException e) {
-            SecurityLayer.Log(e.toString());
-            SecurityLayer.Log(e.toString());
-        } catch (IOException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (NoSuchAlgorithmException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (CertificateException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (UnrecoverableKeyException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (KeyManagementException e) {
-            SecurityLayer.Log(e.toString());
-        }
-
         client.post(url, new AsyncHttpResponseHandler() {
             // When the response returned by REST has Http response code '200'
             @Override
@@ -457,22 +431,7 @@ SecurityLayer.Log("encryptionerror",e.toString());
 //SecurityLayer.Log("encryptionerror",e.toString());
         }
 
-        try {
-            MySSLSocketFactory.SecureURL(client, getApplicationContext());
-        } catch (KeyStoreException e) {
-            SecurityLayer.Log(e.toString());
-            SecurityLayer.Log(e.toString());
-        } catch (IOException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (NoSuchAlgorithmException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (CertificateException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (UnrecoverableKeyException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (KeyManagementException e) {
-            SecurityLayer.Log(e.toString());
-        }
+
 
         client.post(url, new AsyncHttpResponseHandler() {
             // When the response returned by REST has Http response code '200'
@@ -766,23 +725,6 @@ pDialog.show();
             SecurityLayer.Log("params", params);
         } catch (Exception e) {
             SecurityLayer.Log("encryptionerror",e.toString());
-        }
-
-        try {
-            MySSLSocketFactory.SecureURL(client, getApplicationContext());
-        } catch (KeyStoreException e) {
-            SecurityLayer.Log(e.toString());
-            SecurityLayer.Log(e.toString());
-        } catch (IOException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (NoSuchAlgorithmException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (CertificateException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (UnrecoverableKeyException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (KeyManagementException e) {
-            SecurityLayer.Log(e.toString());
         }
 
         client.post(url, new AsyncHttpResponseHandler() {

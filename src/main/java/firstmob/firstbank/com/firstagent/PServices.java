@@ -217,17 +217,7 @@ if(view.getId() == R.id.button1){
  /*   getActivity().finish();
     startActivity(new Intent(getActivity(), MainActivity.class));*/
 }
-        if(view.getId() == R.id.tdispedit){
-            Fragment  fragment = new PersThree();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Personalise Top Three");
-            fragmentTransaction.addToBackStack("Personalise Top Three");
-            ((MainActivity)getActivity())
-                    .setActionBarTitle("Personalise Top Three");
-            fragmentTransaction.commit();
-        }
+
     }
 
 
@@ -342,16 +332,5 @@ if(view.getId() == R.id.button1){
         }
     }
 
-    public void SetHome(){
-        Fragment fragment = new MyAccountFrag();
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //  String tag = Integer.toString(title);
-        fragmentTransaction.replace(R.id.container_body, fragment, "Welcome");
-        fragmentTransaction.addToBackStack("Welcome");
-        fragmentTransaction.commit();
-        ((MainActivity)getActivity())
-                .setActionBarTitle("Welcome");
-    }
 }

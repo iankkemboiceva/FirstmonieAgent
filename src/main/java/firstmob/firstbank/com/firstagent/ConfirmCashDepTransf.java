@@ -334,16 +334,7 @@ public class ConfirmCashDepTransf extends Fragment  implements View.OnClickListe
                                                 encrypted = Utility.b64_sha256(agpin);
 
 
-                                                    OkHttpClient client = new OkHttpClient();
-                                                    try {
-                                                        KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-                                                        trustStore.load(null, null);
-                                                        MySSLSocketFactory  sf = new MySSLSocketFactory(trustStore);
-                                                        sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                                                        client.sslSocketFactory();
-                                                    }
-                                                    catch (Exception e) {
-                                                    }
+
 
                                                     ApiInterface apiService =
                                                             ApiClient.getClient().create(ApiInterface.class);

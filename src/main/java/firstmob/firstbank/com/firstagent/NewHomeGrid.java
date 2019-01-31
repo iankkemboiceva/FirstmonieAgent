@@ -1049,12 +1049,16 @@ pro.show();
 
                                     if (respcode.equals("00")) {
 
-                                        String minversion = servdata.optString("minVersion");
-                                        SecurityLayer.Log("Min version", minversion);
+                                        String reqversion = servdata.optString("minVersion");
+                                        SecurityLayer.Log("Min version", reqversion);
                                      //   double dbvers = Double.parseDouble(minversion);
                                         String currvers = Utility.getAppVersion(getActivity());
+                                        SecurityLayer.Log("Curr version", currvers);
+
+
+                                                SecurityLayer.Log("Curr version sorted", currvers.replace(".",""));
                                       //  double dbcurrvers = Double.parseDouble(currvers);
-                                        if( Utility.compareversionsupdate("1.3.6",currvers)) {
+                                        if( Utility.compareversionsupdatenew(reqversion,currvers)) {
                                             final String packageName = "firstmob.firstbank.com.firstagent";
                                             new MaterialDialog.Builder(getActivity())
                                                     .title(getActivity().getString(R.string.appupd_verstitle))

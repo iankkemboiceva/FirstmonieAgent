@@ -5,6 +5,7 @@
     android:layout_height="90dp"
     android:paddingLeft="1dp"
     android:paddingRight="1dp"
+    android:filterTouchesWhenObscured ="true"
 
 
 

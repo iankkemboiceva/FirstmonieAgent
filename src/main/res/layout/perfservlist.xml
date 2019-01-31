@@ -5,6 +5,7 @@
     android:background="@color/white"
     android:descendantFocusability="beforeDescendants"
     android:paddingLeft="10dp"
+    android:filterTouchesWhenObscured ="true"
     android:paddingRight="10dp">
 
     <RelativeLayout

@@ -1543,6 +1543,7 @@ prgDialog2.show();
         });
 
     }
+/*
 
 
     public void setOldAlertDialog(){
@@ -1621,6 +1622,7 @@ String finalparams = newparams+"/"+encrypted;
         AlertDialog dialog = alert.create();
         dialog.show();
     }
+*/
 
     public void setAlertDialog(){
         LayoutInflater inflater = getActivity().getLayoutInflater();

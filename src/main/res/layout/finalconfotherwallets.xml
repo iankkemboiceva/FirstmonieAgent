@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:filterTouchesWhenObscured ="true"
  >
 
     <LinearLayout
@@ -984,6 +985,7 @@ android:layout_margin="5dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_centerHorizontal="true"
                                 android:textSize="12sp"
+                                android:filterTouchesWhenObscured ="true"
                                 android:text="Share Receipt"/>
                         </RelativeLayout>
 
@@ -992,6 +994,7 @@ android:layout_margin="5dp"
                             android:id="@+id/reportiss"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
+                            android:filterTouchesWhenObscured ="true"
                             android:visibility="gone"
                             android:text="BLUETOOTH PRINT"
                             android:textColor="@color/white"
@@ -1003,6 +1006,7 @@ android:layout_margin="5dp"
                             android:layout_weight="0.5"
                             android:id="@+id/share_image"
                             android:visibility="gone"
+                            android:filterTouchesWhenObscured ="true"
                             android:textColor="@color/white"
                             android:text="SHARE RECEIPT"
                             android:background="@drawable/rectangle375"

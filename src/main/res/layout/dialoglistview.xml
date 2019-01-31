@@ -6,6 +6,7 @@
     android:descendantFocusability="beforeDescendants"
     android:orientation="vertical"
     android:paddingLeft="10dp"
+    android:filterTouchesWhenObscured ="true"
     android:id="@+id/lay"
     android:paddingRight="10dp">
     <RelativeLayout

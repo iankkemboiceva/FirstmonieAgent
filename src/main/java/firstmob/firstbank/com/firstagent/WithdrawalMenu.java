@@ -77,8 +77,7 @@ public class WithdrawalMenu extends Fragment {
                     title = "Withdraw";
                 }
                else if (position == 1) {
-                    fragment = new BioWithdrawal();
-                    title = "Bio";
+
                 }
                 if (fragment != null) {
                     FragmentManager fragmentManager = getFragmentManager();

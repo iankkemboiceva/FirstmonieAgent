@@ -47,7 +47,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ public class FragmentDrawerOldUI extends Fragment implements View.OnClickListene
     File finalFile;
     private static String TAG = FragmentDrawerOldUI.class.getSimpleName();
     TextView tv,home;
-    String upurl = ApplicationConstants.IMG_URL+"image/profilepic?userId=";
+
 
     RelativeLayout header;
     private RecyclerView recyclerView;
@@ -203,7 +203,7 @@ public class FragmentDrawerOldUI extends Fragment implements View.OnClickListene
         header = (RelativeLayout) layout.findViewById(R.id.nav_header_container);
         tv = (TextView) layout.findViewById(R.id.section_text);
         String usid = Utility.gettUtilUserId(getActivity());
-        upurl = upurl+usid+"&channel=1";
+
         //   scroll = (ImageView) layout.findViewById(R.id.scroll);
 
         //   padl = (ImageView) layout.findViewById(R.id.pad);
@@ -309,10 +309,10 @@ public class FragmentDrawerOldUI extends Fragment implements View.OnClickListene
 
             }
         }));
-        loadImage();
-        String urll = ApplicationConstants.IMG_URL+"image/profilepic?userId=";
+
+
         String usidd = Utility.gettUtilUserId(getActivity());
-        urll = urll+usidd;
+
         //  Picasso.with(getActivity()).load(urll).into(iv);
         return layout;
     }
@@ -435,7 +435,7 @@ public class FragmentDrawerOldUI extends Fragment implements View.OnClickListene
                 } else if (items[item].equals("Choose from Library")) {
                     userChoosenTask="Choose from Library";
                     if(result) {
-                        galleryIntent();
+
                     }
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
@@ -454,8 +454,7 @@ public class FragmentDrawerOldUI extends Fragment implements View.OnClickListene
                         cameraIntent();
 
                     }
-                    else if(userChoosenTask.equals("Choose from Library"))
-                        galleryIntent();
+
                 } else {
                     //code for deny
                 }
@@ -468,13 +467,7 @@ public class FragmentDrawerOldUI extends Fragment implements View.OnClickListene
         startActivityForResult(intent, REQUEST_CAMERA);
     }
 
-    private void galleryIntent()
-    {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
-    }
+
     public void SetDialog(String msg,String title){
         new MaterialDialog.Builder(getActivity())
 
@@ -592,37 +585,6 @@ public class FragmentDrawerOldUI extends Fragment implements View.OnClickListene
         return resizedBitmap;
     }
 
-    public void uploadImage(File file){
-
-        OkHttpClient client = new OkHttpClient();
-
-        SecurityLayer.Log("Up Image File Name",file.getName());
-        SecurityLayer.Log("Up Image File Name",file.getName());
-        RequestBody formBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("file", "tmp_photo_" + System.currentTimeMillis(),
-                        RequestBody.create(MediaType.parse("image/jpg"), file))
-
-                .build();
-        SecurityLayer.Log("Upload Url",upurl);
-        Request request = new Request.Builder().url(upurl).post(formBody).build();
-
-        Response response = null;
-        try {
-            response = client.newCall(request).execute();
-
-
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-            else{
-                SecurityLayer.Log("Success upload","Success Upload");
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.home){
@@ -736,13 +698,7 @@ public class FragmentDrawerOldUI extends Fragment implements View.OnClickListene
     }
 
 
-    public void loadImage(){
-        File destination = new File(Environment.getExternalStorageDirectory(),
-                "FBNProf.jpg");
 
-        new DownloadImg().execute("");
-
-    }
     class AsyncUplImg extends AsyncTask<String, String, String> {
         Bitmap bmp = null;
 
@@ -757,7 +713,7 @@ public class FragmentDrawerOldUI extends Fragment implements View.OnClickListene
         protected String doInBackground(String... f_url) {
 
 
-            uploadImage(finalFile);
+
             return "34";
         }
 
@@ -776,216 +732,6 @@ public class FragmentDrawerOldUI extends Fragment implements View.OnClickListene
     }
 
 
-    class DownloadImg extends AsyncTask<String, String, String> {
-        Bitmap bmp=null;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // prgDialog.show();
-        }
-
-        // Download Music File from Internet
-        @Override
-        protected String doInBackground(String... f_url) {
-
-
-            try{
-                String url = ApplicationConstants.IMG_URL+"image/profilepic?userId=";
-                String usid = Utility.gettUtilUserId(getActivity());
-                url = url+usid;
-                bmp = downloadBitmap(url);
-            }catch(Exception e){
-                SecurityLayer.Log("ERROR While Downloadin", e.getLocalizedMessage());
-                Toast.makeText(getContext(), "Error While Downloading File", Toast.LENGTH_LONG);
-            }
-            return "34";
-        }
-
-
-        private Bitmap downloadBitmap(String url) {
-            HttpURLConnection urlConnection = null;
-            try {
-                Log.i("thumb", url);
-                URL uri = new URL(url);
-                urlConnection = (HttpURLConnection) uri.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.setDoInput(true);
-
-                urlConnection.connect();
-
-           /* int statusCode = urlConnection.getResponseCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                return null;
-            }*/
-/*
-
-                URL url = new URL("http://upload.wikimedia.org/wikipedia/commons/9/9c/Image-Porkeri_001.jpg");
-                InputStream in = new BufferedInputStream(url.openStream());
-                OutputStream out = new BufferedOutputStream(new FileOutputStream("Image-Porkeri_001.jpg"));
-
-                for ( int i; (i = in.read()) != -1; ) {
-                    out.write(i);
-                }
-                in.close();
-                out.close();
-*/
-
-                InputStream inputStream = urlConnection.getInputStream();
-                if (inputStream != null) {
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                    Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-                    inputStream.close();
-                    return bitmap;
-                }
-            } catch (Exception e) {
-                urlConnection.disconnect();
-                Log.w("thumb dnwld", e);
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-            }
-            return null;
-        }
-
-
-
-
-
-        @Override
-        protected void onPostExecute(String file_url) {
-            //  prgDialog.dismiss();
-
-            if(bmp != null)
-            {
-                iv.setImageBitmap(bmp);
-            }
-
-
-        }
-    }
-
-
-    public void uploadFile(File sourceFile) {
-
-
-
-        HttpURLConnection conn = null;
-        DataOutputStream dos = null;
-        String lineEnd = "\r\n";
-        String twoHyphens = "--";
-        String boundary = "*****";
-        int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
-
-
-
-        try {
-
-            // open a URL connection to the Servlet
-            FileInputStream fileInputStream = new FileInputStream(sourceFile);
-            URL url = new URL(upurl);
-            SecurityLayer.Log("Upload url",upurl);
-            // Open a HTTP  connection to  the URL
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true); // Allow Inputs
-            conn.setDoOutput(true); // Allow Outputs
-            conn.setUseCaches(false); // Don't use a Cached Copy
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Connection", "Keep-Alive");
-            conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-
-
-            dos = new DataOutputStream(conn.getOutputStream());
-
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
-
-
-            // create a buffer of  maximum size
-            bytesAvailable = fileInputStream.available();
-
-            bufferSize = Math.min(bytesAvailable, maxBufferSize);
-            buffer = new byte[bufferSize];
-
-            // read file and write it into form...
-            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-            while (bytesRead > 0) {
-
-                dos.write(buffer, 0, bufferSize);
-                bytesAvailable = fileInputStream.available();
-                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-            }
-
-            // send multipart form data necesssary after file data...
-            dos.writeBytes(lineEnd);
-            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-            // Responses from the server (code and message)
-            int   serverResponseCode = conn.getResponseCode();
-            String serverResponseMessage = conn.getResponseMessage();
-
-            Log.i("uploadFile", "HTTP Response is : "
-                    + serverResponseMessage + ": " + serverResponseCode);
-
-            if(serverResponseCode == 200){
-
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-
-                        String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
-                                +" http://www.androidexample.com/media/uploads/"
-                                +uploadFileName;
-
-
-                        Toast.makeText(getActivity(), "File Upload Complete.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            //close the streams //
-            fileInputStream.close();
-            dos.flush();
-            dos.close();
-
-        } catch (MalformedURLException ex) {
-
-            prgDialog.dismiss();
-            ex.printStackTrace();
-
-            getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    //    messageText.setText("MalformedURLException Exception : check script url.");
-                    Toast.makeText(getActivity(), "MalformedURLException",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-
-
-        } catch (Exception e) {
-
-            prgDialog.dismiss();
-            e.printStackTrace();
-
-            getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    SecurityLayer.Log("Got Exception ","");
-                    Toast.makeText(getActivity(), "Got Exception : see logcat ",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-        prgDialog.dismiss();
-
-
-    } // End else block
 
 
 

@@ -3,11 +3,7 @@ package firstmob.firstbank.com.firstagent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,8 +34,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import adapter.FavList;
-import adapter.TopFavAdapter;
 import model.GetAirtimeBillers;
 import model.GetAirtimeBillersData;
 import rest.ApiClient;
@@ -59,10 +53,10 @@ public class AirtimeTransfActivity extends BaseActivity implements View.OnClickL
     Spinner sp1, sp5, sp7;
     //  RecyclerView lvbann;
     ArrayAdapter<GetAirtimeBillersData> mobadapt;
-    TopFavAdapter FavAdapt;
+
     TextView tx;
     LinearLayoutManager layoutManager,layoutManager2;
-    List<FavList> favlist = new ArrayList<FavList>();
+
     Button btn2;
     String telcochosen;
     ProgressDialog prgDialog;
@@ -413,14 +407,7 @@ public class AirtimeTransfActivity extends BaseActivity implements View.OnClickL
 
         }
     }
-    public void Pop(){
-        favlist.add(new FavList("Airtel", R.drawable.airtel,"ATM",""));
-        favlist.add(new FavList("Etisalat", R.drawable.etisalat,"ATM",""));
-        favlist.add(new FavList("GLO", R.drawable.glo,"ATM",""));
-        favlist.add(new FavList("MTN", R.drawable.mtn,"ATM",""));
-        FavAdapt = new TopFavAdapter( getApplicationContext(),favlist);
-        //lvbann.setAdapter(FavAdapt);
-    }
+
 
     public void SetAirtimStored(){
         planetsList.clear();

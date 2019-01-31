@@ -167,15 +167,7 @@ public class ConfirmWithdrawalActivity extends BaseActivity implements View.OnCl
                             }
                             String encrypted = null;
                             encrypted = Utility.b64_sha256(agpin);
-                            OkHttpClient client = new OkHttpClient();
-                            try {
-                                KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-                                trustStore.load(null, null);
-                                MySSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-                                sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                                client.sslSocketFactory();
-                            } catch (Exception e) {
-                            }
+
 
 
                             String usid = Utility.gettUtilUserId(getApplicationContext());

@@ -52,10 +52,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Inbox" />
         <activity
-            android:name=".LifeStyle"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="Lifestyle" />
-        <activity
             android:name=".IndivChartActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Stats" />
@@ -127,19 +123,9 @@
             android:label="Sign In"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MapHostActivity"
-            android:label="@string/title_activity_map_host" />
-        <activity
-            android:name=".WizardActivity"
-            android:label="Add Store" />
-        <activity
             android:name=".FormActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Add Store" />
-        <activity
-            android:name=".TutorialActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="Tutorial" />
         <activity
             android:name=".StepActivity"
             android:label="@string/title_activity_step"
@@ -187,14 +173,6 @@
             android:label="Activate"
             android:theme="@style/MyMaterialTheme" />
         <activity
-            android:name=".MovieDetails"
-            android:label="@string/title_activity_movie_details"
-            android:theme="@style/MyMaterialTheme" />
-        <activity
-            android:name=".ConfirmMovie"
-            android:label="@string/title_activity_confirm_movie"
-            android:theme="@style/MyMaterialTheme" />
-        <activity
             android:name=".ChatActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Chat with Support"
@@ -233,19 +211,7 @@
             android:value="98ecaa0447eb5f57e65b83301fc2f8e13d31f313" />
 
         <activity android:name=".BluetoothPrinterTwo" />
-        <!--
-        <activity android:name=".USBPrintingActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-                <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
-            </intent-filter>
 
-            <meta-data
-                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
-                android:resource="@xml/device_filter" />
-        </activity>
-        -->
         <activity android:name=".USBPrintTwo" />
         <activity
             android:name=".MyPerfActivity"

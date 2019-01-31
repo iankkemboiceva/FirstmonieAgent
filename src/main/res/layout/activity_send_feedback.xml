@@ -242,7 +242,7 @@ android:layout_below="@+id/appbar2"
                 android:background="@color/nbkyellow"
                 android:padding="5dp"
                 android:text="OK"
-
+                android:filterTouchesWhenObscured ="true"
                 android:layout_marginTop="10dip"
                 android:layout_marginBottom="10dip"
                 android:textColor="@color/colorPrimary" />

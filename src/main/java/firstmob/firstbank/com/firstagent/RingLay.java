@@ -56,18 +56,6 @@ ImageView imageView1;
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.phn) {
-/*
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://ringtones.mob.org"));
-            startActivity(browserIntent);*/
-            Fragment  fragment = new RingWebv();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Ringtones");
-            fragmentTransaction.addToBackStack("Ringtones");
-            ((MainActivity)getActivity())
-                    .setActionBarTitle("Ringtones");
-            fragmentTransaction.commit();
 
         }
     }

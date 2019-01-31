@@ -404,7 +404,7 @@ public class BillMenuActivity extends BaseActivity {
                                 }
                             } else {
 
-                                ((FMobActivity) getApplicationContext()).LogOut();
+                                LogOut();
 
 
                             }
