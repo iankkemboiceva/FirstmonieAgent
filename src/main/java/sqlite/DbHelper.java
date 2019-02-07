@@ -147,59 +147,16 @@ public class DbHelper extends SQLiteOpenHelper {
 		return rgpojo;
 	}
 
-	public List<AppIDPojo> getAllContacts() {
-		List<AppIDPojo> contactList = new ArrayList<AppIDPojo>();
-		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
 
-		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.rawQuery(selectQuery, null);
 
-		// looping through all rows and adding to list
-		if (cursor.moveToFirst()) {
-			do {
-				AppIDPojo contact = new AppIDPojo();
-				contact.setID(Integer.parseInt(cursor.getString(0)));
-				contact.setAppid(cursor.getString(1));
-
-				// Adding contact to list
-				contactList.add(contact);
-			} while (cursor.moveToNext());
-		}
-
-		// return contact list
-		return contactList;
-	}
-	public List<ViewPojo> getAllView() {
-		List<ViewPojo> contactList = new ArrayList<ViewPojo>();
-		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_VIEW;
-
-		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.rawQuery(selectQuery, null);
-
-		// looping through all rows and adding to list
-		if (cursor.moveToFirst()) {
-			do {
-				ViewPojo contact = new ViewPojo();
-				contact.setID(Integer.parseInt(cursor.getString(0)));
-				contact.setAppid(cursor.getString(1));
-
-				// Adding contact to list
-				contactList.add(contact);
-			} while (cursor.moveToNext());
-		}
-
-		// return contact list
-		return contactList;
-	}
 	public List<RegIDPojo> getAllReg() {
 		List<RegIDPojo> contactList = new ArrayList<RegIDPojo>();
 		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_REG;
+
 
 		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.rawQuery(selectQuery, null);
+		Cursor cursor = db.query(TABLE_REG, null, null,
+				null, null, null, null, null);
 
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
@@ -217,15 +174,38 @@ public class DbHelper extends SQLiteOpenHelper {
 		return contactList;
 	}
 
-	// Getting contacts Count
-	public int getContactsCount() {
-		String countQuery = "SELECT  * FROM " + TABLE_REG;
-		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.rawQuery(countQuery, null);
-		cursor.close();
 
-		// return count
-		return cursor.getCount();
+    public void deleteAll()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("delete  from "+ TABLE_CONTACTS);
+
+        db.close();
+    }
+
+	public List<AppIDPojo> getAllContacts() {
+		List<AppIDPojo> contactList = new ArrayList<AppIDPojo>();
+		// Select All Query
+
+
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		Cursor cursor = db.query(TABLE_CONTACTS, null, null,
+				null, null, null, null, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				AppIDPojo contact = new AppIDPojo();
+				contact.setID(Integer.parseInt(cursor.getString(0)));
+				contact.setAppid(cursor.getString(1));
+
+				// Adding contact to list
+				contactList.add(contact);
+			} while (cursor.moveToNext());
+		}
+		return contactList;
 	}
 
 }

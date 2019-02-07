@@ -687,7 +687,7 @@ public void loginRetrofit(){
 		final AsyncHttpClient client = new AsyncHttpClient();
 		//String appid = session.getString(SecurityLayer.KEY_APP_ID);
 		String userid = Utility.gettUtilUserId(getApplicationContext());
-		String appid = Utility.getAppID(getApplicationContext());
+		String appid = Utility.getNewAppID(getApplicationContext());
 		client.addHeader("man", userid);
 
 		client.addHeader("serial", appid);
@@ -850,7 +850,7 @@ public void loginRetrofit(){
 
 
 		String usid = Utility.gettUtilUserId(getApplicationContext());
-		String appid = Utility.getAppID(getApplicationContext());
+		String appid = Utility.getNewAppID(getApplicationContext());
 		SecurityLayer.Log("appid", appid);
 		String params = "1/"+usid+"/"+appid;
 		String urlparams = "";

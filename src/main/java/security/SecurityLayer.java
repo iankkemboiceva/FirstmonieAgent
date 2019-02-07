@@ -20,6 +20,7 @@ import firstmob.firstbank.com.firstagent.SessionManagement;
 import firstmob.firstbank.com.firstagent.Utility;
 import sqlite.DbHelper;
 
+
 import static security.AESCBCEncryption.base64Decode;
 import static security.AESCBCEncryption.base64Encode;
 import static security.AESCBCEncryption.decrypt;
@@ -33,7 +34,7 @@ import static security.AESCBCEncryption.toHex;
  */
 
 public class SecurityLayer {
-    public static DbHelper db ;
+
     public static boolean isDebug = true;
     public final static String KEY_PIV = "pvoke";
     public final static String KEY_PKEY = "pkey";
@@ -171,10 +172,12 @@ JSONObject newjs = new JSONObject(finalresp);
 String tken = newjs.optString("token");
         String nwappid = newjs.optString("appid");
     //    String encappid = toHex(encrypt(key, initVector, nwappid));
-        DbHelper db = new DbHelper(context);
-        db.addContact(new AppIDPojo(0, nwappid));
+
 
 session.setString("NWAPPID",nwappid);
+
+       /* DbHelper db = new DbHelper(context);
+        db.addContact(new AppIDPojo(0, nwappid));*/
         session.setString(KEY_TOKEN, tken);
             SecurityLayer.Log("pkey_dec [" + pkey_dec + "]");
             SecurityLayer.Log("pvoke_dec [" + pvoke_dec + "");
@@ -217,19 +220,11 @@ session.setString("NWAPPID",nwappid);
             SecurityLayer.Log("piv", piv);
             //  String appid = "113260437012100";
             int count = 0;
-            DbHelper db2 = new DbHelper(context);
-            List<AppIDPojo> contacts = db2.getAllContacts();
 
 
-            for (AppIDPojo cn : contacts) {
-                count++;
-                String log = "Id: " + cn.getID() + " ,App Id: " + cn.getAppID();
-                // Writing Contacts to log
-                SecurityLayer.Log("App ID: ", log);
-                System.out.println("appid item [" + log + "]");
-            }
-            AppIDPojo pj = db2.getContact(count);
-            String appid = pj.getAppID();
+
+
+            String appid = Utility.getNewAppID(context);
 
 
 
@@ -341,20 +336,9 @@ SecurityLayer.Log("encappid",encappid);
             String piv = (session.getString(SecurityLayer.KEY_PIV));
             SecurityLayer.Log("piv", piv);
             int count = 0;
-            SecurityLayer.Log("Reading: ", "Reading all contacts..");
-            DbHelper db2 = new DbHelper(c);
-            List<AppIDPojo> contacts = db2.getAllContacts();
 
 
-            for (AppIDPojo cn : contacts) {
-                count++;
-                String log = "Id: " + cn.getID() + " ,App Id: " + cn.getAppID();
-                // Writing Contacts to log
-                SecurityLayer.Log("App ID: ", log);
-                System.out.println("appid item [" + log + "]");
-            }
-            AppIDPojo pj = db2.getContact(count);
-            String appid = pj.getAppID();
+            String appid = Utility.getNewAppID(c);
             // String appid = session.getString(SecurityLayer.KEY_APP_ID);
             SecurityLayer.Log("appid gen url", appid);
             System.out.println("appid gen url [" + appid + "]");
@@ -458,21 +442,10 @@ SecurityLayer.Log("Imei chosen",imei);
         //    String appid = data.optString("appid");
             // session.setString(KEY_APP_ID,appid);
             int count = 0;
-            DbHelper db2 = new DbHelper(context);
-            List<AppIDPojo> contacts = db2.getAllContacts();
 
 
-            for (AppIDPojo cn : contacts) {
-                count++;
-                String log = "Id: "+cn.getID()+" ,App Id: " + cn.getAppID() ;
-                // Writing Contacts to log
-                SecurityLayer.Log("App ID: ", log);
-            }
-            AppIDPojo pj =  db2.getContact(count);
-            String appid = pj.getAppID();
-            // String appid = session.getString(SecurityLayer.KEY_APP_ID);
-            SecurityLayer.Log("appid gen url", appid);
-            System.out.println("appid gen url [" + appid + "]");
+
+
             System.out.println("finalresp [" + finalresp + "]");
             String gen = Utility.generateHashString(finalresp);
             System.out.println("Hashing Status [" + gen.equals(dhash) + "]");

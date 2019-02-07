@@ -320,24 +320,6 @@ public static JSONArray getNubanAlgo(String account){
 		return imei;
 	}
 
-	public static String getAppID(Context c) {
-		int count = 0;
-		DbHelper db2 = new DbHelper(c);
-		List<AppIDPojo> contacts = db2.getAllContacts();
-
-
-		for (AppIDPojo cn : contacts) {
-			count++;
-			String log = "Id: " + cn.getID() + " ,App Id: " + cn.getAppID();
-			// Writing Contacts to log
-			SecurityLayer.Log("App ID: ", log);
-			System.out.println("appid item [" + log + "]");
-		}
-		AppIDPojo pj = db2.getContact(count);
-		String appid = pj.getAppID();
-
-		return appid;
-	}
 
 	public static boolean getReg(Context c) {
 		boolean chkrg = false;
@@ -365,23 +347,11 @@ public static JSONArray getNubanAlgo(String account){
 		return chkrg;
 	}
 	public static String getFinAppid(Context c) {
-		DbHelper db2 = new DbHelper(c);
-		List<AppIDPojo> contacts = db2.getAllContacts();
-		int count =0;
-
-		for (AppIDPojo cn : contacts) {
-
-			count++;
-			String log = "Id: " + cn.getID() + " ,App Id: " + cn.getAppID();
-			// Writing Contacts to log
-			SecurityLayer.Log("App ID: ", log);
-			System.out.println("appid item [" + log + "]");
-		}
-		AppIDPojo pj = db2.getContact(count);
-		String appid = pj.getAppID();
+		SessionManagement sess = new SessionManagement(c);
+		final String appid = sess.getString("NWAPPID");
 		return appid;
 	}
-	public static String getView(Context c) {
+	/*public static String getView(Context c) {
 		String chkrg = "N";
 		int count = 0;
 		DbHelper db2 = new DbHelper(c);
@@ -404,8 +374,55 @@ public static JSONArray getNubanAlgo(String account){
 
 
 		return chkrg;
+	}*/
+	public static String getNewAppID(Context c) {
+		SessionManagement sess = new SessionManagement(c);
+		int count = 0;
+		DbHelper db2 = new DbHelper(c);
+		List<AppIDPojo> contacts = db2.getAllContacts();
+
+
+		for (AppIDPojo cn : contacts) {
+			count++;
+			String log = "Id: " + cn.getID() + " ,App Id: " + cn.getAppID();
+			// Writing Contacts to log
+			SecurityLayer.Log("App ID: ", log);
+			System.out.println("appid item [" + log + "]");
+		}
+		AppIDPojo pj = db2.getContact(count);
+		String appid = pj.getAppID();
+Log.v("Gotten appid",appid);
+		if(appid == null || appid.equals("") || appid.equals("N")){
+			appid = sess.getString("NWAPPID");
+			//Log.v("SharedPref Appid",appid);
+		}else{
+		    sess.setString("NWAPPID",appid);
+         //   Log.v("SQLite Appid","SQLite");
+			db2.deleteAll();
+
+		}
+
+		return appid;
 	}
 
+	public static String getSQLiteAppID(Context c) {
+		int count = 0;
+		DbHelper db2 = new DbHelper(c);
+		List<AppIDPojo> contacts = db2.getAllContacts();
+
+
+		for (AppIDPojo cn : contacts) {
+			count++;
+			String log = "Id: " + cn.getID() + " ,App Id: " + cn.getAppID();
+			// Writing Contacts to log
+			SecurityLayer.Log("App ID: ", log);
+			System.out.println("appid item [" + log + "]");
+		}
+		AppIDPojo pj = db2.getContact(count);
+		String appid = pj.getAppID();
+
+		return appid;
+	}
 	public static void setUtilView(Context c,String vtype) {
 
 

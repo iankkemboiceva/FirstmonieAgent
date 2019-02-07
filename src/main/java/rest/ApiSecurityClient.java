@@ -20,6 +20,7 @@ import javax.net.ssl.X509TrustManager;
 
 import adapter.AppIDPojo;
 import firstmob.firstbank.com.firstagent.ApplicationConstants;
+import firstmob.firstbank.com.firstagent.SessionManagement;
 import firstmob.firstbank.com.firstagent.Utility;
 import okhttp3.CertificatePinner;
 import okhttp3.ConnectionSpec;
@@ -99,19 +100,8 @@ public class ApiSecurityClient {
         if((ApplicationConstants.PROD_ENV.equals("Y"))) {
             final String userid = Utility.gettUtilUserId(ct);
             int count = 0;
-            DbHelper db2 = new DbHelper(ct);
-            List<AppIDPojo> contacts = db2.getAllContacts();
-
-
-            for (AppIDPojo cn : contacts) {
-                count++;
-                String log = "Id: "+cn.getID()+" ,App Id: " + cn.getAppID() ;
-                // Writing Contacts to log
-                SecurityLayer.Log("App ID: ", log);
-                System.out.println("appid item [" + log + "]");
-            }
-            AppIDPojo pj =  db2.getContact(count);
-           final String appid = pj.getAppID();
+            SessionManagement sess = new SessionManagement(ct);
+           final String appid =  Utility.getNewAppID(ct);
             final String baseimage = Utility.getBase64Image(ct);
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -290,19 +280,8 @@ public class ApiSecurityClient {
                 final String baseimage = Utility.getBase64Image(ct);
                 System.out.println("baseimage [" + baseimage+ "]");
                 int count = 0;
-                DbHelper db2 = new DbHelper(ct);
-                List<AppIDPojo> contacts = db2.getAllContacts();
-
-
-                for (AppIDPojo cn : contacts) {
-                    count++;
-                    String log = "Id: "+cn.getID()+" ,App Id: " + cn.getAppID() ;
-                    // Writing Contacts to log
-                    SecurityLayer.Log("App ID: ", log);
-                    System.out.println("appid item [" + log + "]");
-                }
-                AppIDPojo pj =  db2.getContact(count);
-                final String appid = pj.getAppID();
+                SessionManagement sess = new SessionManagement(ct);
+                final String appid = Utility.getNewAppID(ct);
 
 
                 builder.addInterceptor(new Interceptor() {
@@ -402,19 +381,8 @@ public class ApiSecurityClient {
                 final String baseimage = Utility.getBase64Image(ct);
                 System.out.println("baseimage [" + baseimage+ "]");
                 int count = 0;
-                DbHelper db2 = new DbHelper(ct);
-                List<AppIDPojo> contacts = db2.getAllContacts();
-
-
-                for (AppIDPojo cn : contacts) {
-                    count++;
-                    String log = "Id: "+cn.getID()+" ,App Id: " + cn.getAppID() ;
-                    // Writing Contacts to log
-                    SecurityLayer.Log("App ID: ", log);
-                    System.out.println("appid item [" + log + "]");
-                }
-                AppIDPojo pj =  db2.getContact(count);
-                final String appid = pj.getAppID();
+                SessionManagement sess = new SessionManagement(ct);
+                final String appid = Utility.getNewAppID(ct);
 
 
                 builder.addInterceptor(new Interceptor() {
@@ -501,19 +469,8 @@ public class ApiSecurityClient {
         if((ApplicationConstants.PROD_ENV.equals("Y"))) {
             final String userid = Utility.gettUtilUserId(ct);
             int count = 0;
-            DbHelper db2 = new DbHelper(ct);
-            List<AppIDPojo> contacts = db2.getAllContacts();
-
-
-            for (AppIDPojo cn : contacts) {
-                count++;
-                String log = "Id: "+cn.getID()+" ,App Id: " + cn.getAppID() ;
-                // Writing Contacts to log
-                SecurityLayer.Log("App ID: ", log);
-                System.out.println("appid item [" + log + "]");
-            }
-            AppIDPojo pj =  db2.getContact(count);
-            final String appid = pj.getAppID();
+            SessionManagement sess = new SessionManagement(ct);
+            final String appid = Utility.getNewAppID(ct);
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.addInterceptor(new Interceptor() {
@@ -668,21 +625,8 @@ public class ApiSecurityClient {
 
                 OkHttpClient.Builder builder = new OkHttpClient.Builder();
                 final String userid = Utility.gettUtilUserId(ct);
-                int count = 0;
-                DbHelper db2 = new DbHelper(ct);
-                List<AppIDPojo> contacts = db2.getAllContacts();
 
-
-                for (AppIDPojo cn : contacts) {
-                    count++;
-                    String log = "Id: "+cn.getID()+" ,App Id: " + cn.getAppID() ;
-                    // Writing Contacts to log
-                    SecurityLayer.Log("App ID: ", log);
-                    System.out.println("appid item [" + log + "]");
-                }
-                AppIDPojo pj =  db2.getContact(count);
-                final String appid = pj.getAppID();
-
+                final String appid =  Utility.getNewAppID(ct);
 
                 builder.addInterceptor(new Interceptor() {
                     @Override
