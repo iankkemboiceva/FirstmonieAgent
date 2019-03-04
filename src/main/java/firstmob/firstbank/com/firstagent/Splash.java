@@ -30,8 +30,8 @@ public class Splash extends Activity {
         gm = (TextView) findViewById(R.id.gm);
 
         session.putURL(NET_URL);
-        if(!(Utility.isEmulator())) {
-            if(!(Utility.isRooted())) {
+       if(!(Utility.isEmulator())) {
+           if(!(Utility.isRooted())) {
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
@@ -41,11 +41,17 @@ public class Splash extends Activity {
                         //      session.logoutUser();
 
 
-                        boolean checktpref = Utility.getReg(getApplicationContext());
-                       // boolean checktpref = session.isReg();
-                        SecurityLayer.Log("Boolean checkpref", String.valueOf(checktpref));
-                        if (checktpref == false) {
-                            i = new Intent(Splash.this, ActivateAgentBefore.class);
+                        String chkreg = session.getString(SessionManagement.SESS_REG);
+
+                        if ((chkreg == null) || chkreg.equals("")) {
+
+                                i = new Intent(Splash.this, ActivateAgentBefore.class);
+                                session.clearallPref();
+
+                                startActivity(i);
+                                finish();
+
+
                         } else {
                             boolean isloggedin = session.isLoggedIn();
                             if (isloggedin){
@@ -53,19 +59,19 @@ public class Splash extends Activity {
                             }else{
                                 i = new Intent(Splash.this, SignInActivity.class);
                             }
-
+                            startActivity(i);
+                            finish();
                         }
 
 
-                        startActivity(i);
-                        finish();
+
 
                         //  overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
 
 
                 }, SPLASH_TIME_OUT);
-           }else{
+          }else{
                 Toast.makeText(
                         getApplicationContext(),
                         "You have currently rooted your device hence cant access this app"

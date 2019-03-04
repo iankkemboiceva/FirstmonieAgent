@@ -344,7 +344,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
     myBitmap.compress(Bitmap.CompressFormat.JPEG,90,bytes);
     String filename = System.currentTimeMillis() + ".jpg";
 
-    final File path = new File(getFilesDir(), "FirstAgent");
+    final File path = new File(Environment.getExternalStorageDirectory(), "FirstAgent");
 
     // Make sure the path directory exists.
     if(!path.exists())
@@ -355,7 +355,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
         Log.v("was it crated", "created");
     }
 
-    finalFile = new File(getFilesDir(), "FirstAgent/"+filename);
+    finalFile = new File(Environment.getExternalStorageDirectory(), "FirstAgent/"+filename);
     FileOutputStream fo;
                                     try
 

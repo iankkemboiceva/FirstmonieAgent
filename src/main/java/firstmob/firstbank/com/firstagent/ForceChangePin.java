@@ -23,25 +23,15 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.UUID;
 
 import adapter.RegIDPojo;
-import okhttp3.OkHttpClient;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import security.EncryptTransactionPin;
 import security.SecurityLayer;
-import sqlite.DbHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ForceChangePin extends AppCompatActivity implements View.OnClickListener{
@@ -218,8 +208,7 @@ String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/"+encrypted1+"/";
                         SecurityLayer.Log("Response Message", responsemessage);
 
                         if (respcode.equals("00")) {
-                            DbHelper db = new DbHelper(getApplicationContext());
-                            db.setReg(new RegIDPojo(0, "Y"));
+                            session.setString(SessionManagement.SESS_REG,"Y");
                             Toast.makeText(
                                     getApplicationContext(),
                                     "Pin successfully changed.Please login",
@@ -337,9 +326,7 @@ SecurityLayer.Log("encryptionerror",e.toString());
                             SecurityLayer.Log("Response Message", responsemessage);
 
                             if (respcode.equals("00")) {
-                              //  session.setReg();
-                                DbHelper db = new DbHelper(getApplicationContext());
-                                db.setReg(new RegIDPojo(0, "Y"));
+                                session.setString(SessionManagement.SESS_REG,"Y");
                                 finish();
 
                                 Intent i = new Intent(getApplicationContext(), SignInActivity.class);

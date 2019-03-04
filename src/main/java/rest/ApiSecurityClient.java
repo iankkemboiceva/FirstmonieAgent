@@ -18,7 +18,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import adapter.AppIDPojo;
 import firstmob.firstbank.com.firstagent.ApplicationConstants;
 import firstmob.firstbank.com.firstagent.SessionManagement;
 import firstmob.firstbank.com.firstagent.Utility;
@@ -32,7 +31,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import security.SecurityLayer;
-import sqlite.DbHelper;
 
 
 public class ApiSecurityClient {

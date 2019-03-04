@@ -23,25 +23,15 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.UUID;
 
 import adapter.RegIDPojo;
-import okhttp3.OkHttpClient;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import security.EncryptTransactionPin;
 import security.SecurityLayer;
-import sqlite.DbHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ForceResetPin extends AppCompatActivity implements View.OnClickListener {
@@ -219,8 +209,7 @@ public class ForceResetPin extends AppCompatActivity implements View.OnClickList
                         SecurityLayer.Log("Response Message", responsemessage);
 
                         if (respcode.equals("00")) {
-                            DbHelper db = new DbHelper(getApplicationContext());
-                            db.setReg(new RegIDPojo(0, "Y"));
+                            session.setString(SessionManagement.SESS_REG,"Y");
                             finish();
                             Intent i = new Intent(getApplicationContext(), SignInActivity.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

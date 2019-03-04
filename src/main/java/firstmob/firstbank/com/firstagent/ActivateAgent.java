@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,29 +33,19 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import adapter.RegIDPojo;
 
-import okhttp3.OkHttpClient;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import security.EncryptTransactionPin;
 import security.SecurityLayer;
 
-import sqlite.DbHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ActivateAgent extends AppCompatActivity implements View.OnClickListener {
@@ -519,9 +507,7 @@ pDialog.hide();
                                     mIntent.putExtra("pinna", encrypted);
                                     startActivity(mIntent);
                                 }else{
-                                     // session.setReg();
-                                    DbHelper db = new DbHelper(getApplicationContext());
-                                    db.setReg(new RegIDPojo(0, "Y"));
+                                    session.setString(SessionManagement.SESS_REG,"Y");
 
                                     finish();
                                     Intent mIntent = new Intent(getApplicationContext(), SignInActivity.class);
@@ -579,143 +565,7 @@ pDialog.dismiss();
         });
 
     }
-    private void invokeAgent(final String params) {
 
-        final AsyncHttpClient client = new AsyncHttpClient();
-        client.setTimeout(35000);
-        String userid = Utility.gettUtilUserId(getApplicationContext());
-        String appid = ApplicationConstants.APP_OUTSIDEID;
-        client.addHeader("man", userid);
-
-        client.addHeader("serial", appid);
-
-        String sessid = UUID.randomUUID().toString();
-
-
-
-        String endpoint= "reg/devReg.action/";
-
-        String url = "";
-        try {
-            url = SecurityLayer.firstLogin(params,endpoint,getApplicationContext());
-            //SecurityLayer.Log("cbcurl",url);
-            SecurityLayer.Log("params", params);
-            SecurityLayer.Log("refurl", url);
-        } catch (Exception e) {
-//SecurityLayer.Log("encryptionerror",e.toString());
-        }
-
-
-        client.post(url, new AsyncHttpResponseHandler() {
-            // When the response returned by REST has Http response code '200'
-            @Override
-            public void onSuccess(String response) {
-                // Hide Progress Dialog
-                pDialog.dismiss();
-                try {
-                    // JSON Object
-                    SecurityLayer.Log("response..:", response);
-
-
-                    JSONObject obj = new JSONObject(response);
-                 /*   JSONObject jsdatarsp = obj.optJSONObject("data");
-                    SecurityLayer.Log("JSdata resp", jsdatarsp.toString());
-                    //obj = Utility.onresp(obj,getActivity()); */
-                    obj = SecurityLayer.decryptFirstTimeLogin(obj, getApplicationContext());
-                    SecurityLayer.Log("decrypted_response", obj.toString());
-
-                    String respcode = obj.optString("responseCode");
-                    String responsemessage = obj.optString("message");
-
-
-
-                    //session.setString(SecurityLayer.KEY_APP_ID,appid);
-
-                          if (Utility.isNotNull(respcode) && Utility.isNotNull(responsemessage)) {
-                            SecurityLayer.Log("Response Message", responsemessage);
-
-                            if (respcode.equals("00")) {
-                                JSONObject datas = obj.optJSONObject("data");
-                                String agent = datas.optString("agent");
-                                if (!(datas == null)) {
-                                    final   String agid = agentid.getText().toString();
-                                    final   String mobno = phonenumber.getText().toString();
-                                    String status = datas.optString("status");
-                                //    session.SetUserID(agid);
-                                    session.SetAgentID(agent);
-                                    session.setString(AGMOB,mobno);
-                                    if(status.equals("F")) {
-                                        finish();
-                                        Intent mIntent = new Intent(getApplicationContext(), ForceChangePin.class);
-                                        mIntent.putExtra("pinna", encrypted);
-                                        startActivity(mIntent);
-                                    }else{
-                                        session.setReg();
-                                        DbHelper db = new DbHelper(getApplicationContext());
-
-                                        finish();
-                                        Intent mIntent = new Intent(getApplicationContext(), SignInActivity.class);
-                                        mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(mIntent);
-                                    }
-                                }
-                            }
-                            else {
-
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        responsemessage,
-                                        Toast.LENGTH_LONG).show();
-
-
-                            }
-
-                        }
-                        else {
-
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    "There was an error on your request",
-                                    Toast.LENGTH_LONG).show();
-
-
-                        }
-
-                } catch (JSONException e) {
-                    SecurityLayer.Log("encryptionJSONException", e.toString());
-                    // TODO Auto-generated catch block
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
-                    // SecurityLayer.Log(e.toString());
-
-                } catch (Exception e) {
-                    SecurityLayer.Log("encryptionJSONException", e.toString());
-                    // SecurityLayer.Log(e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Throwable error,
-                                  String content) {
-
-                // Hide Progress Dialog
-                pDialog.dismiss();
-                SecurityLayer.Log("error:", error.toString());
-                // When Http response code is '404'
-                if (statusCode == 404) {
-                    Toast.makeText(getApplicationContext(), "We are unable to process your request at the moment. Please try again later", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code is '500'
-                else if (statusCode == 500) {
-                    Toast.makeText(getApplicationContext(), "We are unable to process your request at the moment. Please try again later", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code other than 404, 500
-                else {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });
-    }
 
 
 }

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -99,46 +100,7 @@ public class CashDepoActivity extends BaseActivity implements View.OnClickListen
                         String acno = edacc.getText().toString();
                         NameInquirySec(acno);
 
-                       /* ApiInterface apiService =
-                                ApiClient.getClient().create(ApiInterface.class);
 
-                        Call<NameEnquiry> call = apiService.getAccountDetails("1", "suresh", "BATA0000000001", "0000", "0", acno);
-                        call.enqueue(new Callback<NameEnquiry>() {
-                            @Override
-                            public void onResponse(Call<NameEnquiry> call, Response<NameEnquiry> response) {
-                                String responsemessage = response.body().getMessage();
-
-                                SecurityLayer.Log("Response Message", responsemessage);
-                                NameEnquiryData datas = response.body().getResults();
-//                                    SecurityLayer.Log("Respnse getResults",datas.toString());
-                                if (!(datas == null)) {
-                                    acname = datas.getAccountName();
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            "Account Name: " + acname,
-                                            Toast.LENGTH_LONG).show();
-                                    accountoname.setText(acname);
-                                }
-                                else{
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            "This is not a valid account number.Please check again",
-                                            Toast.LENGTH_LONG).show();
-                                }
-                                prgDialog.dismiss();
-                            }
-
-                            @Override
-                            public void onFailure(Call<NameEnquiry> call, Throwable t) {
-                                // Log error here since request failed
-                                SecurityLayer.Log("Throwable error",t.toString());
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        "There was an error processing your request",
-                                        Toast.LENGTH_LONG).show();
-                                prgDialog.dismiss();
-                            }
-                        });*/
 
                     }
                 }
@@ -185,6 +147,7 @@ public class CashDepoActivity extends BaseActivity implements View.OnClickListen
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 String txt = txtamount.getText().toString();
                 String fbal = Utility.returnNumberFormat(txt);
+                Log.v("Amount",txt);
                 txtamount.setText(fbal);
 
             }

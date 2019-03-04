@@ -8,17 +8,14 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.List;
 import java.util.UUID;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
-import adapter.AppIDPojo;
 import firstmob.firstbank.com.firstagent.ApplicationConstants;
 import firstmob.firstbank.com.firstagent.SessionManagement;
 import firstmob.firstbank.com.firstagent.Utility;
-import sqlite.DbHelper;
 
 
 import static security.AESCBCEncryption.base64Decode;
@@ -171,13 +168,12 @@ String dehexcab = AESCBCEncryption.toString(pkey);
 JSONObject newjs = new JSONObject(finalresp);
 String tken = newjs.optString("token");
         String nwappid = newjs.optString("appid");
-    //    String encappid = toHex(encrypt(key, initVector, nwappid));
+        String encappid = toHex(encrypt(key, initVector, nwappid));
 
 
-session.setString("NWAPPID",nwappid);
+session.setString("NWAPPID",encappid);
 
-       /* DbHelper db = new DbHelper(context);
-        db.addContact(new AppIDPojo(0, nwappid));*/
+
         session.setString(KEY_TOKEN, tken);
             SecurityLayer.Log("pkey_dec [" + pkey_dec + "]");
             SecurityLayer.Log("pvoke_dec [" + pvoke_dec + "");
@@ -224,11 +220,11 @@ session.setString("NWAPPID",nwappid);
 
 
 
-            String appid = Utility.getNewAppID(context);
+            String encappid = session.getString("NWAPPID");
 
 
 
-            SecurityLayer.Log("appid gott", appid);
+            SecurityLayer.Log("appid gott", encappid);
             StringBuffer sb = new StringBuffer();
 
             String imei = Utility.getDevImei(context);
@@ -245,7 +241,7 @@ session.setString("NWAPPID",nwappid);
             String encryptedpkey = toHex(encrypt(base64Decode(pkey), base64Decode(piv), base64Encode(randomKey)));//LoginAESProcess.getEncryptedUrlByPropKey(randkey, pkey);
             String encryptedRandomIV = toHex(encrypt(base64Decode(pkey), base64Decode(piv), base64Encode(randomSIV)));
 
-            String encappid = toHex(encrypt(key, initVector, appid));
+
 
             String vers = Utility.getAppVersion(context);
 SecurityLayer.Log("encappid",encappid);
@@ -338,14 +334,14 @@ SecurityLayer.Log("encappid",encappid);
             int count = 0;
 
 
-            String appid = Utility.getNewAppID(c);
+            String encappid = session.getString("NWAPPID");
             // String appid = session.getString(SecurityLayer.KEY_APP_ID);
-            SecurityLayer.Log("appid gen url", appid);
-            System.out.println("appid gen url [" + appid + "]");
+            SecurityLayer.Log("appid gen url", encappid);
+            System.out.println("appid gen url [" + encappid + "]");
             String encryptedpkey = "";
             String encryptedrandomIV = "";
             String encryptedUrl = "";
-            String encappid = appid;
+
             String hash = null;
 
 
@@ -369,13 +365,13 @@ SecurityLayer.Log("encappid",encappid);
             //  String appid = "113260437012100";
             //  String appid = session.getString(SecurityLayer.KEY_APP_ID);
 
-            SecurityLayer.Log("appid", appid);
+            SecurityLayer.Log("appid", encappid);
             StringBuffer sb = new StringBuffer();
 
             String imei = "Vokez";
             Log("Session Key", skey);
             Log("Personal  Key", pkey);
-            Log("App ID", appid);
+            Log("App ID", encappid);
             Log("Session ID", fsess);
             Log("Params", params);
             Log("Imei", imei);
@@ -387,7 +383,7 @@ SecurityLayer.Log("Imei chosen",imei);
                 encryptedpkey = toHex(AESCBCEncryption.encrypt(base64Decode(pkey), base64Decode(piv), AESCBCEncryption.base64Encode(AESCBCEncryption.generateSessionKey())));
                 encryptedrandomIV = toHex(AESCBCEncryption.encrypt(base64Decode(pkey), base64Decode(piv), AESCBCEncryption.base64Encode(AESCBCEncryption.generateIV())));
                 encryptedUrl = toHex(AESCBCEncryption.encrypt(base64Decode(skey), base64Decode(siv), params));
-                encappid = toHex(AESCBCEncryption.encrypt(AESCBCEncryption.key, AESCBCEncryption.initVector, appid));
+
                 hash = Utility.generateHashString(params);
                 encryptedimei = toHex(AESCBCEncryption.encrypt(base64Decode(skey), base64Decode(siv), imei));
                 fsess = toHex(AESCBCEncryption.encrypt(base64Decode(skey), base64Decode(siv), fsess));

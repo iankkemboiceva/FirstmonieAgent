@@ -174,7 +174,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
         Bitmap [] bmap = new Bitmap[2];
         bmap[0] = bitmapcust;
         bmap[1] = bitmapsign;
-        Bitmap res = mergeMultiple(bmap);
+
 
 
         step2 = (TextView) findViewById(R.id.tv2);
@@ -213,9 +213,9 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
     private String saveToInternalStorage(Bitmap bitmapImage){
         ContextWrapper cw = new ContextWrapper(this);
         // path to /data/data/yourapp/app_data/imageDir
-        File directory = new File(getFilesDir(),"Firstagent");
+        File directory = new File(Environment.getExternalStorageDirectory(),"Firstagent");
         // Create imageDir
-        File mypath=new File(getFilesDir(), "/FirstAgent/profile.jpg");
+        File mypath=new File(Environment.getExternalStorageDirectory(), "/FirstAgent/profile.jpg");
 
         FileOutputStream fos = null;
         try {
@@ -713,7 +713,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
             Bitmap [] bmap = new Bitmap[2];
             bmap[0] = bitmapcust;
             bmap[1] = bitmapsign;
-            Bitmap res = mergeMultiple(bmap);
+            Bitmap res = mergeBitmap(bitmapcust,bitmapsign);
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             res.compress(Bitmap.CompressFormat.JPEG, 90, out);
@@ -731,7 +731,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
             final File path =
                     Environment.getExternalStoragePublicDirectory
                             (
-                                    //Environment.DIRECTORY_PICTURES
+                                    //Enviro.cnment.DIRECTORY_PICTURES
                                     "FirstAgent/"
                             );
 
@@ -1098,7 +1098,36 @@ String title = "Bank Info";
     }
 
 
+    public Bitmap mergeBitmap(Bitmap fr, Bitmap sc)
+    {
 
+        Bitmap comboBitmap;
+
+        int width, height;
+
+        width = fr.getWidth() + sc.getWidth();
+        height = fr.getHeight();
+
+        comboBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        Canvas comboImage = new Canvas(comboBitmap);
+
+
+        comboImage.drawBitmap(fr, 0f, 0f, null);
+        comboImage.drawBitmap(sc, fr.getWidth(), 0f , null);
+        return comboBitmap;
+
+    }
+
+
+
+    public static Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
+        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+        Canvas canvas = new Canvas(bmOverlay);
+        canvas.drawBitmap(bmp1, new Matrix(), null);
+        canvas.drawBitmap(bmp2, 0, 0, null);
+        return bmOverlay;
+    }
 
     public static String encodeTobase64(Bitmap image)
     {
@@ -1125,7 +1154,7 @@ String title = "Bank Info";
         Bitmap[] bmap = new Bitmap[2];
         bmap[0] = bitmapcust;
         bmap[1] = bitmapsign;
-        Bitmap res = mergeMultiple(bmap);
+        Bitmap res = mergeBitmap(bitmapcust,bitmapsign);
         String encimage = encodeTobase64(res);
         return encimage;
     }

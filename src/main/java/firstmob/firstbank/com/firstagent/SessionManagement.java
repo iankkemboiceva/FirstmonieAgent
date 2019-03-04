@@ -31,6 +31,8 @@ public class SessionManagement {
     public static final String STUDIDTWO = "studtwo";
     public static final String STUDIDTHREE = "studthree";
     public static final String US_TYPE = "ustype";
+
+    public static final String SESS_REG = "sessreg";
     public static final String KEY_THEME = "theme";
     public static final String SCHONE = "schone";
     public static final String SCHTWO = "schtwo";
@@ -1236,6 +1238,11 @@ public class SessionManagement {
      */
     public void removeTimest() {
         editor.remove(KEY_TIMEST);
+    }
+
+
+    public void clearallPref(){
+editor.clear().commit();
     }
 
     public void logoutUser() {
