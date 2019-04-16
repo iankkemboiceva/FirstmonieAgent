@@ -22,8 +22,8 @@ android {
         applicationId "firstmob.firstbank.com.firstagent"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 20
-        versionName "1.5.6"
+        versionCode 21
+        versionName "1.6.0"
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -114,12 +114,9 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.android.support:design:25.3.0'
 
+    //   implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
 
- //   implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
-
-  //  implementation 'com.google.firebase:firebase-ml-vision-face-model:17.0.2'
-   
-
+    //  implementation 'com.google.firebase:firebase-ml-vision-face-model:17.0.2'
 
 
     compile 'commons-codec:commons-codec:1.10'
@@ -144,6 +141,7 @@ dependencies {
 
     // Add dependency
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

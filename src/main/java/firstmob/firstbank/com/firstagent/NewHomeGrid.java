@@ -234,7 +234,8 @@ if(Utility.isNotNull(cntopen)) {
                     .setActionBarTitle(title);*/
             //nav = true;
 
-            startActivity(new Intent(getActivity(), OpenAccActivity.class));
+            startActivity(new Intent(getActivity(), OpenAccBVN.class));
+            session.setString("ISBVN","Y");
         }
         if (view.getId() == R.id.rlagac) {
             //   SetDialog("Select Bank");

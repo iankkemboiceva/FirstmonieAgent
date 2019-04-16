@@ -752,8 +752,41 @@ String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/"+strsalut+"/"+strfname+"/"+s
             //   invokeAccOTP(params);
             //  uploadImage(file);
 
-            new AsyncUplImg().execute("");
+         //   new AsyncUplImg().execute("");
 
+
+                    if (!(getApplicationContext() == null)) {
+                        prgDialog.dismiss();
+                    }
+                    String usid = Utility.gettUtilUserId(getApplicationContext());
+                    String agentid = Utility.gettUtilAgentId(getApplicationContext());
+                    String mobnoo = Utility.gettUtilMobno(getApplicationContext());
+
+
+
+                    String encrypted = Utility.b64_sha256(edpin);
+
+
+                    finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted+"/"+straddr;
+                    //  finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted;
+                    SecurityLayer.Log("Before InvokeAcc");
+
+                    String bvnparams = "1/" + usid + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + straddr + "/" + strmobn + "/" + refnumber + "/" + strmobn + "/" + edotp + "/" + encrypted;
+
+
+                            refnumber = "12121212";
+
+                    //   {channel}/{userId}/{salutation}/{firstName}/{lastName}/{midName}/{maritalStatus}/{dob}/{email}/{gender}/{state}/{city}/{address}/{phone}/{mandateCard}/{bvn}/{otp}/{pin}
+                    if (!((refnumber == null))) {
+                        if (!(refnumber.equals(""))) {
+                            if(session.getString("ISBVN").equals("Y")) {
+
+                                BVNOpenAcc(bvnparams);
+                            }else{
+                                invokeAccOTP(finparams);
+                            }
+                        }/**/
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter a valid value for PIN", Toast.LENGTH_LONG).show();
                 }
@@ -980,9 +1013,17 @@ String title = "Bank Info";
             finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted+"/"+straddr;
           //  finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted;
             SecurityLayer.Log("Before InvokeAcc");
+
+           String bvnparams = "1/" + usid + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + straddr + "/" + strmobn + "/" + refnumber + "/" + strmobn + "/" + edotp + "/" + encrypted;
+         //   {channel}/{userId}/{salutation}/{firstName}/{lastName}/{midName}/{maritalStatus}/{dob}/{email}/{gender}/{state}/{city}/{address}/{phone}/{mandateCard}/{bvn}/{otp}/{pin}
             if (!((refnumber == null))) {
                 if (!(refnumber.equals(""))) {
-                    invokeAccOTP(finparams);
+if(session.getString("ISBVN").equals("Y")) {
+
+    BVNOpenAcc(bvnparams);
+}else{
+    invokeAccOTP(finparams);
+}
                 }/**/
             }
 
@@ -1259,5 +1300,151 @@ String title = "Bank Info";
                 Toast.LENGTH_LONG).show();
         // Toast.makeText(getApplicationContext(), "You have logged out successfully", Toast.LENGTH_LONG).show();
 
+    }
+
+    private void BVNOpenAcc(final String params) {
+
+        prgDialog.show();
+
+
+        String endpoint = "bvn/openaccount.action";
+
+        String url = "";
+        try {
+            url = SecurityLayer.genURLCBC(params, endpoint, getApplicationContext());
+            SecurityLayer.Log("cbcurl", url);
+            SecurityLayer.Log("params", params);
+            SecurityLayer.Log("refurl", url);
+        } catch (Exception e) {
+            SecurityLayer.Log("encryptionerror", e.toString());
+        }
+
+      /*  try {
+           // MySSLSocketFactory.SecureURL(client, getApplicationContext());
+        } catch (KeyStoreException e) {
+            SecurityLayer.Log(e.toString());
+            SecurityLayer.Log(e.toString());
+        } catch (IOException e) {
+            SecurityLayer.Log(e.toString());
+        } catch (NoSuchAlgorithmException e) {
+            SecurityLayer.Log(e.toString());
+        } catch (CertificateException e) {
+            SecurityLayer.Log(e.toString());
+        } catch (UnrecoverableKeyException e) {
+            SecurityLayer.Log(e.toString());
+        } catch (KeyManagementException e) {
+            SecurityLayer.Log(e.toString());
+        }*/
+        String encimage = getImageBase64();
+        SecurityLayer.Log("Image Base 64", encimage);
+        session.setString("Base64image", encimage);
+        ApiInterface apiService =
+                ApiSecurityClient.getClientBase64(getApplicationContext(), encimage).create(ApiInterface.class);
+
+
+        Call<String> call = apiService.setGenericRequestRaw(url);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                try {
+                    SecurityLayer.Log("response..:", response.body());
+
+
+                    JSONObject obj = new JSONObject(response.body());
+                 /*   JSONObject jsdatarsp = obj.optJSONObject("data");
+                    SecurityLayer.Log("JSdata resp", jsdatarsp.toString());
+                    //obj = Utility.onresp(obj,getApplicationContext()); */
+                    obj = SecurityLayer.decryptTransaction(obj, getApplicationContext());
+                    SecurityLayer.Log("decrypted_response", obj.toString());
+
+                    String respcode = obj.optString("responseCode");
+                    String responsemessage = obj.optString("message");
+
+
+                    if (!(response.body() == null)) {
+                        if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+                            if (!(Utility.checkUserLocked(respcode))) {
+                                if (respcode.equals("00")) {
+
+                                    SecurityLayer.Log("Response Message", responsemessage);
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            "Account Opening request has been successfully received ",
+                                            Toast.LENGTH_LONG).show();
+                                    finish();
+                                    Intent i = new Intent(OpenAccOTPActivity.this, FMobActivity.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(i);
+
+                                } else {
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            responsemessage,
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                LogOut();
+                            }
+                        } else {
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "There was an error processing your request ",
+                                    Toast.LENGTH_LONG).show();
+                        }
+
+                    } else {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was an error on your request",
+                                Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    SecurityLayer.Log("encryptionJSONException", e.toString());
+                    // TODO Auto-generated catch block
+                    //   Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                    // SecurityLayer.Log(e.toString());
+
+                    if (!(getApplicationContext() == null)) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                        // SecurityLayer.Log(e.toString());
+                        SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                    }
+
+                } catch (Exception e) {
+                    SecurityLayer.Log("encryptionJSONException", e.toString());
+                    if (!(getApplicationContext() == null)) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                        // SecurityLayer.Log(e.toString());
+                        SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                    }
+                    // SecurityLayer.Log(e.toString());
+                }
+                if (!(getApplicationContext() == null)) {
+                    session.setString("Base64image", "N");
+                    prgDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // Log error here since request failed
+                SecurityLayer.Log("Throwable error", t.toString());
+
+                session.setString("Base64image", "N");
+
+
+                if (!(getApplicationContext() == null)) {
+                    prgDialog.dismiss();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "There was an error processing your request",
+                            Toast.LENGTH_LONG).show();
+                    // SecurityLayer.Log(e.toString());
+                    SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                }
+            }
+        });
     }
 }

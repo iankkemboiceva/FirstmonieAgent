@@ -169,8 +169,10 @@ private void checkPlayServices(){
 
                             encrypted = Utility.b64_sha256(agpin);
                             SecurityLayer.Log("Encrypted Pin",encrypted);
-                            String params = "1/"+agid+"/"+phnnumb+"/"+encrypted+"/secans1/"+ "secans2"+"/secans3/"+mac+"/"+ip+"/"+imei+"/"+serial+"/"+version+"/"+devtype+"/"+regId;
-                           RetroDevReg(params);
+                           String params = "1/"+agid+"/"+phnnumb+"/"+encrypted+"/secans1/"+ "secans2"+"/secans3/"+mac+"/"+ip+"/"+imei+"/"+serial+"/"+version+"/"+devtype+"/"+regId;
+
+ //String params = "1/MUNENEM/8121210402/309B3E7906BFF7C8/secans1/secans2/secans3/02:00:00:00:00:00/192.168.0.55/358812060537681/FA55BYN01623/23/HTC_M9pw/JKKS";
+                            RetroDevReg(params);
 
                         }
                     } else {
