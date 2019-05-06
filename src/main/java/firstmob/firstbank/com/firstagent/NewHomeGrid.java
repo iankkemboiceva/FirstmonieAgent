@@ -1,6 +1,8 @@
 package firstmob.firstbank.com.firstagent;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -146,131 +148,44 @@ if(Utility.isNotNull(cntopen)) {
 
         }*/
         if (view.getId() == R.id.rl2) {
-           /* Fragment fragment = new FTMenu();
-            String title = "Transfer";
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment, title);
-            fragmentTransaction.addToBackStack(title);
-            fragmentTransaction.commit();
-            ((FMobActivity) getActivity())
-                    .setActionBarTitle(title);*/
+
 
             startActivity(new Intent(getActivity(), FTMenuActivity.class));
 
         }
 
         if (view.getId() == R.id.rl3) {
-            /*Fragment fragment = new Withdraw();
-            String title = "Withdraw";
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment, title);
-            fragmentTransaction.addToBackStack(title);
-            fragmentTransaction.commit();
-            ((FMobActivity) getActivity())
-                    .setActionBarTitle(title);*/
 
 
             startActivity(new Intent(getActivity(), WithdrawActivity.class));
 
         } if(view.getId() == R.id.rl6){
-          /*  Fragment fragment = new BillMenu();
-            String title = "Pay Bills";
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment, title);
-            fragmentTransaction.addToBackStack(title);
-            fragmentTransaction.commit();
-            ((FMobActivity) getActivity())
-                    .setActionBarTitle(title);*/
+
 
             startActivity(new Intent(getActivity(), BillMenuActivity.class));
         }  if (view.getId() == R.id.rl1) {
-           /* Fragment fragment = new AirtimeTransf();
-            String title = "Airtime Transfer";
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment, title);
-            fragmentTransaction.addToBackStack(title);
-            fragmentTransaction.commit();
-            ((FMobActivity) getActivity())
-                    .setActionBarTitle(title);*/
+
 
             startActivity(new Intent(getActivity(), AirtimeTransfActivity.class));
 
         }
         if (view.getId() == R.id.rl5) {
-           /* Fragment fragment = new CashDepo();
-            String title = "Transfer";
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment, title);
-            fragmentTransaction.addToBackStack(title);
-            fragmentTransaction.commit();
-            ((FMobActivity) getActivity())
-                    .setActionBarTitle(title);*/
-
 
 
             startActivity(new Intent(getActivity(), CashDepoActivity.class));
 
         }
         if (view.getId() == R.id.rlopenaccinside) {
-      /*      Fragment fragment = new OpenAcc();
-            String title = "Coming Soon";
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment, title);
-            fragmentTransaction.addToBackStack(title);
-            fragmentTransaction.commit();
-            ((FMobActivity) getActivity())
-                    .setActionBarTitle(title);*/
-            //nav = true;
 
-            startActivity(new Intent(getActivity(), OpenAccBVN.class));
-            session.setString("ISBVN","Y");
+
+          showDialog();
+
         }
         if (view.getId() == R.id.rlagac) {
-            //   SetDialog("Select Bank");
 
-            /*android.app.Fragment  fragment = new Minstat();
-            String title = "Mini Statement";
-            ((FMobActivity)getActivity()).addAppFragment(fragment,title);*/
-           /* new MaterialDialog.Builder(getActivity())
-                    .title("Enter PIN")
-                    .content("Please enter Login PIN")
-                    .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
-                    .inputMaxLength(5)
-                    .input("Login PIN", "", new MaterialDialog.InputCallback() {
-                        @Override
-                        public void onInput(MaterialDialog dialog, CharSequence input) {
-                            // Do something
-                           String pin =  input.toString();
-                           Log.v("Login Pin",pin);
-                           String encpin = Utility.getencpin(pin);
-                            String usid = Utility.gettUtilUserId(getActivity());
-                            String mobnoo = Utility.gettUtilMobno(getActivity());
-                            String params = "1" + "/"+usid+"/" + encpin  + "/"+mobnoo;
-                            LogRetro(params,"MINIST");
-                        }
-                    }).show();*/
 
             ((FMobActivity)getActivity()).showEditDialog("MINIST");
-           /* FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Mini Statement");
 
-            ((FMobActivity)getActivity())
-                    .setActionBarTitle("Mini Statement");
-            fragmentTransaction.commit();*/
 
         }
         if (view.getId() == R.id.rlcommwal) {
@@ -307,7 +222,30 @@ if(Utility.isNotNull(cntopen)) {
 
         }
     }
+    private void showDialog() {
+        final CharSequence[] items = { "BVN", "NO BVN",
+                "Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
 
+
+                if (items[item].equals("BVN")) {
+
+                    startActivity(new Intent(getActivity(), OpenAccBVN.class));
+                    session.setString("ISBVN","Y");
+                } else if (items[item].equals("NO BVN")) {
+                    startActivity(new Intent(getActivity(), OpenAccActivity.class));
+                    session.setString("ISBVN","N");
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
     public void  swithgrid(){
         Fragment  fragment = new HomeAccountFragNewUI();
         String title = "New Grid";

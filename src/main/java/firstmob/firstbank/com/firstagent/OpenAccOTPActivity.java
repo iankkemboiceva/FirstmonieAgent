@@ -241,7 +241,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
 
 
 
-        String endpoint= "core/openaccountnew.action";
+        String endpoint= "core/openaccount.action";
 
         String url = "";
         try {
@@ -752,9 +752,9 @@ String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/"+strsalut+"/"+strfname+"/"+s
             //   invokeAccOTP(params);
             //  uploadImage(file);
 
-         //   new AsyncUplImg().execute("");
+           new AsyncUplImg().execute("");
 
-
+/*
                     if (!(getApplicationContext() == null)) {
                         prgDialog.dismiss();
                     }
@@ -785,8 +785,8 @@ String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/"+strsalut+"/"+strfname+"/"+s
                             }else{
                                 invokeAccOTP(finparams);
                             }
-                        }/**/
-                    }
+                        }*//**//*
+                    }*/
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter a valid value for PIN", Toast.LENGTH_LONG).show();
                 }

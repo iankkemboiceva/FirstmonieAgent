@@ -200,7 +200,7 @@ public class OpenAccBVN extends AppCompatActivity implements View.OnClickListene
 */
 
                         }
-                        // prgDialog2.dismiss();
+                         pro.dismiss();
 
 
                     } catch (JSONException e) {
@@ -430,7 +430,7 @@ OpenAcc();
                     // Log error here since request failed
                     // Log error here since request failed
                     SecurityLayer.Log("throwable error", t.toString());
-
+pro.dismiss();
 
 
 

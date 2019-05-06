@@ -174,7 +174,7 @@ RelativeLayout rlsave,rlshare;
                 bitmap=layout_to_image.convert_layout();
                 if(Utility.checkWriteStoragePermission(FinalConfDepoActivity.this)) {
                     if(!(getApplicationContext() == null)) {
-                        shareImage(getImageUri(getApplicationContext(), bitmap));
+                        shareImage(saveImageExternal(bitmap));
                     }
                 }
 
@@ -336,7 +336,7 @@ RelativeLayout rlsave,rlshare;
                             bitmap=layout_to_image.convert_layout();
                             if(Utility.checkPermission(FinalConfDepoActivity.this)) {
                                 if(!(getApplicationContext() == null)) {
-                                    shareImage(getImageUri(getApplicationContext(), bitmap));
+                                    shareImage(saveImageExternal(bitmap));
                                 }
                             }
 
@@ -394,7 +394,20 @@ RelativeLayout rlsave,rlshare;
         // put your code here...
 
     }
-
+    private Uri saveImageExternal(Bitmap image) {
+        //TODO - Should be processed in another thread
+        Uri uri = null;
+        try {
+            File file = new File(getAlbumStorageDir("FirstAgent"), "to-share.png");
+            FileOutputStream stream = new FileOutputStream(file);
+            image.compress(Bitmap.CompressFormat.PNG, 90, stream);
+            stream.close();
+            uri = Uri.fromFile(file);
+        } catch (IOException e) {
+            Log.d("TAG", "IOException while trying to write file for sharing: " + e.getMessage());
+        }
+        return uri;
+    }
     private void saveImage(Bitmap finalBitmap, String image_name) {
 
 
