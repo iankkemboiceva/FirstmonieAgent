@@ -199,7 +199,6 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
                                                 }
                                                 String params = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + billid + "/" + serviceid + "/" + amou + "/" + packid + "/" + ednumbb + "/" + ednamee + "/" + txtcustid + "/" + paymentCode;
 
-
                                                 Intent intent  = new Intent(ConfirmCableActivity.this,TransactionProcessingActivity.class);
 
 

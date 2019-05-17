@@ -833,6 +833,31 @@ changeddate = dateFormat.format(datefrom);
 
 	return changeddate;
 }
+
+
+
+	static  public  String convertBVNdate(String olddate){
+		String changeddate = "N/A";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+		if (Utility.isNotNull(olddate)) {
+			String dateInString = olddate;
+
+
+			try {
+				Date datefrom = sdf.parse(dateInString);
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+				changeddate = dateFormat.format(datefrom);
+				System.out.println(changeddate);
+
+				//   txtdtdiff = Integer.toString(dtdiff);
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return changeddate;
+	}
 public static boolean compareversionsupdate(String server,String device){
 	String[] v1 = device.split("\\.");
 	String[] v2 = server.split("\\.");

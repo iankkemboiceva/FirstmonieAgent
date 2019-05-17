@@ -174,7 +174,7 @@ RelativeLayout rlsave,rlshare;
                 bitmap=layout_to_image.convert_layout();
                 if(Utility.checkWriteStoragePermission(FinalConfDepoActivity.this)) {
                     if(!(getApplicationContext() == null)) {
-                        shareImage(saveImageExternal(bitmap));
+                        shareImage(getImageUri(getApplicationContext(),bitmap));
                     }
                 }
 
@@ -336,7 +336,7 @@ RelativeLayout rlsave,rlshare;
                             bitmap=layout_to_image.convert_layout();
                             if(Utility.checkPermission(FinalConfDepoActivity.this)) {
                                 if(!(getApplicationContext() == null)) {
-                                    shareImage(saveImageExternal(bitmap));
+                                    shareImage(getImageUri(getApplicationContext(),bitmap));
                                 }
                             }
 

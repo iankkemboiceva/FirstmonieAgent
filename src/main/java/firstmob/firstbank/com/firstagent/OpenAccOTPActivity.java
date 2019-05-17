@@ -241,7 +241,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
 
 
 
-        String endpoint= "core/openaccount.action";
+        String endpoint= "core/openaccountnew.action";
 
         String url = "";
         try {
@@ -1016,6 +1016,10 @@ String title = "Bank Info";
 
            String bvnparams = "1/" + usid + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + straddr + "/" + strmobn + "/" + refnumber + "/" + strmobn + "/" + edotp + "/" + encrypted;
          //   {channel}/{userId}/{salutation}/{firstName}/{lastName}/{midName}/{maritalStatus}/{dob}/{email}/{gender}/{state}/{city}/{address}/{phone}/{mandateCard}/{bvn}/{otp}/{pin}
+        //    1/112128164/Chief/Ranae/Benjamin/L/UNMARR/19931003/Michaellhenderson@armyspy.com/M/05/NA/2922 Rocky Road/08013952719/424655476196982/08013952719/12344/6a697a7579387463656a426e6b714d515335736b6e78626a625844614874417365366c4961516f4947624d
+
+
+
             if (!((refnumber == null))) {
                 if (!(refnumber.equals(""))) {
 if(session.getString("ISBVN").equals("Y")) {
