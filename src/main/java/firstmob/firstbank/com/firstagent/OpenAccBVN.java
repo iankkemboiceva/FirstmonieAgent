@@ -68,7 +68,7 @@ public class OpenAccBVN extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    private void GetBVN(String bvn) {
+    private void GetBVN(final String bvn) {
         pro.show();
         String endpoint= "bvn/validatebvn.action";
         if(!(getApplicationContext() == null)) {
@@ -154,7 +154,7 @@ public class OpenAccBVN extends AppCompatActivity implements View.OnClickListene
                                         intent.putExtra("state", state);
                                         intent.putExtra("straddr", address);
                                         intent.putExtra("email", email);
-                                        intent.putExtra("hmadd", "NA");
+                                        intent.putExtra("hmadd", bvn);
                                         intent.putExtra("mobn", mobileNumber);
                                         intent.putExtra("salut", salutation);
                                         intent.putExtra("marstatus", maritalStatus);

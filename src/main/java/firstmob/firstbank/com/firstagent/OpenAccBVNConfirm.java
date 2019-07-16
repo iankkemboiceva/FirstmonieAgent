@@ -149,7 +149,7 @@ if(strgender.equals("Male")){
             intent.putExtra("state", strcode);
             intent.putExtra("straddr", straddr);
             intent.putExtra("email", stremail);
-            intent.putExtra("hmadd", "NA");
+            intent.putExtra("hmadd", strhmdd);
             intent.putExtra("mobn", strmobn);
             intent.putExtra("salut", strsalut);
             intent.putExtra("marstatus", strmarst);

@@ -42,6 +42,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import com.google.android.gms.tasks.OnFailureListener;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.face.FirebaseVisionFace;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -64,10 +70,12 @@ import java.util.Locale;
 
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import utils.FileCompressor;
 
 public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickListener {
     File finalFile;
     int REQUEST_CAMERA = 3293;
+    File photoFile = null;
     Button sigin, next;
     int fcsizes = 0;
     TextView gendisp;
@@ -102,7 +110,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
     TextView step2, step1;
     // directory name to store captured images and videos
     private static final String IMAGE_DIRECTORY_NAME = "Hello Camera";
-
+    FileCompressor mCompressor;
     private Uri fileUri;
 
     @Override
@@ -157,7 +165,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
         step1 = (TextView) findViewById(R.id.tv);
         step1.setOnClickListener(this);
 
-
+        mCompressor = new FileCompressor(this);
     }
 
 
@@ -170,11 +178,19 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_CANCELED) {
-            if (requestCode == REQUEST_CAMERA) {
-                if (data != null) {
-                    onCaptureImageResult(data);
-                }
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_TAKE_PHOTO) {
+
+                    //onCaptureImageResult(data);
+                SecurityLayer.Log("compressor",photoFile.getAbsolutePath());
+                    try {
+                        photoFile = mCompressor.compressToFile(photoFile);
+                        Bitmap thumbnail = mCompressor.compressToBitmap(photoFile);
+                        runFaceContourDetection(thumbnail, thumbnail);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
             }
         }
     }
@@ -183,7 +199,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
-            File photoFile = null;
+
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
@@ -191,8 +207,8 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getApplicationContext(),
-                        "com.example.android.fileprovider",
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "firstmob.firstbank.com.firstagent.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
@@ -220,7 +236,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
         return resizedBitmap;
     }
 
-  /*  private void runFaceContourDetection(final Bitmap myBitmap, Bitmap origbit) {
+    private void runFaceContourDetection(final Bitmap myBitmap, final Bitmap origbit) {
 
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(origbit);
         FirebaseVisionFaceDetectorOptions options =
@@ -243,10 +259,12 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
 
                                 if (fcsizes > 0) {
                                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                                    myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-                                    String filename = System.currentTimeMillis() + ".jpg";
+                                    myBitmap.compress(Bitmap.CompressFormat.JPEG,90,bytes);
+
+
 
                                     final File path = new File(getFilesDir(), "FirstAgent");
+                                    String filename = "facepic.jpg";
 
                                     // Make sure the path directory exists.
                                     if (!path.exists()) {
@@ -254,7 +272,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
                                         path.mkdirs();
                                         Log.v("was it crated", "created");
                                     }
-                                    finalFile = new File(getFilesDir(), "FirstAgent/" + filename);
+                                    finalFile = new File(Environment.getExternalStorageDirectory(),"FirstAgent/"+filename);
                                     FileOutputStream fo;
                                     try {
                                         finalFile.createNewFile();
@@ -265,25 +283,12 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
                                         String filePath = finalFile.getPath();
                                         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                                         if (img != null) {
-                                            img.setImageBitmap(bitmap);
+                                            img.setImageBitmap(myBitmap);
                                         }
                                         session.setString("CUSTIMGFILEPATH", filePath);
                                         uploadpic = true;
-           *//* new Thread(new Runnable() {
-                public void run() {
 
 
-                    uploadFile(finalFile);
-
-                }
-            }).start();*//*
-                                        //    new FragmentDrawer.AsyncUplImg().execute();
-           *//* getApplicationContext().finish();
-            Toast.makeText(
-                    getApplicationContext(),
-                    "Image Set Successfully",
-                    Toast.LENGTH_LONG).show();
-            startActivity(new Intent(getApplicationContext(),FMobActivity.class));*//*
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     } catch (IOException e) {
@@ -293,7 +298,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
                                     //   iv.setImageBitmap(thumbnail);
 
                                 } else {
-                                    img.setImageBitmap(myBitmap);
+                                    img.setImageBitmap(origbit);
                                     Toast.makeText(
                                             getApplicationContext(),
                                             "Please ensure you have taken a clear picture of the customer's face"
@@ -316,7 +321,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
                             }
                         });
 
-    }*/
+    }
 
     private void onCaptureImageResult(Intent data) {
         if (!(data == null)) {
@@ -324,14 +329,19 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
             Bitmap origbit = (Bitmap) data.getExtras().get("data");
             int srcWidth = origbit.getWidth();
             int srcHeight = origbit.getHeight();
-            int dstWidth = (int) (srcWidth * 0.8f);
-            int dstHeight = (int) (srcHeight * 0.8f);
-            Bitmap thumbnail = getResizedBitmap((Bitmap) data.getExtras().get("data"), dstHeight, dstWidth);
-          //  runFaceContourDetection(thumbnail, origbit);
+            int dstWidth = (int) (srcWidth * 0.95f);
+            int dstHeight = (int) (srcHeight * 0.95f);
+            try {
+                Bitmap thumbnail = mCompressor.compressToBitmap(photoFile);
+                runFaceContourDetection(thumbnail, origbit);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             if (img != null) {
                 img.setImageBitmap(origbit);
             }
-            finalizeup(thumbnail);
+          //  finalizeup(thumbnail);
 
         }
 
@@ -564,7 +574,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
             }else{
                 Toast.makeText(
                         getApplicationContext(),
-                        "Please upload customer picture to proceed",
+                        "Please upload a valid customer passport with their face in focus to proceed",
                         Toast.LENGTH_LONG).show();
             }
         }
@@ -681,12 +691,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
             }
         }*/
 
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //  intent.setPackage(defaultCameraPackage);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, REQUEST_CAMERA);
-
-        }
+       dispatchTakePictureIntent();
     }
     /* private void captureImage() {
          Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

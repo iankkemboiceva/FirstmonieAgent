@@ -63,6 +63,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import utils.FileCompressor;
 
 public class OpenAccCustPicActivity extends BaseActivity implements View.OnClickListener {
     File finalFile;
@@ -70,6 +71,7 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
     ProgressDialog pDialog;
     Button sigin,next2;
     TextView gendisp;
+    File photoFile = null;
     SessionManagement session;
     EditText idno, mobno, fnam, lnam, yob;
     List<String> planetsList = new ArrayList<String>();
@@ -96,6 +98,7 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
     private SignaturePad mSignaturePad;
     private Button mClearButton;
     private Button mSaveButton;
+    FileCompressor mCompressor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,6 +222,8 @@ lyupl.setVisibility(View.VISIBLE);
                 convertSignedImage(signatureBitmap);
             }
         });
+
+        mCompressor = new FileCompressor(this);
     }
 
 
@@ -385,23 +390,32 @@ lyupl.setVisibility(View.VISIBLE);
         });
 
     }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode != RESULT_CANCELED) {
-            if (requestCode == REQUEST_CAMERA) {
-                if(data != null) {
-                    onCaptureImageResult(data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_TAKE_PHOTO) {
+
+                //onCaptureImageResult(data);
+                SecurityLayer.Log("compressor",photoFile.getAbsolutePath());
+                try {
+                    photoFile = mCompressor.compressToFile(photoFile);
+                    Bitmap thumbnail = mCompressor.compressToBitmap(photoFile);
+                    onCaptureImageResult(thumbnail,thumbnail);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+
             }
         }
     }
-
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) != null) {
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
-            File photoFile = null;
+
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
@@ -409,8 +423,8 @@ lyupl.setVisibility(View.VISIBLE);
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getApplicationContext(),
-                        "com.example.android.fileprovider",
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "firstmob.firstbank.com.firstagent.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
@@ -470,9 +484,9 @@ private void convertSignedImage(Bitmap origbit){
 
     //   iv.setImageBitmap(thumbnail);
 }
-    private void onCaptureImageResult(Intent data) {
-        if(!(data == null)) {
-            Bitmap origbit = (Bitmap) data.getExtras().get("data");
+    private void onCaptureImageResult(Bitmap thumbnail,Bitmap origbit) {
+        if(!(origbit == null)) {
+
             if(img != null) {
                 img.setImageBitmap(origbit);
             }
@@ -481,7 +495,7 @@ private void convertSignedImage(Bitmap origbit){
             int srcHeight = origbit.getHeight();
             int dstWidth = (int) (srcWidth * 0.8f);
             int dstHeight = (int) (srcHeight * 0.8f);
-            Bitmap thumbnail = getResizedBitmap((Bitmap) data.getExtras().get("data"), dstHeight, dstWidth);
+
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
             String filename = "camerapic.jpg";
@@ -774,11 +788,7 @@ String title = "Bank Info";
                 }
             }
         }*/
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //  intent.setPackage(defaultCameraPackage);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, REQUEST_CAMERA);
-        }
+        dispatchTakePictureIntent();
     }
     private File createImageFile() throws IOException {
         // Create an image file name

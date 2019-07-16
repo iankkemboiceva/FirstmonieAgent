@@ -326,65 +326,38 @@
                             android:background="@color/divcolor" />
                     </RelativeLayout>
 
-                    <RelativeLayout
+                        <RelativeLayout
 
 
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:orientation="vertical"
-
-android:layout_marginTop="10dp"
-                        >
-
-                        <TextView
-                            android:id="@+id/txtsal"
-                            android:layout_width="wrap_content"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="Title"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/colorPrimary"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:orientation="vertical"
+
+                            android:layout_marginTop="10dp"
+                            >
+
+                            <TextView
+                                android:id="@+id/txtsal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Title"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textColor="@color/colorPrimary"
 
 
-                            />
+                                />
 
-                        <Spinner
-                            android:id="@+id/spinsal"
-                            style="@style/SpinnerAppTheme"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/txtsal">
-
-                        </Spinner>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-
-
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-
-
-                        >
-
-                    <!--    <android.support.design.widget.TextInputLayout
-                            android:id="@+id/input_layout_password4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <EditText
-                                android:id="@+id/mobno"
+                            <Spinner
+                                android:id="@+id/spinsal"
+                                style="@style/SpinnerAppTheme"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:maxLength="13"
-                                android:hint="Mobile Number"
-                                android:inputType="number"
-                                android:textColorHint="@color/colorPrimary" />
+                                android:layout_below="@+id/txtsal">
 
-                        </android.support.design.widget.TextInputLayout>-->
+                            </Spinner>
+                        </RelativeLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
@@ -416,8 +389,45 @@ android:layout_marginTop="10dp"
                                 android:layout_weight="2"
                                 android:inputType="number"
                                 android:layout_marginLeft="5dp"
-android:maxLength="14"
+                                android:maxLength="14"
                                 android:hint="Mobile Number"
+                                android:background="@android:color/transparent"
+
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/lyemail"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/divcolor" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:id="@+id/lystraddress"
+
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|center"
+                                android:layout_weight="1.5"
+
+                                android:text="House Number"
+                                android:textColor="@color/black" />
+
+                            <EditText
+                                android:id="@+id/straddr"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:layout_gravity="left|center"
+                                android:layout_weight="2"
+                                android:hint="House Number"
                                 android:background="@android:color/transparent"
 
                                 android:textSize="14sp" />
@@ -429,6 +439,73 @@ android:maxLength="14"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:background="@color/divcolor" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:id="@+id/lyhomeaddr"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|center"
+                                android:layout_weight="1.5"
+
+                                android:text="Street Name"
+                                android:textColor="@color/black" />
+
+                            <EditText
+                                android:id="@+id/hmaddr"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|center"
+                                android:layout_weight="2"
+                                android:hint="Street Name"
+                                android:background="@android:color/transparent"
+
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_below="@+id/lyhomeaddr"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+
+                            android:background="@color/divcolor" />
+
+                    <RelativeLayout
+
+
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+
+
+                        >
+
+                    <!--    <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_password4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/mobno"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:maxLength="13"
+                                android:hint="Mobile Number"
+                                android:inputType="number"
+                                android:textColorHint="@color/colorPrimary" />
+
+                        </android.support.design.widget.TextInputLayout>-->
+
+
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -456,81 +533,11 @@ android:maxLength="14"
                                 android:textColorHint="@color/colorPrimary" />
 
                         </android.support.design.widget.TextInputLayout>-->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:id="@+id/lyhomeaddr"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left|center"
-                                android:layout_weight="1.5"
 
-                                android:text="Home Address"
-                                android:textColor="@color/black" />
 
-                            <EditText
-                                android:id="@+id/hmaddr"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left|center"
-                                android:layout_weight="2"
-                                android:hint="Home Address"
-                                android:background="@android:color/transparent"
-
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_below="@+id/lyhomeaddr"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@color/divcolor" />
                     </RelativeLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:id="@+id/lystraddress"
 
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left|center"
-                                android:layout_weight="1.5"
-
-                                android:text="Street Number"
-                                android:textColor="@color/black" />
-
-                            <EditText
-                                android:id="@+id/straddr"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:inputType="number"
-                                android:layout_gravity="left|center"
-                                android:layout_weight="2"
-                                android:hint="Street Number"
-                                android:background="@android:color/transparent"
-
-                                android:textSize="14sp" />
-                        </LinearLayout>
-                        <View
-                            android:layout_below="@+id/lyhomeaddr"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-
-                            android:background="@color/divcolor" />
                     <RelativeLayout
 
 

@@ -177,64 +177,10 @@ public class ApiSecurityClient {
 
             okHttpClient = builder.build();
 
-        /*    ConnectionSpec spec = new
-                    ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
-                    .tlsVersions(TlsVersion.TLS_1_2)
-                    .cipherSuites(
-                            CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-                            CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-                            CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256)
-                    .buid
-                    ();*/
-
-           /* okHttpClient = new OkHttpClient.Builder()
-                    .connectionSpecs(Collections.singletonList(spec))
-                    .build();*/
-
-           // okHttpClient = builder.build();
             SecurityLayer.Log("OkHttpTLSCompat", "Vefore TLS");
 
-          /*  OkHttpClient.Builder client = new OkHttpClient.Builder()
-                    .followRedirects(true)
-                    .followSslRedirects(true)
-                    .retryOnConnectionFailure(true)
-                    .cache(null)
-                    .connectTimeout(60, TimeUnit.SECONDS)
-                    .writeTimeout(60, TimeUnit.SECONDS)
-                    .readTimeout(60, TimeUnit.SECONDS);
-            if (Build.VERSION.SDK_INT >= 16 && Build.VERSION.SDK_INT < 22) {
-                enableTls12OnPreLollipop(client).build();
-                SecurityLayer.Log("OkHttpTLSCompat", "Vefore TLS version 22");
-            }else{*/
-
-
-          /*  SSLSocketFactory sslSocketFactory = null;
-            try {
-                sslSocketFactory = new TLSSocketFactory();
-
-            } catch (KeyManagementException ignored) {
-
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-
-
-            SSLContext sslContext;
-            try {
-                sslContext = SSLContext.getInstance("TLS");
-                sslContext.init(null, null, null);
-            } catch (GeneralSecurityException e) {
-                throw new AssertionError(); // The system has no TLS. Just give up.
-            }*/
 
                 SecurityLayer.Log("OkHttpTLSCompat", "Vefore TLS version after 24");
-
-
-          //  }
-
-
-
-
 
 
        }else   if((ApplicationConstants.PROD_ENV.equals("N"))) {
@@ -267,7 +213,7 @@ public class ApiSecurityClient {
                     sslSocketFactory = new TLSSocketFactory();
 
                 } catch (KeyManagementException ignored) {
-
+ignored.printStackTrace();
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }

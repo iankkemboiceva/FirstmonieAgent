@@ -178,7 +178,7 @@ if(Utility.isNotNull(cntopen)) {
         if (view.getId() == R.id.rlopenaccinside) {
 
 
-          showDialog();
+            startActivity(new Intent(getActivity(), ChooseBVNorNoBVN.class));
 
         }
         if (view.getId() == R.id.rlagac) {

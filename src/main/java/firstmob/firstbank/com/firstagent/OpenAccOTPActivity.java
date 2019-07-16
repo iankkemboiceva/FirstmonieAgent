@@ -82,6 +82,7 @@ import retrofit2.Response;
 import security.EncryptTransactionPin;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import utils.FileCompressor;
 
 public class OpenAccOTPActivity extends BaseActivity implements View.OnClickListener {
     File finalFile;
@@ -115,6 +116,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
     String upurl = ApplicationConstants.IMG_UPURL;
     String strfname,strlname,strmidnm,stryob,stremail,strhmdd,strmobn,strsalut,strmarst,strgender,strcity,strstate,straddr;
     TextView step2, step1, step3, step4;
+    FileCompressor mCompressor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -714,10 +716,10 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
             bmap[0] = bitmapcust;
             bmap[1] = bitmapsign;
             Bitmap res = mergeBitmap(bitmapcust,bitmapsign);
-
+         //   res = mCompressor.compressToBitmap(res);
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-            res.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+        res.compress(Bitmap.CompressFormat.JPEG, 5, out);
+            Bitmap decoded = res;
             int kb = BitmapCompat.getAllocationByteCount(res)/1024;
             SecurityLayer.Log("KBS of file",Integer.toString(kb));
 
@@ -1014,7 +1016,7 @@ String title = "Bank Info";
           //  finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted;
             SecurityLayer.Log("Before InvokeAcc");
 
-           String bvnparams = "1/" + usid + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + straddr + "/" + strmobn + "/" + refnumber + "/" + strmobn + "/" + edotp + "/" + encrypted;
+           String bvnparams = "1/" + usid + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + straddr + "/" + strmobn + "/" + refnumber + "/" + strhmdd + "/" + edotp + "/" + encrypted;
          //   {channel}/{userId}/{salutation}/{firstName}/{lastName}/{midName}/{maritalStatus}/{dob}/{email}/{gender}/{state}/{city}/{address}/{phone}/{mandateCard}/{bvn}/{otp}/{pin}
         //    1/112128164/Chief/Ranae/Benjamin/L/UNMARR/19931003/Michaellhenderson@armyspy.com/M/05/NA/2922 Rocky Road/08013952719/424655476196982/08013952719/12344/6a697a7579387463656a426e6b714d515335736b6e78626a625844614874417365366c4961516f4947624d
 

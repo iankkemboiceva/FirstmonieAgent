@@ -414,7 +414,7 @@ strmobn = strmobn.substring(strmobn.length() - 10);
                                         } else {
                                             Toast.makeText(
                                                     getApplicationContext(),
-                                                    "Please enter a valid street address value",
+                                                    "Please enter a valid House Number value",
                                                     Toast.LENGTH_LONG).show();
                                         }
                                     } else {
@@ -445,7 +445,7 @@ strmobn = strmobn.substring(strmobn.length() - 10);
                     } else {
                         Toast.makeText(
                                 getApplicationContext(),
-                                "Please enter a value for Home Address",
+                                "Please enter a value for Street Name",
                                 Toast.LENGTH_LONG).show();
                     }
                 } else {

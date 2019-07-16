@@ -211,8 +211,8 @@ public class CashDepoActivity extends BaseActivity implements View.OnClickListen
                                 intent.putExtra("recanno", recanno);
                                 intent.putExtra("amou", amou);
                                 intent.putExtra("narra", narra);
-                                intent.putExtra("ednamee", "N/A");
-                                intent.putExtra("ednumbb", "N/A");
+                                intent.putExtra("ednamee", acname);
+                                intent.putExtra("ednumbb", "NA");
                                 intent.putExtra("trantype", "D");
                                 intent.putExtra("txtname", acname);
                                 startActivity(intent);

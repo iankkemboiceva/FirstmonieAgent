@@ -837,7 +837,7 @@ changeddate = dateFormat.format(datefrom);
 
 
 	static  public  String convertBVNdate(String olddate){
-		String changeddate = "N/A";
+		String changeddate = "NA";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
 		if (Utility.isNotNull(olddate)) {
 			String dateInString = olddate;

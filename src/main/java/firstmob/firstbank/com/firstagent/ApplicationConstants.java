@@ -27,9 +27,9 @@ public interface ApplicationConstants {
 	static final String IMG_URL = "https://firstmonieagent.firstbanknigeria.com:7778/agencyapi/";
 	static final String PROD_ENV = "Y";
 	static final String HOSTNAME = "http://firstmonieagent.firstbanknigeria.com";
-	static final String UNENC_URL = "http://196.11.150.20:1111/agencyapi/app/";
+	static final String UNENC_URL = "http://196.11.150.20:1111/agencyapi/app/";*/
 
-	static final String IMG_UPURL = ApplicationConstants.IMG_URL+"image/acimg?userId=";*/
+	//static final String IMG_UPURL = ApplicationConstants.IMG_URL+"image/acimg?userId=";
 
 	/*static final String NET_URL = "https://196.11.150.210:7777/agencyapi/app/";
 	static final String IMG_URL = "hoffttps://196.11.150.210:7777/agencyapi/";

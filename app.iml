@@ -129,6 +129,7 @@
     <orderEntry type="library" name="Gradle: com.android.databinding:adapters-1.2.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-analytics-16.0.6" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-common-16.0.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-vision-common-17.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:retrofit:2.0.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-flags-16.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.crashlytics.sdk.android:crashlytics-core-2.6.4" level="project" />
@@ -137,10 +138,12 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support:multidex-1.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:multidex-1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-measurement-connector-impl-17.0.4" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-basement-16.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:exifinterface-25.3.0" level="project" />
     <orderEntry type="library" name="Gradle: com.borax12.materialdaterangepicker:library-1.9" level="project" />
     <orderEntry type="library" name="Gradle: com.github.vipulasri.layouttoimage:library-1.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-phenotype-16.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:converter-scalars:2.0.2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-ml-vision-18.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-base-16.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-ui-25.3.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-crash-16.2.1" level="project" />
@@ -156,6 +159,7 @@
     <orderEntry type="library" name="Gradle: com.android.support:recyclerview-v7-25.3.0" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.4.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-vector-drawable-25.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth-base-16.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-utils-25.3.0" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.9.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.andrognito.pinlockview:pinlockview-1.0.1" level="project" />
@@ -168,21 +172,27 @@
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-ads-identifier-16.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.6.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.shell-software:uitools-1.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-vision-image-label-17.0.2" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:C.\Users\ian\AndroidStudioProjects\NewFirstMerchant\app\libs\android-async-http-1.4.4.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement-api-16.0.4" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.9@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-compat-25.3.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-stats-16.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-basement-16.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:animated-vector-drawable-25.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-ml-common-16.1.5" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:transition-25.3.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-v13-25.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-ml-vision-face-model-17.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.wdullaer:materialdatetimepicker-3.6.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-vision-17.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.github.shell-software:fab-1.1.2" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.picasso:picasso:2.5.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.crashlytics.sdk.android:crashlytics-2.9.5" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-iid-interop-16.0.1" level="project" />
     <orderEntry type="library" name="Gradle: uk.co.chrisjenx:calligraphy-2.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-clearcut-16.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.crashlytics.sdk.android:answers-1.4.3" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-analytics-impl-16.2.4" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-iid-17.0.4" level="project" />
