@@ -44,10 +44,12 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.security.ProviderInstaller;
+import com.google.gson.JsonArray;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -594,6 +596,9 @@ public void loginRetrofit(){
 								String mobno = datas.optString("mobileNo");
 								String accno = datas.optString("acountNumber");
 									String cntopen = datas.optString("canOpenAccount");
+									session.setString("SUPERVID",userid);
+
+
 									session.setString(SessionManagement.KEY_SETCNTOPEN,cntopen);
 
 								session.SetAgentID(agentid);

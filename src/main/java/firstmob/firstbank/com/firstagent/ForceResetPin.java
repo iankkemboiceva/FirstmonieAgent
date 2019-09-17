@@ -40,6 +40,7 @@ public class ForceResetPin extends AppCompatActivity implements View.OnClickList
     Button btnok;
     SessionManagement session;
     String value;
+    boolean blchk;
     public static final String AGMOB = "agmobno";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,12 @@ public class ForceResetPin extends AppCompatActivity implements View.OnClickList
         updateAndroidSecurityProvider(getParent());
         if(!(getIntent() == null)){
             value = getIntent().getExtras().getString("pinna");
+            String type = getIntent().getExtras().getString("type");
+            if(!(type == null ) || type.equals("")){
+                if(type.equals("SUP")){
+                    blchk = true;
+                }
+            }
         }
 
 
@@ -99,8 +106,12 @@ public class ForceResetPin extends AppCompatActivity implements View.OnClickList
                                     String encrypted1 = null;
                                     String encrypted2 = null;
 
-
-                                    String usid = Utility.gettUtilUserId(getApplicationContext());
+                                    String usid = null;
+                                    if(blchk){
+                                        usid = session.getString("SUPERVID");
+                                    }else {
+                                        usid = Utility.gettUtilUserId(getApplicationContext());
+                                    }
                                     String agentid = Utility.gettUtilAgentId(getApplicationContext());
                                     String mobnoo = Utility.gettUtilMobno(getApplicationContext());
 
