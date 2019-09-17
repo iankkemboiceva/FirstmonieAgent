@@ -172,6 +172,7 @@ String tken = newjs.optString("token");
 
 
 session.setString("NWAPPID",encappid);
+        session.setString("PLAINAPPID",nwappid);
 
 
         session.setString(KEY_TOKEN, tken);

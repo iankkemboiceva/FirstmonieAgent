@@ -393,6 +393,14 @@ public static JSONArray getNubanAlgo(String account){
 		}
 		return s;
 	}
+	public static String getPlainAppid(Context c) {
+		SessionManagement sess = new SessionManagement(c);
+		 String appid = sess.getString("PLAINAPPID");
+		if(appid == null || appid.equals("")){
+			appid = "NA";
+		}
+		return appid;
+	}
 	public static String b64_sha256(String inputString) {
 		String outputString= null;
 		if (inputString != null) {
@@ -430,6 +438,13 @@ public static JSONArray getNubanAlgo(String account){
 		session = new SessionManagement(c);
 		HashMap<String, String> defa = session.getUserIdd();
 		String	defac  = defa.get(SessionManagement.KEY_USERID);
+		return defac;
+	}
+
+	public static String gettUtilUsername(Context c){
+		session = new SessionManagement(c);
+		HashMap<String, String> defa = session.getCustName();
+		String	defac  = defa.get(SessionManagement.KEY_CUSTNAME);
 		return defac;
 	}
 	public static String getBase64Image(Context c){

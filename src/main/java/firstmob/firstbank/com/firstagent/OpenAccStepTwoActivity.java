@@ -368,7 +368,9 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
                             if(!(sp2.getSelectedItemPosition() == 0)){
                                 if(!(sp1.getSelectedItemPosition() == 0)){
                                     if(boolemail){
-                                        if(Utility.isNotNull(straddr)){
+                                        if(!(Utility.isNotNull(straddr))|| straddr.equals("")){
+                                            straddr = "NA";
+                                        }
                                         if (!(Utility.isNotNull(stremail)) || stremail.equals("")) {
                                             stremail = "NA";
                                         }
@@ -411,12 +413,7 @@ strmobn = strmobn.substring(strmobn.length() - 10);
                                                 .setActionBarTitle("Step Three");
                                         fragmentTransaction.commit(); */
 
-                                        } else {
-                                            Toast.makeText(
-                                                    getApplicationContext(),
-                                                    "Please enter a valid House Number value",
-                                                    Toast.LENGTH_LONG).show();
-                                        }
+
                                     } else {
                                         Toast.makeText(
                                                 getApplicationContext(),

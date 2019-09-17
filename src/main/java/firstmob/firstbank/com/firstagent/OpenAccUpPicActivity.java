@@ -184,7 +184,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
                     //onCaptureImageResult(data);
                 SecurityLayer.Log("compressor",photoFile.getAbsolutePath());
                     try {
-                        photoFile = mCompressor.compressToFile(photoFile);
+                        photoFile = mCompressor.compressToFile(photoFile,"P");
                         Bitmap thumbnail = mCompressor.compressToBitmap(photoFile);
                         runFaceContourDetection(thumbnail, thumbnail);
                     } catch (IOException e) {
@@ -208,7 +208,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this,
-                        "firstmob.firstbank.com.firstagent.fileprovider",
+                        getApplicationContext().getPackageName() + ".provider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
@@ -216,6 +216,8 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
 
         }
     }
+
+
 
     public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
         int width = bm.getWidth();
@@ -691,7 +693,14 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
             }
         }*/
 
-       dispatchTakePictureIntent();
+     /*   Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //  intent.setPackage(defaultCameraPackage);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_CAMERA);
+
+        }*/
+
+      dispatchTakePictureIntent();
     }
     /* private void captureImage() {
          Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -759,7 +768,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */

@@ -125,9 +125,9 @@ if(Utility.isNotNull(cntopen)) {
         checkAppvers();
         String chkappvs = session.getString("APPVERSBOOL");
         SecurityLayer.Log("chkappvs",chkappvs);
-       if(chkappvs.equals("Y")) {
+    //   if(chkappvs.equals("Y")) {
             GetAppversion();
-       }
+   //    }
         return root;
     }
 

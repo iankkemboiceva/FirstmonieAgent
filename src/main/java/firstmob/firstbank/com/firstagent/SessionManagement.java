@@ -380,6 +380,13 @@ public class SessionManagement {
 
         return user;
     }
+    public HashMap<String, String> getUsernamee() {
+        HashMap<String, String> user = new HashMap<String, String>();
+        // user name
+        user.put(KEY_USERID, pref.getString(KEY_USERID, null));
+
+        return user;
+    }
 
     public void SetSch2(String serv) {
         // Storing login value as TRUE

@@ -28,6 +28,8 @@ android {
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
+
+
     }
 
     flavorDimensions "default"
@@ -38,12 +40,15 @@ android {
     }
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
+           applicationIdSuffix ".debug"
+
         }
         release {
 
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+
         }
         releasedebugstore {
             applicationIdSuffix ".debugstore"

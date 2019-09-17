@@ -82,7 +82,7 @@ android:weightSum="100"
                                         android:layout_marginTop="5dp"
                                         android:layout_below="@+id/imgg"
                                         android:textStyle="bold"
-                                        android:text="TRANSACTION SUCCESSFUL"
+                                        android:text="CASH DEPOSIT SUCCESSFUL"
                                         android:textColor="@color/fab_material_green_900"
                                         android:textSize="16sp" />  </RelativeLayout>
                                 <RelativeLayout
@@ -398,6 +398,104 @@ android:layout_margin="2dp"
                                         android:layout_marginLeft="15dip"
                                         android:layout_alignParentRight = "true"
                                         android:text="\u20A6 0.00"
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="#3C2415" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+
+
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:id="@+id/rlagname"
+
+                                    android:layout_margin="2dp"
+
+
+                                    >
+                                    <TextView
+                                        android:id="@+id/agname"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:text="User Name:"
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="@color/black" />
+                                    <TextView
+                                        android:id="@+id/txtgname"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:layout_marginLeft="15dip"
+                                        android:layout_alignParentRight = "true"
+                                        android:text=""
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="#3C2415" />
+
+                                </RelativeLayout>
+                                <RelativeLayout
+
+
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:id="@+id/rlattid"
+
+                                    android:layout_margin="2dp"
+
+
+                                    >
+                                    <TextView
+                                        android:id="@+id/attid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:text="Attendant ID:"
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="@color/black" />
+                                    <TextView
+                                        android:id="@+id/txtattid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:layout_marginLeft="15dip"
+                                        android:layout_alignParentRight = "true"
+                                        android:text=""
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="#3C2415" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+
+
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:id="@+id/rlagid"
+
+                                    android:layout_margin="2dp"
+
+
+                                    >
+                                    <TextView
+                                        android:id="@+id/agid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:text="Agent ID:"
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="@color/black" />
+                                    <TextView
+                                        android:id="@+id/txtagid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:layout_marginLeft="15dip"
+                                        android:layout_alignParentRight = "true"
+                                        android:text=""
                                         android:textSize="@dimen/textsize"
                                         android:textColor="#3C2415" />
 

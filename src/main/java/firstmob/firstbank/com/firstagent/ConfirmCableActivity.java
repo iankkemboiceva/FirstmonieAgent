@@ -180,7 +180,7 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
                                             }catch (NumberFormatException e){
                                                 e.printStackTrace();
                                             }
-                                            if(chkdb){
+                                        //    if(chkdb){
                                                 String encrypted = null;
                                                 encrypted = Utility.b64_sha256(agpin);
                                                 if (!(prgDialog2 == null)) {
@@ -236,12 +236,12 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
                                                         .setActionBarTitle("Final Conf Cable");
                                                 fragmentTransaction.commit();*/
                                                 ClearPin();
-                                            }  else {
+                                           /* }  else {
                                                 Toast.makeText(
                                                         getApplicationContext(),
                                                         "The amount set is higher than your agent balance",
                                                         Toast.LENGTH_LONG).show();
-                                            }
+                                            }*/
                                         } else {
                                             Toast.makeText(
                                                     getApplicationContext(), "Please ensure a valid customer has been chosen for the selected biller",

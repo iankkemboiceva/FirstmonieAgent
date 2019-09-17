@@ -399,9 +399,9 @@ lyupl.setVisibility(View.VISIBLE);
             if (requestCode == REQUEST_TAKE_PHOTO) {
 
                 //onCaptureImageResult(data);
-                SecurityLayer.Log("compressor",photoFile.getAbsolutePath());
+//                SecurityLayer.Log("compressor",photoFile.getAbsolutePath());
                 try {
-                    photoFile = mCompressor.compressToFile(photoFile);
+                    photoFile = mCompressor.compressToFile(photoFile,"S");
                     Bitmap thumbnail = mCompressor.compressToBitmap(photoFile);
                     onCaptureImageResult(thumbnail,thumbnail);
                 } catch (IOException e) {
@@ -411,7 +411,7 @@ lyupl.setVisibility(View.VISIBLE);
             }
         }
     }
-    private void dispatchTakePictureIntent() {
+   /* private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
@@ -431,7 +431,32 @@ lyupl.setVisibility(View.VISIBLE);
             }
 
         }
-    }
+    }*/
+   private void dispatchTakePictureIntent() {
+       Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+       if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+           // Create the File where the photo should go
+
+           try {
+               photoFile = createImageFile();
+           } catch (IOException ex) {
+               ex.printStackTrace();
+           }
+           // Continue only if the File was successfully created
+           if (!(photoFile == null)) {
+               Uri photoURI = FileProvider.getUriForFile(this,
+                       getApplicationContext().getPackageName() + ".provider",
+                       photoFile);
+               takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+               SecurityLayer.Log("Photofile IS NOT null");
+               startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+
+           }else{
+               SecurityLayer.Log("Photofile IS null");
+           }
+
+       }
+   }
 
     public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
         int width = bm.getWidth();
@@ -454,15 +479,14 @@ lyupl.setVisibility(View.VISIBLE);
 private void convertSignedImage(Bitmap origbit){
 
 
-    int srcWidth = origbit.getWidth();
-    int srcHeight = origbit.getHeight();
-    int dstWidth = (int) (srcWidth * 0.8f);
-    int dstHeight = (int) (srcHeight * 0.8f);
+
     Bitmap thumbnail = origbit;
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
     String filename = "signed.jpg";
-    finalFile = new File(Environment.getExternalStorageDirectory(),"FirstAgent/"+filename);
+
+        finalFile = new File(Environment.getExternalStorageDirectory(),"FirstAgent/"+filename);
+
     FileOutputStream fo;
     try {
         finalFile.createNewFile();
@@ -470,9 +494,13 @@ private void convertSignedImage(Bitmap origbit){
         fo.write(bytes.toByteArray());
         fo.close();
         SecurityLayer.Log("Filename stored", filename);
-        String filePath = finalFile.getPath();
-        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
 
+
+
+
+File newfile  = mCompressor.compressToFile(finalFile,"S");
+        SecurityLayer.Log("compressor",finalFile.getAbsolutePath());
+        String filePath = newfile.getPath();
         session.setString("CUSTSIGNPATH", filePath);
         uploadpic = true;
 
@@ -482,6 +510,21 @@ private void convertSignedImage(Bitmap origbit){
         e.printStackTrace();
     }
 
+if(uploadpic) {
+    String usid = Utility.gettUtilUserId(getApplicationContext());
+    String agentid = Utility.gettUtilAgentId(getApplicationContext());
+    String mobnoo = Utility.gettUtilMobno(getApplicationContext());
+
+
+    String params = "1/" + usid + "/" + agentid + "/" + strmobn;
+
+    invokeAgent(params);
+}else{
+    Toast.makeText(
+            getApplicationContext(),
+            "There was an error capturing the signature",
+            Toast.LENGTH_LONG).show();
+}
     //   iv.setImageBitmap(thumbnail);
 }
     private void onCaptureImageResult(Bitmap thumbnail,Bitmap origbit) {
@@ -671,24 +714,7 @@ private void convertSignedImage(Bitmap origbit){
                 ((FMobActivity)getApplicationContext())
                         .setActionBarTitle("Step Four");
                 fragmentTransaction.commit();*/
-            if(uploadpic) {
 
-                String usid = Utility.gettUtilUserId(getApplicationContext());
-                String agentid = Utility.gettUtilAgentId(getApplicationContext());
-                String mobnoo = Utility.gettUtilMobno(getApplicationContext());
-
-
-
-
-                String params = "1/"+usid+"/"+agentid+"/"+strmobn;
-
-                invokeAgent(params);
-            }else{
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Please upload customer picture to proceed",
-                        Toast.LENGTH_LONG).show();
-            }
         }
         if(view.getId() == R.id.buttonnxt2){
 
@@ -703,24 +729,13 @@ private void convertSignedImage(Bitmap origbit){
                 ((FMobActivity)getApplicationContext())
                         .setActionBarTitle("Step Four");
                 fragmentTransaction.commit();*/
-            if(uploadpic) {
 
-                String usid = Utility.gettUtilUserId(getApplicationContext());
-                String agentid = Utility.gettUtilAgentId(getApplicationContext());
-                String mobnoo = Utility.gettUtilMobno(getApplicationContext());
+            Bitmap signatureBitmap = mSignaturePad.getSignatureBitmap();
+            Bitmap thumbnail = null;
 
 
+            convertSignedImage(signatureBitmap);
 
-
-                String params = "1/"+usid+"/"+agentid+"/"+strmobn;
-
-                invokeAgent(params);
-            }else{
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Please upload customer picture to proceed",
-                        Toast.LENGTH_LONG).show();
-            }
         }
         if(view.getId()==  R.id.button4){
 
@@ -789,12 +804,19 @@ String title = "Bank Info";
             }
         }*/
         dispatchTakePictureIntent();
+
+       /* Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //  intent.setPackage(defaultCameraPackage);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_CAMERA);
+
+        }*/
     }
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */

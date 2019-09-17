@@ -237,6 +237,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical"
 android:id="@+id/lyuploadpic"
+                        android:visibility="gone"
 
                         android:paddingBottom="10dip"
 
@@ -304,7 +305,7 @@ android:id="@+id/lyuploadpic"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:id="@+id/lysignsi"
-                        android:visibility="gone"
+
                         android:paddingBottom="10dip"
 
                         >
@@ -349,15 +350,17 @@ android:id="@+id/lyuploadpic"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:text="Clear Pad"
+                                android:layout_marginLeft="15dip"
+                                android:layout_marginRight="15dip"
                                 android:textColor="@color/white"
                                 android:background="@drawable/mybutton"
-                                android:layout_marginRight="5dp"
-                                android:layout_marginLeft="5dp"
+
                                 android:enabled="false" />
 
                             <Button
                                 android:id="@+id/save_button"
                                 android:layout_width="0dp"
+                                android:visibility="gone"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:text="Save Signature"
@@ -371,7 +374,7 @@ android:id="@+id/lyuploadpic"
                             android:id="@+id/buttonnxt2"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="25dp"
                             android:layout_gravity="center_horizontal|bottom"
                             android:layout_marginLeft="25dip"
                             android:layout_marginRight="25dip"

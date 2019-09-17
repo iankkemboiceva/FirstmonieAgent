@@ -102,6 +102,7 @@ RelativeLayout rlagfee,rlaccom;
 RelativeLayout rlsave,rlshare;
     HashMap<String, UsbDevice> mDeviceList;
     Iterator<UsbDevice> mDeviceIterator;
+    TextView edagname,edattid,edagid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +133,19 @@ RelativeLayout rlsave,rlshare;
 
         rlagfee = (RelativeLayout) findViewById(R.id.rlagfee);
         rlaccom = (RelativeLayout) findViewById(R.id.rlaccom);
+
+
+        edagid = (TextView) findViewById(R.id.txtagid);
+        edagname = (TextView) findViewById(R.id.txtgname);
+        edattid = (TextView) findViewById(R.id.txtattid);
+
+        String stragid = Utility.gettUtilAgentId(getApplicationContext());
+        String stragname = Utility.gettUtilCustname(getApplicationContext());
+        String strattid = Utility.gettUtilUserId(getApplicationContext());
+
+        edagid.setText(stragid);
+        edagname.setText(stragname);
+        edattid.setText(strattid);
 
         rlsave = (RelativeLayout) findViewById(R.id.rlsave);
         rlshare = (RelativeLayout) findViewById(R.id.rlshare);

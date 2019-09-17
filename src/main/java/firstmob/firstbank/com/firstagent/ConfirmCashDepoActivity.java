@@ -330,7 +330,7 @@ public class ConfirmCashDepoActivity extends BaseActivity implements View.OnClic
                                         if(!(finalfee == null)){
                                             double dbamo = Double.parseDouble(amou);
                                             Double dbagbal = Double.parseDouble(agbalance);
-                                            if(dbamo <= dbagbal){
+                                       //     if(dbamo <= dbagbal){
                                                 String encrypted = null;
                                                 encrypted = Utility.b64_sha256(agpin);
 
@@ -460,12 +460,12 @@ public class ConfirmCashDepoActivity extends BaseActivity implements View.OnClic
                                                         }
                                                     });*/
                                                 ClearPin();
-                                            }  else {
+                                          /*  }  else {
                                                 Toast.makeText(
                                                         getApplicationContext(),
                                                         "The amount set is higher than your agent balance",
                                                         Toast.LENGTH_LONG).show();
-                                            }
+                                            }*/
                                         }  else {
                                             Toast.makeText(
                                                     getApplicationContext(),
