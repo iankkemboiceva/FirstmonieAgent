@@ -614,7 +614,7 @@ public void loginRetrofit(){
 								session.setString(SessionManagement.KEY_SETBILLERS,"N");
 								session.setString(SessionManagement.KEY_SETWALLETS,"N");
 								session.setString(SessionManagement.KEY_SETAIRTIME,"N");
-
+//
                                 session.createLoginSession();
 
 								boolean checknewast = session.checkAst();
