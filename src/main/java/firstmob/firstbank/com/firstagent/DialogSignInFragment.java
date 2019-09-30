@@ -195,7 +195,6 @@ String finpin;
                                     getActivity().finish();
                                     Intent mIntent = new Intent(getActivity(), ForceResetPin.class);
                                     mIntent.putExtra("pinna", encpin);
-                                    mIntent.putExtra("type", "SUP");
                                     startActivity(mIntent);
                                 }else {
                                     if (service.equals("PROF")) {
@@ -319,8 +318,7 @@ setDialog(responsemessage);
               encpin =   Utility.b64_sha256(finpin);
                 SecurityLayer.Log("Enc Pin",encpin);
                // encpin = Utility.b64_sha256(encpin);
-                String usid = session.getString("SUPERVID");
-                SecurityLayer.Log("Supervisor id"+usid);
+                String usid = session.getString("SUPERID");
                 String mobnoo = Utility.gettUtilMobno(getActivity());
                 SecurityLayer.Log("Base64 Pin",encpin);
                 String params = "1" + "/" + usid + "/" + encpin + "/" + mobnoo;

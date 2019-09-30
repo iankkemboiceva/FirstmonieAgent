@@ -44,7 +44,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.security.ProviderInstaller;
-import com.google.gson.JsonArray;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -596,9 +595,17 @@ public void loginRetrofit(){
 								String mobno = datas.optString("mobileNo");
 								String accno = datas.optString("acountNumber");
 									String cntopen = datas.optString("canOpenAccount");
-									session.setString("SUPERVID",userid);
 
-
+									JSONArray admusers = datas.optJSONArray("adminUsers");
+									JSONObject json_data = null;
+									for (int i = 0; i < admusers.length(); i++) {
+										json_data = admusers.getJSONObject(i);
+										String role = json_data.optString("role");
+										String superid = json_data.optString("userid");
+										if(role.equals("MS")){
+											session.setString("SUPERID",superid);
+										}
+									}
 									session.setString(SessionManagement.KEY_SETCNTOPEN,cntopen);
 
 								session.SetAgentID(agentid);
@@ -614,7 +621,7 @@ public void loginRetrofit(){
 								session.setString(SessionManagement.KEY_SETBILLERS,"N");
 								session.setString(SessionManagement.KEY_SETWALLETS,"N");
 								session.setString(SessionManagement.KEY_SETAIRTIME,"N");
-//
+
                                 session.createLoginSession();
 
 								boolean checknewast = session.checkAst();

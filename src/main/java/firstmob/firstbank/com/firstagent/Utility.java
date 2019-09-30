@@ -871,8 +871,12 @@ changeddate = dateFormat.format(datefrom);
 			}
 		}
 
+
+
 		return changeddate;
 	}
+
+
 public static boolean compareversionsupdate(String server,String device){
 	String[] v1 = device.split("\\.");
 	String[] v2 = server.split("\\.");

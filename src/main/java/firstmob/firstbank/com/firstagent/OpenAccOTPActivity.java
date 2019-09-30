@@ -296,6 +296,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
 
                     String respcode = obj.optString("responseCode");
                     String responsemessage = obj.optString("message");
+                    JSONObject datas = obj.optJSONObject("data");
 
 
                     if(!(response.body() == null)) {
@@ -303,14 +304,19 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
                             if (!(Utility.checkUserLocked(respcode))) {
                                 if (respcode.equals("00")) {
 
+                                    String acno = "";
+                                    if(!(datas == null)){
+                                        acno = datas.optString("accountNumber")  ;
+                                    }
+
                                     SecurityLayer.Log("Response Message", responsemessage);
                                     Toast.makeText(
                                             getApplicationContext(),
                                             "Account Opening request has been successfully received ",
                                             Toast.LENGTH_LONG).show();
                                     finish();
-                                    Intent i = new Intent(OpenAccOTPActivity.this, FMobActivity.class);
-                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    Intent i = new Intent(OpenAccOTPActivity.this, FinalConfAccountOpening.class);
+                                    i.putExtra("accountno", acno);
                                     startActivity(i);
 
                                 } else {
@@ -382,106 +388,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
                 }
             }
         });
-     /*   client.post(url, new AsyncHttpResponseHandler() {
-            // When the response returned by REST has Http response code '200'
-            @Override
-            public void onSuccess(String response) {
-                // Hide Progress Dialog
-                pDialog.dismiss();
-                try {
-                    // JSON Object
-                    SecurityLayer.Log("response..:", response);
 
-
-                    JSONObject obj = new JSONObject(response);
-                 *//*   JSONObject jsdatarsp = obj.optJSONObject("data");
-                    SecurityLayer.Log("JSdata resp", jsdatarsp.toString());
-                    //obj = Utility.onresp(obj,getApplicationContext()); *//*
-                    obj = SecurityLayer.decryptTransaction(obj, getApplicationContext());
-                    SecurityLayer.Log("decrypted_response", obj.toString());
-
-                    String respcode = obj.optString("responseCode");
-                    String responsemessage = obj.optString("message");
-
-
-
-                    //session.setString(SecurityLayer.KEY_APP_ID,appid);
-
-                    if (Utility.isNotNull(respcode) && Utility.isNotNull(responsemessage)) {
-                        SecurityLayer.Log("Response Message", responsemessage);
-
-                        if (respcode.equals("00")) {
-                           *//* JSONObject datas = obj.optJSONObject("data");
-
-                            final   String agid = agentid.getText().toString();
-
-                            String status = datas.optString("status");
-
-
-
-
-                            finish();
-                            Intent mIntent = new Intent(getApplicationContext(), ActivateAgent.class);
-
-                            startActivity(mIntent);*//*
-
-
-                        }
-                        else {
-
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    responsemessage,
-                                    Toast.LENGTH_LONG).show();
-
-
-                        }
-
-                    }
-                    else {
-
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "There was an error on your request",
-                                Toast.LENGTH_LONG).show();
-
-
-                    }
-
-                } catch (JSONException e) {
-                    SecurityLayer.Log("encryptionJSONException", e.toString());
-                    // TODO Auto-generated catch block
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
-                    // SecurityLayer.Log(e.toString());
-
-                } catch (Exception e) {
-                    SecurityLayer.Log("encryptionJSONException", e.toString());
-                    // SecurityLayer.Log(e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Throwable error,
-                                  String content) {
-
-                // Hide Progress Dialog
-                pDialog.dismiss();
-                SecurityLayer.Log("error:", error.toString());
-                // When Http response code is '404'
-                if (statusCode == 404) {
-                    Toast.makeText(getApplicationContext(), "We are unable to process your request at the moment. Please try again later", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code is '500'
-                else if (statusCode == 500) {
-                    Toast.makeText(getApplicationContext(), "We are unable to process your request at the moment. Please try again later", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code other than 404, 500
-                else {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });*/
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -837,7 +744,7 @@ String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/"+strsalut+"/"+strfname+"/"+s
             bundle.putString("fname", strfname);
             bundle.putString("lname", strlname);
             bundle.putString("midname", strmidnm);
-            bundle.putString("yob", stryob);
+            bundle.putString("yob", stry
             bundle.putString("gender", strgender);
             bundle.putString("city", strcity);
             bundle.putString("state", strstate);
@@ -1032,81 +939,6 @@ if(session.getString("ISBVN").equals("Y")) {
             }
 
         }
-    }
-
-
-    public void invokeWS( String acctype,String msisdn,String id,String fname,String lname,String yearob){
-        // Show Progress Dialog
-        prgDialog.show();
-
-        // Make RESTful webservice call using AsyncHttpClient object
-        final AsyncHttpClient client = new AsyncHttpClient();
-        client.setTimeout(35000);
-        HashMap<String, String> nurl = session.getNetURL();
-        String newurl = nurl.get(SessionManagement.NETWORK_URL);
-        client.setURLEncodingEnabled(true);
-
-
-        HashMap<String, String> stuse = session.getDisp();
-        String username = stuse.get(SessionManagement.KEY_DISP);
-        String url =   ApplicationConstants.NET_URL+ApplicationConstants.AND_ENPOINT+"agencyopenAccount/1/01261/"+ msisdn+"/1/"+id+"/"+fname+"/"+lname+"/"+yearob+"/ANDROID/"+username;
-
-        SecurityLayer.Log("Open Acc URL",url);
-
-        client.post(url,new AsyncHttpResponseHandler() {
-            // When the response returned by REST has Http response code '200'
-            @Override
-            public void onSuccess(String response) {
-                // Hide Progress Dialog
-                prgDialog.hide();
-                try {
-                    // JSON Object
-                    SecurityLayer.Log("response..:", response);
-                    JSONObject obj = new JSONObject(response);
-
-
-                    String rpcode = obj.optString("responsecode");
-                    String rsmesaage = obj.optString("responsemessage");
-                    String fname = obj.optString("fullname");
-                    String mno = obj.optString("mobilenumber");
-                    SecurityLayer.Log("Response Code", rsmesaage);
-                    if (rpcode.equals("00")) {
-
-                    } else {
-
-
-                    }
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    SetDialog(" The device has not successfully connected to server. Please check your internet settings","Check Settings");
-                    e.printStackTrace();
-
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onFailure(int statusCode, Throwable error,
-                                  String content) {
-
-                // Hide Progress Dialog
-                prgDialog.hide();
-                // When Http response code is '404'
-                if(statusCode == 404){
-                    Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code is '500'
-                else if(statusCode == 500){
-                    Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code other than 404, 500
-                else{
-                    SetDialog(" The device has not successfully connected to server. Please check your internet settings","Check Settings");
-                }
-            }
-        });
     }
 
 
@@ -1364,22 +1196,28 @@ if(session.getString("ISBVN").equals("Y")) {
 
                     String respcode = obj.optString("responseCode");
                     String responsemessage = obj.optString("message");
-
+                    JSONObject datas = obj.optJSONObject("data");
 
                     if (!(response.body() == null)) {
                         if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
                             if (!(Utility.checkUserLocked(respcode))) {
                                 if (respcode.equals("00")) {
+                                    String acno = "";
+                                    if(!(datas == null)){
+                                        acno = datas.optString("accountNumber")  ;
+                                    }
 
                                     SecurityLayer.Log("Response Message", responsemessage);
                                     Toast.makeText(
                                             getApplicationContext(),
                                             "Account Opening request has been successfully received ",
                                             Toast.LENGTH_LONG).show();
+
                                     finish();
-                                    Intent i = new Intent(OpenAccOTPActivity.this, FMobActivity.class);
-                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    Intent i = new Intent(OpenAccOTPActivity.this, FinalConfAccountOpening.class);
+                                    i.putExtra("accountno", acno);
                                     startActivity(i);
+
 
                                 } else {
                                     Toast.makeText(

@@ -29,7 +29,6 @@ android {
         vectorDrawables.useSupportLibrary = true
 
 
-
     }
 
     flavorDimensions "default"
@@ -40,7 +39,7 @@ android {
     }
     buildTypes {
         debug {
-           applicationIdSuffix ".debug"
+            applicationIdSuffix ".debug"
 
         }
         release {
@@ -119,9 +118,9 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.android.support:design:25.3.0'
 
-       implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
+    implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
 
-      implementation 'com.google.firebase:firebase-ml-vision-face-model:17.0.2'
+    implementation 'com.google.firebase:firebase-ml-vision-face-model:17.0.2'
 
 
     compile 'commons-codec:commons-codec:1.10'

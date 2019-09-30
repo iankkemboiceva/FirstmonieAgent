@@ -99,6 +99,7 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
     private Button mClearButton;
     private Button mSaveButton;
     FileCompressor mCompressor;
+    boolean hasSigned = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,6 +191,7 @@ lyupl.setVisibility(View.VISIBLE);
             @Override
             public void onStartSigning() {
              //   Toast.makeText(OpenAccCustPicActivity.this, "OnStartSigning", Toast.LENGTH_SHORT).show();
+                hasSigned = true;
             }
 
             @Override
@@ -202,6 +204,7 @@ lyupl.setVisibility(View.VISIBLE);
             public void onClear() {
                 mSaveButton.setEnabled(false);
                 mClearButton.setEnabled(false);
+                hasSigned = false;
             }
         });
 
@@ -729,12 +732,18 @@ if(uploadpic) {
                 ((FMobActivity)getApplicationContext())
                         .setActionBarTitle("Step Four");
                 fragmentTransaction.commit();*/
+if(hasSigned) {
+    Bitmap signatureBitmap = mSignaturePad.getSignatureBitmap();
+    Bitmap thumbnail = null;
 
-            Bitmap signatureBitmap = mSignaturePad.getSignatureBitmap();
-            Bitmap thumbnail = null;
 
-
-            convertSignedImage(signatureBitmap);
+    convertSignedImage(signatureBitmap);
+}else{
+    Toast.makeText(
+            getApplicationContext(),
+            "The customer has to provide a signature to proceed",
+            Toast.LENGTH_LONG).show();
+}
 
         }
         if(view.getId()==  R.id.button4){

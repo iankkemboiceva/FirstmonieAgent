@@ -15,8 +15,8 @@ import java.util.concurrent.Callable;
  */
 public class FileCompressor {
     //max width and height values of the compressed image is taken as 612x816
-    private int maxWidth = 180;
-    private int maxHeight = 180;
+    private int maxWidth = 100;
+    private int maxHeight = 100;
     private Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.JPEG;
     private int quality = 40;
     private String destinationDirectoryPath;
@@ -53,9 +53,9 @@ public class FileCompressor {
 
     public File compressToFile(File imageFile, String type) throws IOException {
         if(type.equals("S")){
-           /* maxHeight =  340;
-            maxWidth = 180;*/
-             quality = 20;
+            maxHeight =  100;
+            maxWidth = 100;
+
 
         }
         return ImageUtilities.compressImage(imageFile, maxWidth, maxHeight, compressFormat, quality,
