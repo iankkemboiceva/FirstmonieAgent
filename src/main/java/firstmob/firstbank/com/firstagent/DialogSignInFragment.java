@@ -39,7 +39,7 @@ public class DialogSignInFragment extends DialogFragment implements View.OnClick
     Button btnconfirm;
     ProgressDialog pro ;
     TextView txserv;
-    String serv,encpin;
+    String encpin;
     private PinLockView mPinLockView;
     private IndicatorDots mIndicatorDots;
     ImageView imv;
@@ -92,8 +92,8 @@ String finpin;
 
 
         Bundle bundle = getArguments();
-        serv = bundle.getString("SERV","");
-        if(serv.equals("PROF")) {
+
+        /*if(serv.equals("PROF")) {
             txserv.setText("My Profile");
         }
         if(serv.equals("MYPERF")) {
@@ -108,7 +108,7 @@ String finpin;
         }
         if(serv.equals("COMM")) {
             txserv.setText("Commission Wallet");
-        }
+        }*/
 
         mPinLockView = (PinLockView) view.findViewById(R.id.pin_lock_view);
         mPinLockView.setPinLockListener(mPinLockListener);
@@ -124,7 +124,7 @@ String finpin;
     }
 
 
-    private void LogRetro(String params, final String service) {
+    private void LogRetro(String params) {
 
 
         pro.show();
@@ -181,7 +181,7 @@ String finpin;
 
                     if (Utility.isNotNull(respcode) && Utility.isNotNull(responsemessage)) {
                         if ((Utility.checkUserLocked(respcode))) {
-                            ((FMobActivity) getActivity()).LogOut();
+                          //  ((SignInActivity) getActivity()).LogOut();
                         }
                         SecurityLayer.Log("Response Message", responsemessage);
 
@@ -197,6 +197,13 @@ String finpin;
                                     mIntent.putExtra("pinna", encpin);
                                     startActivity(mIntent);
                                 }else {
+
+
+                                    getActivity().finish();
+                                    startActivity(new Intent(getActivity(), SupHomeActivity.class));
+                                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                                    /*
                                     if (service.equals("PROF")) {
 //                                        Fragment fragment = new ChangeACName();
 //                                        String title = "Mini Statement";
@@ -205,37 +212,37 @@ String finpin;
                                         startActivity(new Intent(getActivity(), ChangeAcNameActivity.class));
                                     }
                                     if (service.equals("MYPERF")) {
-                                   /* android.app.Fragment  fragmennt = new SelChartNewVers();
+                                   *//* android.app.Fragment  fragmennt = new SelChartNewVers();
                                     String titlee = "My Performance";
-                                    ((FMobActivity) getActivity()).addAppFragment(fragmennt,titlee);*/
+                                    ((FMobActivity) getActivity()).addAppFragment(fragmennt,titlee);*//*
 
                                         startActivity(new Intent(getActivity(), MyPerfActivity.class));
                                     }
                                     if (service.equals("INBOX")) {
-                                 /*   android.app.Fragment  fragmennt = new Inbox();
+                                 *//*   android.app.Fragment  fragmennt = new Inbox();
                                     String titlee = "Inbox";
-                                    ((FMobActivity) getActivity()).addAppFragment(fragmennt,titlee);*/
+                                    ((FMobActivity) getActivity()).addAppFragment(fragmennt,titlee);*//*
 
 
                                         startActivity(new Intent(getActivity(), InboxActivity.class));
                                     }
 
                                     if (service.equals("MINIST")) {
-                                      /*  android.app.Fragment fragment = new Minstat();
+                                      *//*  android.app.Fragment fragment = new Minstat();
                                         String title = "Mini Statement";
-                                        ((FMobActivity) getActivity()).addAppFragment(fragment, title);*/
+                                        ((FMobActivity) getActivity()).addAppFragment(fragment, title);*//*
 
                                         startActivity(new Intent(getActivity(), MinistatActivity.class));
                                     }
                                     if (service.equals("COMM")) {
-                                  /*  android.app.Fragment  fragment = new CommReport();
+                                  *//*  android.app.Fragment  fragment = new CommReport();
 
 
                                     String title = "Commissions Report";
-                                    ((FMobActivity)getActivity()).addAppFragment(fragment,title);*/
+                                    ((FMobActivity)getActivity()).addAppFragment(fragment,title);*//*
 
                                         startActivity(new Intent(getActivity(), CommissionActivity.class));
-                                    }
+                                    }*/
                                 }
                             }
                         }   else if(respcode.equals("002")){
@@ -244,7 +251,7 @@ String finpin;
                                     getActivity(), responsemessage,
                                     Toast.LENGTH_LONG).show();
 
-                            ((FMobActivity) getActivity()).showEditDialog(serv);
+                            ((SignInActivity) getActivity()).showEditDialog();
                         }
                         else {
 
@@ -276,13 +283,11 @@ setDialog(responsemessage);
                     if (!(getActivity() == null)){
                         Toast.makeText(getActivity(), getActivity().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
                     // SecurityLayer.Log(e.toString());
-                    ((FMobActivity) getActivity()).SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getActivity());
                 }
 
                 } catch (Exception e) {
                     SecurityLayer.Log("encryptionJSONException", e.toString());
                     if (!(getActivity() == null)) {
-                        ((FMobActivity) getActivity()).SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getActivity());
                     }
                     // SecurityLayer.Log(e.toString());
                 }
@@ -300,7 +305,6 @@ setDialog(responsemessage);
                             getActivity(),
                             "There was an error processing your request",
                             Toast.LENGTH_LONG).show();
-                    ((FMobActivity) getActivity()).SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getActivity());
 
                 }
 
@@ -322,7 +326,7 @@ setDialog(responsemessage);
                 String mobnoo = Utility.gettUtilMobno(getActivity());
                 SecurityLayer.Log("Base64 Pin",encpin);
                 String params = "1" + "/" + usid + "/" + encpin + "/" + mobnoo;
-                LogRetro(params, serv);
+                LogRetro(params);
             }else{
                 Toast.makeText(
                         getActivity(),

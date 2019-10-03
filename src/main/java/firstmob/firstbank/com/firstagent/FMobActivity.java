@@ -56,7 +56,7 @@ public class FMobActivity extends BaseActivity implements FragmentDrawer.Fragmen
     ProgressDialog pro ;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
-    public static final long DISCONNECT_TIMEOUT = 180000; // 5 min = 5 * 60 * 1000 ms
+    public static final long DISCONNECT_TIMEOUT = 180000;
 
 
     @Override
@@ -113,54 +113,7 @@ public class FMobActivity extends BaseActivity implements FragmentDrawer.Fragmen
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-  /*  private void enableViews(boolean enable) {
 
-        // To keep states of ActionBar and ActionBarDrawerToggle synchronized,
-        // when you enable on one, you disable on the other.
-        // And as you may notice, the order for this operation is disable first, then enable - VERY VERY IMPORTANT.
-        if(enable) {
-//You may not want to open the drawer on swipe from the left in this case
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-// Remove hamburger
-            dra.setDrawerIndicatorEnabled(false);
-            // Show back button
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            // when DrawerToggle is disabled i.e. setDrawerIndicatorEnabled(false), navigation icon
-            // clicks are disabled i.e. the UP button will not work.
-            // We need to add a listener, as in below, so DrawerToggle will forward
-            // click events to this listener.
-            if(!mToolBarNavigationListenerIsRegistered) {
-                mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Doesn't have to be onBackPressed
-                        onBackPressed();
-                    }
-                });
-
-                mToolBarNavigationListenerIsRegistered = true;
-            }
-
-        } else {
-//You must regain the power of swipe for the drawer.
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-
-// Remove back button
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            // Show hamburger
-            .setDrawerIndicatorEnabled(true);
-            // Remove the/any drawer toggle listener
-            mDrawerToggle.setToolbarNavigationClickListener(null);
-            mToolBarNavigationListenerIsRegistered = false;
-        }
-
-        // So, one may think "Hmm why not simplify to:
-        // .....
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(enable);
-        // mDrawer.setDrawerIndicatorEnabled(!enable);
-        // ......
-        // To re-iterate, the order in which you enable and disable views IS important #dontSimplify.
-    }*/
   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -315,97 +268,6 @@ showEditDialog("MYPERF");
                 break;
 
 
-         /*   case 40:
-
-                fragment = new HomeAccountFragNewUI();
-                title = "Welcome";
-
-                break;
-            case 0:
-
-                fragment = new HomeAccountFragNewUI();
-                title = "Welcome";
-
-                break;
-
-            case 1:
-                fragment = new CashDepo();
-                title = "Deposit";
-
-                break;
-
-
-            case 2:
-
-                fragment = new FTMenu();
-                title = "Transfer";
-                break;
-            case 3:
-                fragment = new Withdraw();
-                title = "Withdrawal";
-                break;
-            case 4:
-                fragment = new BillMenu();
-                title = "Billers";
-                break;
-            case 5:
-                fragment = new AirtimeTransf();
-                title = "Airtime Transfer";
-                break;
-            *//*case 6:
-
-
-                fragment = new OpenAcc();
-                title = "Open Account";
-                //   Toast.makeText(FMobActivity.this, "Open Account coming soon", Toast.LENGTH_LONG).show();
-                break;*//*
-
-
-            case 6:
-
-                android.app.Fragment   fragmentt = new SelChart();
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                android.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                //  String tag = Integer.toString(title);
-                fragmentTransaction.replace(R.id.container_body, fragmentt,title);
-
-                fragmentTransaction.addToBackStack(null);
-
-                fragmentTransaction.commit();
-
-                break;
-
-
-            case 7:
-
-                fragment = new ChangeACName();
-                title = "My Profile";
-
-                break;
-            case 9:
-
-
-                fragment = new ComingSoon();
-                title = "Coming Soon";
-                //  Toast.makeText(FMobActivity.this, "Chat Feature coming soon", Toast.LENGTH_LONG).show();
-                break;
-            case 10:
-
-          *//* fragment = new RequestbankVisit();
-                title = "Bank Visit";*//*
-                fragment = new ComingSoon();
-                title = "Coming Soon";
-                break;
-            case 8:
-                Toast.makeText(FMobActivity.this, "You have successfully signed out", Toast.LENGTH_LONG).show();
-
-                finish();
-                Intent i = new Intent(FMobActivity.this, SignInActivity.class);
-
-                startActivity(i);
-
-                break;*/
-
             default:
                 break;
         }
@@ -507,102 +369,8 @@ showEditDialog("MYPERF");
 
 
         if(bentry2 > 0){
-/*finish();
-            startActivity(new Intent(getApplicationContext(),FMobActivity.class));*/
-        /*   Fragment fragment = null;
-            String title = null;
-            String list = session.getString("VTYPE");
-            if( list == null){
-                fragment = new NewHomeGrid();
-            }else {
-                if (list.equals("N") || list.equals("grid")) {
-                    fragment = new NewHomeGrid();
-                }
-                if (list.equals("list")) {
-                    fragment = new HomeAccountFragNewUI();
-                }
-            }
-            title = "Welcome";
 
-           addFragment(fragment,title);
-            String ide = null;
-            for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
-                ide = fm.getBackStackEntryAt(entry).getName();
-                Log.i("TAG", "Found fragment: " + ide);
-            }*/
-        }/*else if(bentry > 0) {
-
-finish();
-
-            startActivity(new Intent(getApplicationContext(),FMobActivity.class));
-
-          *//*  String ide = null;
-            for (int entry = 0; entry < fm.getBackStackEntryCount(); entry++) {
-                ide = fm.getBackStackEntryAt(entry).getName();
-                Log.i("TAG", "Found fragment: " + ide);
-            }
-*//*
-        }else {
-
-            new MaterialDialog.Builder(FMobActivity.this)
-                    .title("Confirm Exit")
-                    .content("Are you sure you want to exit from FirstAgent? ")
-                    .positiveText("YES")
-                    .negativeText("NO")
-
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                          *//*  finish();
-                            session.logoutUser();*//*
-                            //  checkConnBio();
-                            session.logoutUser();
-
-                            // After logout redirect user to Loing Activity
-                            Intent i = new Intent(getApplicationContext(), SignInActivity.class);
-
-                            // Staring Login Activity
-                            startActivity(i);
-                            Toast.makeText(getApplicationContext(), "You have logged out successfully", Toast.LENGTH_LONG).show();
-
-
-                        }
-
-                        @Override
-                        public void onNegative(MaterialDialog dialog) {
-                            // dialog.dismiss();
-                            Fragment fragment = null;
-                            String list = session.getString("VTYPE");
-
-                            String title = "Welcome";
-                            if (list == null) {
-                                fragment = new NewHomeGrid();
-                            }else {
-                                if (list.equals("N") || list.equals("grid")) {
-                                    fragment = new NewHomeGrid();
-                                }
-                                if (list.equals("list")) {
-                                    fragment = new HomeAccountFragNewUI();
-                                }
-                            }
-                            title = "Welcome";
-                            FragmentManager fragmentManager = getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            //  String tag = Integer.toString(title);
-                            fragmentTransaction.replace(R.id.container_body, fragment, title);
-
-                            fragmentTransaction.addToBackStack(title);
-
-                            fragmentTransaction.commit();
-
-                            // set the toolbar title
-                            // getSupportActionBar().setTitle(title);
-                        }
-                    })
-                    .show();
-
-
-        }*/
+        }
 
         super.onBackPressed();
     }
@@ -649,29 +417,7 @@ finish();
     @Override
     public void onResume() {
         super.onResume();
-      /* *//* resetDisconnectTimer();*/
 
-     /*   HashMap<String, Long> nurl = session.getCurrTime();
-        long newurl = nurl.get(SessionManagement.KEY_TIMEST);
-
-        if (newurl > 0) {
-            long secs = (new Date().getTime()) / 1000;
-            long diff = 0;
-            if (secs >= newurl) {
-                diff = secs - newurl;
-                if (diff > 180) {
-
-                    this.finish();
-                //    session.logoutUser();
-                    // After logout redirect user to Loing Activity
-                    Intent i = new Intent(FMobActivity.this, FMobActivity.class);
-
-                    // Staring Login Activity
-                    startActivity(i);
-                 //   Toast.makeText(FMobActivity.this, "Your session has expired. Please login again", Toast.LENGTH_LONG).show();
-                }
-            }
-        }*/
     }
 
 
@@ -692,121 +438,6 @@ public  void LogOut(){
    // Toast.makeText(getApplicationContext(), "You have logged out successfully", Toast.LENGTH_LONG).show();
 
 }
-
-    private void LogRetro(String params) {
-
-
-        pro.show();
-        String endpoint= "login/login.action/";
-
-        String urlparams = "";
-        try {
-            urlparams = SecurityLayer.generalLogin(params,"23322",getApplicationContext(),endpoint);
-            //SecurityLayer.Log("cbcurl",url);
-            SecurityLayer.Log("RefURL",urlparams);
-            SecurityLayer.Log("refurl", urlparams);
-            SecurityLayer.Log("params", params);
-        } catch (Exception e) {
-            SecurityLayer.Log("encryptionerror",e.toString());
-        }
-
-
-
-
-
-        ApiInterface apiService =
-                ApiSecurityClient.getClient(getApplicationContext()).create(ApiInterface.class);
-
-
-        Call<String> call = apiService.setGenericRequestRaw(urlparams);
-
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                try {
-                    // JSON Object
-                    SecurityLayer.Log("response..:", response.body());
-
-
-                    JSONObject obj = new JSONObject(response.body());
-                 /*   JSONObject jsdatarsp = obj.optJSONObject("data");
-                    SecurityLayer.Log("JSdata resp", jsdatarsp.toString());
-                    //obj = Utility.onresp(obj,getActivity()); */
-                    obj = SecurityLayer.decryptGeneralLogin(obj, getApplicationContext());
-                    SecurityLayer.Log("decrypted_response", obj.toString());
-
-                    String respcode = obj.optString("responseCode");
-                    String responsemessage = obj.optString("message");
-
-
-
-
-                    JSONObject datas = obj.optJSONObject("data");
-
-                    //session.setString(SecurityLayer.KEY_APP_ID,appid);
-
-                    if (Utility.isNotNull(respcode) && Utility.isNotNull(responsemessage)) {
-                        SecurityLayer.Log("Response Message", responsemessage);
-
-                        if (respcode.equals("00")) {
-                            if (!(datas == null)) {
-                                android.app.Fragment  fragment = new Minstat();
-                                String title = "Mini Statement";
-                                addAppFragment(fragment,title);
-                            }
-                        }
-                        else {
-
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    responsemessage,
-                                    Toast.LENGTH_LONG).show();
-
-
-                        }
-
-                    }
-                    else {
-
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "There was an error on your request",
-                                Toast.LENGTH_LONG).show();
-
-
-                    }
-
-                } catch (JSONException e) {
-                    SecurityLayer.Log("encryptionJSONException", e.toString());
-                    // TODO Auto-generated catch block
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
-                    // SecurityLayer.Log(e.toString());
-
-                } catch (Exception e) {
-                    SecurityLayer.Log("encryptionJSONException", e.toString());
-                    // SecurityLayer.Log(e.toString());
-                }
-                if ((pro != null) && pro.isShowing() && !(getApplicationContext() == null)) {
-                    pro.dismiss();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                // Log error here since request failed
-                SecurityLayer.Log("Throwable error",t.toString());
-                Toast.makeText(
-                        getApplicationContext(),
-                        "There was an error processing your request",
-                        Toast.LENGTH_LONG).show();
-                if ((pro != null) && pro.isShowing() && !(getApplicationContext() == null)) {
-                    pro.dismiss();
-                }
-
-            }
-        });
-
-    }
 
     public void SetForceOutDialog(String msg, final String title, final Context c) {
         if (!(c == null)) {
@@ -841,10 +472,6 @@ FMobActivity.this.finish();
     }
 
 
-    public  void SetCorrectActionBar(){
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
+
 
 }

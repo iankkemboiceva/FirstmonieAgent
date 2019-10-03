@@ -37,7 +37,7 @@
 
 android:layout_marginLeft="10dp"
 
-                        android:text="Inbox"
+                        android:text="Supervisor Login"
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimary"
                         android:textSize="15sp" />
@@ -64,7 +64,7 @@ android:layout_marginLeft="10dp"
                 android:layout_gravity="center_horizontal"
 android:layout_marginTop="20dp"
 
-                android:text="Enter Pin"
+                android:text="Enter Supervisor Pin"
                 android:textColor="@color/fab_material_grey_900"
                 android:textSize="17sp" />
     <com.andrognito.pinlockview.IndicatorDots

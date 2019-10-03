@@ -110,6 +110,18 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
+            android:name=".LoanRequest"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".ConfirmLoanRequest"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".LoanRequestConfirm"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name" />
+        <activity
             android:name=".HomeActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
@@ -369,7 +381,8 @@
         <activity android:name=".OpenAccBVN" />
         <activity android:name=".OpenAccBVNConfirm" />
         <activity android:name=".ChooseBVNorNoBVN" />
-        <activity android:name=".FinalConfAccountOpening"></activity>
+        <activity android:name=".FinalConfAccountOpening" />
+        <activity android:name=".SupHomeActivity"></activity>
     </application>
 
 </manifest>

@@ -30,6 +30,7 @@ import com.google.android.gms.security.ProviderInstaller;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -503,6 +504,16 @@ pDialog.hide();
                                 //    session.SetUserID(agid);
                                 session.SetAgentID(agent);
                                 session.setString(AGMOB,mobno);
+                                JSONArray admusers = datas.optJSONArray("adminUsers");
+                                JSONObject json_data = null;
+                                for (int i = 0; i < admusers.length(); i++) {
+                                    json_data = admusers.getJSONObject(i);
+                                    String role = json_data.optString("role");
+                                    String superid = json_data.optString("userid");
+                                    if(role.equals("MS")){
+                                        session.setString("SUPERID",superid);
+                                    }
+                                }
                                 if(status.equals("F")) {
                                     finish();
                                     Intent mIntent = new Intent(getApplicationContext(), ForceChangePin.class);

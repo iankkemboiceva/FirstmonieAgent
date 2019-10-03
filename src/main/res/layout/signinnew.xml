@@ -116,17 +116,30 @@ android:weightSum="100"
                         android:orientation="horizontal"
                         android:layout_weight="10"
                         >
+                        <TextView
+                            android:id="@+id/text14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+
+
+
+android:layout_centerHorizontal="true"
+                            android:layout_marginTop="1dp"
+                            android:text="Login as Supervisor"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/text13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-               android:layout_gravity="center_horizontal"
-                android:gravity="center"
+                android:layout_below="@+id/text14"
+
                 android:layout_marginBottom="5dp"
 
-
-                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
                 android:text="Get Help"
                 android:textColor="@color/colorPrimary"
                 android:textSize="17sp" />

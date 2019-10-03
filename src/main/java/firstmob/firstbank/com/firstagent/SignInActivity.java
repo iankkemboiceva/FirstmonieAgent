@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -156,7 +157,7 @@ boolean chkv = false;
 	private FingerprintManager.CryptoObject cryptoObject;
 	private PinLockView mPinLockView;
 	private IndicatorDots mIndicatorDots;
-	TextView txappvers;
+	TextView txappvers,txlogsup;
 
 String finpin;
 	private PinLockListener mPinLockListener = new PinLockListener() {
@@ -201,6 +202,8 @@ pro = new ProgressDialog(this);
 		txappvers = (TextView) findViewById(R.id.versname);
 		registeruser = (TextView) findViewById(R.id.text17);
 		registeruser.setOnClickListener(this);
+		txlogsup = (TextView) findViewById(R.id.text14);
+		txlogsup.setOnClickListener(this);
 		session = new SessionManagement(getApplicationContext());
 	//	datetime = (TextView) findViewById(R.id.txt10);
 
@@ -223,6 +226,8 @@ pro = new ProgressDialog(this);
 		gethelp.setOnClickListener(this);
 		signinn = (Button) findViewById(R.id.signinn);
 		signinn.setOnClickListener(this);
+		String supervis = session.getString("SUPERID");
+	//	Toast.makeText(getApplicationContext(), "Supervisor is "+supervis, Toast.LENGTH_LONG).show();
 		updateAndroidSecurityProvider(this);
 
 
@@ -314,7 +319,11 @@ onKeyMetric();
 
 			startActivity(new Intent(getApplicationContext(),GetHelpActivity.class));
 		}
-	
+		if (v.getId() == R.id.text14) {
+			//	checkInternetConnection();
+
+			showEditDialog();
+		}
 
 	}
 
@@ -946,4 +955,12 @@ public void loginRetrofit(){
 			pro.dismiss();
 		}
 	}
+
+	public void showEditDialog() {
+		FragmentManager fm = getSupportFragmentManager();
+		DialogSignInFragment editNameDialog = new DialogSignInFragment();
+
+		editNameDialog.show(fm, "fragment_edit_name");
+	}
+
 }
