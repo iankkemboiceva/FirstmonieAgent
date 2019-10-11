@@ -13,7 +13,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     buildToolsVersion '28.0.2'
     useLibrary 'org.apache.http.legacy'
 
@@ -21,9 +21,9 @@ android {
     defaultConfig {
         applicationId "firstmob.firstbank.com.firstagent"
         minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 21
-        versionName "1.6.0"
+        targetSdkVersion 28
+        versionCode 22
+        versionName "1.6.5"
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true

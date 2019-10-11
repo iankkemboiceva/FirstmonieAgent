@@ -102,7 +102,7 @@ RelativeLayout rlagfee,rlaccom;
 RelativeLayout rlsave,rlshare;
     HashMap<String, UsbDevice> mDeviceList;
     Iterator<UsbDevice> mDeviceIterator;
-    TextView edagname,edattid,edagid;
+    TextView edagname,edattid,edagid,edtxtype;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +114,7 @@ RelativeLayout rlsave,rlshare;
         setSupportActionBar(toolbar);
 
         recacno = (TextView) findViewById(R.id.textViewnb2);
+        edtxtype = (TextView) findViewById(R.id.textView1);
         txtrfcd = (TextView) findViewById(R.id.txtrfcd);
         recname = (TextView) findViewById(R.id.textViewcvv);
         etpin = (EditText) findViewById(R.id.pin);
@@ -225,6 +226,7 @@ RelativeLayout rlsave,rlshare;
             if(trantype.equals("D")){
                 rlsendname.setVisibility(View.GONE);
                 rlsendno.setVisibility(View.GONE);
+                edtxtype.setText("CASH DEPOSIT SUCCESSFUL");
             }
             recacno.setText(recanno);
             recname.setText(txtname);

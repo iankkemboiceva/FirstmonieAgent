@@ -39,7 +39,7 @@ public class DialogSignInFragment extends DialogFragment implements View.OnClick
     Button btnconfirm;
     ProgressDialog pro ;
     TextView txserv;
-    String encpin;
+    String serv,encpin;
     private PinLockView mPinLockView;
     private IndicatorDots mIndicatorDots;
     ImageView imv;
@@ -93,7 +93,9 @@ String finpin;
 
         Bundle bundle = getArguments();
 
-        /*if(serv.equals("PROF")) {
+        serv = bundle.getString("SERV","");
+
+        if(serv.equals("PROF")) {
             txserv.setText("My Profile");
         }
         if(serv.equals("MYPERF")) {
@@ -108,7 +110,7 @@ String finpin;
         }
         if(serv.equals("COMM")) {
             txserv.setText("Commission Wallet");
-        }*/
+        }
 
         mPinLockView = (PinLockView) view.findViewById(R.id.pin_lock_view);
         mPinLockView.setPinLockListener(mPinLockListener);
@@ -124,7 +126,7 @@ String finpin;
     }
 
 
-    private void LogRetro(String params) {
+    private void LogRetro(String params, final String service) {
 
 
         pro.show();
@@ -199,50 +201,41 @@ String finpin;
                                 }else {
 
 
-                                    getActivity().finish();
+                                   /* getActivity().finish();
                                     startActivity(new Intent(getActivity(), SupHomeActivity.class));
-                                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
 
-                                    /*
+
                                     if (service.equals("PROF")) {
-//                                        Fragment fragment = new ChangeACName();
-//                                        String title = "Mini Statement";
-//                                        ((FMobActivity) getActivity()).addFragment(fragment, title);
-
+//
                                         startActivity(new Intent(getActivity(), ChangeAcNameActivity.class));
                                     }
                                     if (service.equals("MYPERF")) {
-                                   *//* android.app.Fragment  fragmennt = new SelChartNewVers();
-                                    String titlee = "My Performance";
-                                    ((FMobActivity) getActivity()).addAppFragment(fragmennt,titlee);*//*
+
+
 
                                         startActivity(new Intent(getActivity(), MyPerfActivity.class));
                                     }
                                     if (service.equals("INBOX")) {
-                                 *//*   android.app.Fragment  fragmennt = new Inbox();
-                                    String titlee = "Inbox";
-                                    ((FMobActivity) getActivity()).addAppFragment(fragmennt,titlee);*//*
+
+
 
 
                                         startActivity(new Intent(getActivity(), InboxActivity.class));
                                     }
 
                                     if (service.equals("MINIST")) {
-                                      *//*  android.app.Fragment fragment = new Minstat();
-                                        String title = "Mini Statement";
-                                        ((FMobActivity) getActivity()).addAppFragment(fragment, title);*//*
+
+
 
                                         startActivity(new Intent(getActivity(), MinistatActivity.class));
                                     }
                                     if (service.equals("COMM")) {
-                                  *//*  android.app.Fragment  fragment = new CommReport();
 
 
-                                    String title = "Commissions Report";
-                                    ((FMobActivity)getActivity()).addAppFragment(fragment,title);*//*
 
                                         startActivity(new Intent(getActivity(), CommissionActivity.class));
-                                    }*/
+                                    }
                                 }
                             }
                         }   else if(respcode.equals("002")){
@@ -322,11 +315,11 @@ setDialog(responsemessage);
               encpin =   Utility.b64_sha256(finpin);
                 SecurityLayer.Log("Enc Pin",encpin);
                // encpin = Utility.b64_sha256(encpin);
-                String usid = session.getString("SUPERID");
+                String usid = Utility.gettUtilUserId(getActivity());
                 String mobnoo = Utility.gettUtilMobno(getActivity());
                 SecurityLayer.Log("Base64 Pin",encpin);
                 String params = "1" + "/" + usid + "/" + encpin + "/" + mobnoo;
-                LogRetro(params);
+                LogRetro(params,serv);
             }else{
                 Toast.makeText(
                         getActivity(),

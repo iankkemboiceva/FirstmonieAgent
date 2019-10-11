@@ -113,7 +113,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 28 Platform (1)" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-solver:1.0.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-messaging-17.3.4" level="project" />
@@ -196,6 +196,6 @@
     <orderEntry type="library" name="Gradle: com.crashlytics.sdk.android:answers-1.4.3" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-analytics-impl-16.2.4" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-iid-17.0.4" level="project" />
-    <orderEntry type="library" name="Gradle: org.apache.http.legacy-android-26" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.http.legacy-android-28" level="project" />
   </component>
 </module>

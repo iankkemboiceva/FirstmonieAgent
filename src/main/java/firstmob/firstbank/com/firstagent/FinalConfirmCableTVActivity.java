@@ -103,6 +103,7 @@ public class FinalConfirmCableTVActivity extends BaseActivity implements View.On
     Bitmap bitmap;
     String txtcustid, amou ,narra, ednamee,ednumbb,serviceid,billid,txtfee,stragcms,strfee,strtref,strlabel,strbillnm,fullname;
     EditText amon, edacc,pno,txtamount,txtnarr,edname,ednumber;
+    TextView edagname,edattid,edagid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -325,6 +326,19 @@ public class FinalConfirmCableTVActivity extends BaseActivity implements View.On
         }
 */
 
+
+
+        edagid = (TextView) findViewById(R.id.txtagid);
+        edagname = (TextView) findViewById(R.id.txtgname);
+        edattid = (TextView) findViewById(R.id.txtattid);
+
+        String stragid = Utility.gettUtilAgentId(getApplicationContext());
+        String stragname = Utility.gettUtilCustname(getApplicationContext());
+        String strattid = Utility.gettUtilUserId(getApplicationContext());
+
+        edagid.setText(stragid);
+        edagname.setText(stragname);
+        edattid.setText(strattid);
         relativeLayout=(LinearLayout)findViewById(R.id.receipt);
       /*  layout_to_image=new Layout_to_Image(this,relativeLayout);
 

@@ -78,7 +78,7 @@ public class AESCBCEncryption implements SecurityConstants {
     }
 
     public static byte[] generateSessionKey() throws NoSuchAlgorithmException, NoSuchProviderException {
-        KeyGenerator kgen = KeyGenerator.getInstance(KEYGEN_ALG, PKI_PROVIDER);
+        KeyGenerator kgen = KeyGenerator.getInstance(KEYGEN_ALG);
         kgen.init(SYMETRIC_KEY_SIZE);
         SecretKey key = kgen.generateKey();
         byte[] symmKey = key.getEncoded();

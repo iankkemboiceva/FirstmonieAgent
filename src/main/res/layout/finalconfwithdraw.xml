@@ -76,7 +76,7 @@ android:layout_weight="75"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="5dp"
                                         android:textStyle="bold"
-                                        android:text="TRANSACTION SUCCESSFUL"
+                                        android:text="CASH WITHDRAWAL SUCCESSFUL"
 
                                         android:textColor="@color/fab_material_green_900"
                                         android:textSize="16sp" />  </RelativeLayout>
@@ -128,7 +128,7 @@ android:layout_weight="75"
                                 android:id="@+id/textViewnb"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dip"
+                                android:layout_marginTop="5dip"
                                 android:text="Beneficiary A/c"
                                 android:textSize="@dimen/textsize"
                                 android:textColor="@color/black" />
@@ -136,7 +136,7 @@ android:layout_weight="75"
                                 android:id="@+id/textViewnb2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dip"
+                                android:layout_marginTop="5dip"
                                 android:layout_marginLeft="15dip"
                                 android:layout_alignParentRight = "true"
                                 android:text=""
@@ -183,7 +183,7 @@ android:visibility="gone"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:id="@+id/rlem"
-android:layout_margin="5dp"
+android:layout_margin="2dp"
 
 
                             >
@@ -191,7 +191,7 @@ android:layout_margin="5dp"
                                 android:id="@+id/textViewrd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dip"
+                                android:layout_marginTop="5dip"
                                 android:text="Amount (\u20A6)"
                                 android:textSize="@dimen/textsize"
                                 android:textColor="@color/black" />
@@ -200,7 +200,7 @@ android:layout_margin="5dp"
                                 android:id="@+id/textViewrrs"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dip"
+                                android:layout_marginTop="5dip"
                                 android:layout_marginLeft="15dip"
                                 android:layout_alignParentRight = "true"
                                 android:text=""
@@ -223,7 +223,7 @@ android:layout_margin="5dp"
                                         android:id="@+id/textViewrefcd"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dip"
+                                        android:layout_marginTop="5dip"
                                         android:text="Reference Code:"
                                         android:textSize="@dimen/textsize"
                                         android:textColor="@color/black" />
@@ -232,7 +232,7 @@ android:layout_margin="5dp"
                                         android:id="@+id/txtrfcd"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dip"
+                                        android:layout_marginTop="5dip"
                                         android:layout_marginLeft="15dip"
                                         android:layout_alignParentRight = "true"
                                         android:text=""
@@ -281,7 +281,7 @@ android:layout_margin="5dp"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
                                     android:id="@+id/rlagfee"
-                                    android:layout_margin="5dp"
+                                    android:layout_margin="2dp"
 
 
                                     >
@@ -289,7 +289,7 @@ android:layout_margin="5dp"
                                         android:id="@+id/agfee"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dip"
+                                        android:layout_marginTop="5dip"
                                         android:text="Fee:"
                                         android:textSize="@dimen/textsize"
                                         android:textColor="@color/black" />
@@ -297,7 +297,7 @@ android:layout_margin="5dp"
                                         android:id="@+id/txtfee"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dip"
+                                        android:layout_marginTop="5dip"
                                         android:layout_marginLeft="15dip"
                                         android:layout_alignParentRight = "true"
                                         android:text="0.00"
@@ -312,7 +312,7 @@ android:layout_margin="5dp"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
                                     android:id="@+id/rlaccom"
-                                    android:layout_margin="5dp"
+                                    android:layout_margin="2dp"
 
 
                                     >
@@ -320,7 +320,7 @@ android:layout_margin="5dp"
                                         android:id="@+id/accomm"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dip"
+                                        android:layout_marginTop="5dip"
                                         android:text="Agent Commision:"
                                         android:textSize="@dimen/textsize"
                                         android:textColor="@color/black" />
@@ -328,7 +328,7 @@ android:layout_margin="5dp"
                                         android:id="@+id/txtaccom"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dip"
+                                        android:layout_marginTop="5dip"
                                         android:layout_marginLeft="15dip"
                                         android:layout_alignParentRight = "true"
                                         android:text="\u20A6 0.00"
@@ -351,7 +351,7 @@ android:layout_margin="5dp"
                                         android:id="@+id/textdatet"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dip"
+                                        android:layout_marginTop="5dip"
                                         android:text="Date \u0026 Time:"
                                         android:textSize="@dimen/textsize"
                                         android:textColor="@color/black" />
@@ -359,12 +359,112 @@ android:layout_margin="5dp"
                                         android:id="@+id/textfinaldatet"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dip"
+                                        android:layout_marginTop="5dip"
                                         android:layout_marginLeft="15dip"
                                         android:layout_alignParentRight = "true"
                                         android:text=""
                                         android:textSize="@dimen/textsize"
                                         android:textColor="@color/black" />
+
+                                </RelativeLayout>
+
+
+                                <RelativeLayout
+
+
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:id="@+id/rlagname"
+
+                                    android:layout_margin="2dp"
+
+
+                                    >
+                                    <TextView
+                                        android:id="@+id/agname"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dip"
+                                        android:text="Served By:"
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="@color/black" />
+                                    <TextView
+                                        android:id="@+id/txtgname"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dip"
+                                        android:layout_marginLeft="15dip"
+                                        android:layout_alignParentRight = "true"
+                                        android:text=""
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="#3C2415" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+
+
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:id="@+id/rlagid"
+
+                                    android:layout_margin="2dp"
+
+
+                                    >
+                                    <TextView
+                                        android:id="@+id/agid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dip"
+                                        android:text="Agent ID:"
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="@color/black" />
+                                    <TextView
+                                        android:id="@+id/txtagid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dip"
+                                        android:layout_marginLeft="15dip"
+                                        android:layout_alignParentRight = "true"
+                                        android:text=""
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="#3C2415" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+
+
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:id="@+id/rlattid"
+
+                                    android:layout_margin="2dp"
+
+
+                                    >
+                                    <TextView
+                                        android:id="@+id/attid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dip"
+                                        android:text="Attendant ID:"
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="@color/black" />
+                                    <TextView
+                                        android:id="@+id/txtattid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dip"
+                                        android:layout_marginLeft="15dip"
+                                        android:layout_alignParentRight = "true"
+                                        android:text=""
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="#3C2415" />
 
                                 </RelativeLayout>
                     </LinearLayout>

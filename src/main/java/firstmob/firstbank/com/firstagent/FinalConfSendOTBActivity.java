@@ -78,6 +78,8 @@ public class FinalConfSendOTBActivity extends BaseActivity implements View.OnCli
     int readBufferPosition;
     volatile boolean stopWorker;
 
+    TextView edagname,edattid,edagid;
+
     RelativeLayout rlsave,rlshare;
 
 
@@ -282,7 +284,17 @@ public class FinalConfSendOTBActivity extends BaseActivity implements View.OnCli
             Toast.makeText(getApplicationContext(), "No USB printers have connected", Toast.LENGTH_SHORT).show();
         }*/
 
+        edagid = (TextView) findViewById(R.id.txtagid);
+        edagname = (TextView) findViewById(R.id.txtgname);
+        edattid = (TextView) findViewById(R.id.txtattid);
 
+        String stragid = Utility.gettUtilAgentId(getApplicationContext());
+        String stragname = Utility.gettUtilCustname(getApplicationContext());
+        String strattid = Utility.gettUtilUserId(getApplicationContext());
+
+        edagid.setText(stragid);
+        edagname.setText(stragname);
+        edattid.setText(strattid);
 
         relativeLayout=(LinearLayout)findViewById(R.id.receipt);
       ;

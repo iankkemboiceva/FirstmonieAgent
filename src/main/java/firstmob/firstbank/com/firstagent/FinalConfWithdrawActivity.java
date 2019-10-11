@@ -96,6 +96,8 @@ public class FinalConfWithdrawActivity extends BaseActivity implements View.OnCl
     Layout_to_Image layout_to_image;
     LinearLayout relativeLayout;
     Bitmap bitmap;
+
+    TextView edagname,edattid,edagid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -264,6 +266,20 @@ public class FinalConfWithdrawActivity extends BaseActivity implements View.OnCl
             Toast.makeText(getApplicationContext(), "No USB printers have connected", Toast.LENGTH_SHORT).show();
         }
 */
+
+
+
+        edagid = (TextView) findViewById(R.id.txtagid);
+        edagname = (TextView) findViewById(R.id.txtgname);
+        edattid = (TextView) findViewById(R.id.txtattid);
+
+        String stragid = Utility.gettUtilAgentId(getApplicationContext());
+        String stragname = Utility.gettUtilCustname(getApplicationContext());
+        String strattid = Utility.gettUtilUserId(getApplicationContext());
+
+        edagid.setText(stragid);
+        edagname.setText(stragname);
+        edattid.setText(strattid);
 
 
         relativeLayout=(LinearLayout)findViewById(R.id.receipt);

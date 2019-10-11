@@ -88,7 +88,7 @@ public class SecurityLayer {
 
     public static byte[] generateSessionKey() throws NoSuchAlgorithmException, NoSuchProviderException
     {
-        KeyGenerator kgen = KeyGenerator.getInstance("AES", "BC");
+        KeyGenerator kgen = KeyGenerator.getInstance("AES");
         kgen.init(256);
         SecretKey key = kgen.generateKey();
         byte[] symmKey = key.getEncoded();

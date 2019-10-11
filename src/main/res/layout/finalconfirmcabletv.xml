@@ -495,6 +495,106 @@ android:fillViewport="true"
                                         android:textSize="@dimen/textsize" />
 
                                 </RelativeLayout>
+
+
+                                <RelativeLayout
+
+
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:id="@+id/rlagname"
+
+                                    android:layout_margin="2dp"
+
+
+                                    >
+                                    <TextView
+                                        android:id="@+id/agname"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:text="Served By:"
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="@color/black" />
+                                    <TextView
+                                        android:id="@+id/txtgname"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:layout_marginLeft="15dip"
+                                        android:layout_alignParentRight = "true"
+                                        android:text=""
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="#3C2415" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+
+
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:id="@+id/rlagid"
+
+                                    android:layout_margin="2dp"
+
+
+                                    >
+                                    <TextView
+                                        android:id="@+id/agid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:text="Agent ID:"
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="@color/black" />
+                                    <TextView
+                                        android:id="@+id/txtagid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:layout_marginLeft="15dip"
+                                        android:layout_alignParentRight = "true"
+                                        android:text=""
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="#3C2415" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+
+
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:id="@+id/rlattid"
+
+                                    android:layout_margin="2dp"
+
+
+                                    >
+                                    <TextView
+                                        android:id="@+id/attid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:text="Attendant ID:"
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="@color/black" />
+                                    <TextView
+                                        android:id="@+id/txtattid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dip"
+                                        android:layout_marginLeft="15dip"
+                                        android:layout_alignParentRight = "true"
+                                        android:text=""
+                                        android:textSize="@dimen/textsize"
+                                        android:textColor="#3C2415" />
+
+                                </RelativeLayout>
                             </LinearLayout>
                         </android.support.v7.widget.CardView>
                     </LinearLayout>

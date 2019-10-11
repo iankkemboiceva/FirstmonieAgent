@@ -605,16 +605,7 @@ public void loginRetrofit(){
 								String accno = datas.optString("acountNumber");
 									String cntopen = datas.optString("canOpenAccount");
 
-									JSONArray admusers = datas.optJSONArray("adminUsers");
-									JSONObject json_data = null;
-									for (int i = 0; i < admusers.length(); i++) {
-										json_data = admusers.getJSONObject(i);
-										String role = json_data.optString("role");
-										String superid = json_data.optString("userid");
-										if(role.equals("MS")){
-											session.setString("SUPERID",superid);
-										}
-									}
+
 									session.setString(SessionManagement.KEY_SETCNTOPEN,cntopen);
 
 								session.SetAgentID(agentid);
