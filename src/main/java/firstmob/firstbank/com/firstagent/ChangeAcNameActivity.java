@@ -217,34 +217,6 @@ public class ChangeAcNameActivity extends BaseActivity implements View.OnClickLi
 
         }
 
-        if(v.getId() == R.id.homepagead){
-            if(chkast.isChecked()){
-                session.setAst();
-
-            }else{
-                session.UnSetAst();
-            }
-
-            Toast.makeText(
-                    getApplicationContext(),
-                    "Settings Applied Successfully",
-                    Toast.LENGTH_LONG).show();
-
-        }
-        if(v.getId() == R.id.shwbal){
-            if(chkbal.isChecked()){
-                session.UnSetShwBal();
-
-            }else{
-                session.setShwbal();
-            }
-
-            Toast.makeText(
-                    getApplicationContext(),
-                    "Settings Applied Successfully",
-                    Toast.LENGTH_LONG).show();
-
-        }
         if(v.getId() == R.id.distpin){
             if(chktpin.isChecked()){
                 session.setTpinPref();

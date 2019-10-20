@@ -151,7 +151,7 @@ public class MyHomeFrag extends Fragment {
                     fragmentTransaction.addToBackStack(title);
 
                     fragmentTransaction.commit();
-                    ((MainActivity)getActivity()).count =  ((MainActivity)getActivity()).count++;
+
                     //  ((MainActivity)getActivity()).changeFragment(fragment,title);
 
                 }

@@ -211,7 +211,7 @@ public class FragmentDrawerNewUI extends Fragment implements View.OnClickListene
         //This is the code to provide a sectioned list
         header = (RelativeLayout) layout.findViewById(R.id.nav_header_container);
         lyhomeid = (LinearLayout) layout.findViewById(R.id.homeid);
-        lysignout = (LinearLayout) layout.findViewById(R.id.lysignout);
+
         rlccare = (RelativeLayout) layout.findViewById(R.id.rl4y);
 
         rlperf = (RelativeLayout) layout.findViewById(R.id.rl3);
@@ -225,7 +225,7 @@ public class FragmentDrawerNewUI extends Fragment implements View.OnClickListene
         lyhomeid.setOnClickListener(this);
         tv = (TextView) layout.findViewById(R.id.section_text);
         tvmobno = (TextView) layout.findViewById(R.id.sdf2);
-        tvlastl = (TextView) layout.findViewById(R.id.sdf3);
+
         tvlastl.setText(Utility.getLastl(getContext()));
         tvmobno.setText('0'+Utility.gettUtilMobno(getContext()));
         String usid = Utility.gettUtilUserId(getActivity());
@@ -642,11 +642,7 @@ public class FragmentDrawerNewUI extends Fragment implements View.OnClickListene
             drawerListener.onDrawerItemSelected(view, 40);
             mDrawerLayout.closeDrawer(containerView);
         }
-        if(view.getId() == R.id.lysignout){
 
-            drawerListener.onDrawerItemSelected(view, 5);
-            mDrawerLayout.closeDrawer(containerView);
-        }
         if(view.getId() == R.id.txt2) {
 
             drawerListener.onDrawerItemSelected(view, 41);
@@ -692,8 +688,7 @@ public class FragmentDrawerNewUI extends Fragment implements View.OnClickListene
                 fragmentTransaction.replace(R.id.container_body, fragment,title);
                 fragmentTransaction.addToBackStack(title);
                 fragmentTransaction.commit();
-                ((MainActivity)getActivity())
-                        .setActionBarTitle(title);
+
             }
         }
     }

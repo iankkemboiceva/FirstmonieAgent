@@ -21,6 +21,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+
+
+
     <application
         android:name=".ApplicationClass"
         android:allowBackup="false"
@@ -28,6 +31,18 @@
         android:label="@string/app_name"
         android:theme="@style/MyMaterialTheme"
         tools:replace="android:icon,android:theme,android:allowBackup">
+
+
+        <service
+            android:name="backgroundlocation.LocationUpdatesIntentService"
+            android:exported="false" />
+
+        <receiver android:name="backgroundlocation.LocationUpdatesBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.location.sample.backgroundlocationupdates.LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES" />
+            </intent-filter>
+        </receiver>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -64,10 +79,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Stats" />
         <activity
-            android:name=".SelChartActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="Stats" />
-        <activity
             android:name=".FMobActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label=""
@@ -88,10 +99,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="firstmob.firstbank.com.firstagent.SignInActivity" />
         </activity>
-        <activity
-            android:name=".AddProdActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="Stats" />
+
 
         <!-- Register Service -->
 
@@ -105,10 +113,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".OldMainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name" />
+
         <activity
             android:name=".LoanRequest"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -141,10 +146,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Sign In"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".FormActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="Add Store" />
+
         <activity
             android:name=".StepActivity"
             android:label="@string/title_activity_step"
@@ -219,7 +221,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label=""
             android:screenOrientation="portrait" />
-        <activity android:name=".MyBaseActivity" />
+
         <activity
             android:name=".SupAgentActivity"
             android:label="@string/title_activity_sup_agent"
@@ -382,7 +384,8 @@
         <activity android:name=".OpenAccBVNConfirm" />
         <activity android:name=".ChooseBVNorNoBVN" />
         <activity android:name=".FinalConfAccountOpening" />
-        <activity android:name=".SupHomeActivity"></activity>
+        <activity android:name=".SupHomeActivity" />
+        <activity android:name=".LocationActivity"></activity>
     </application>
 
 </manifest>

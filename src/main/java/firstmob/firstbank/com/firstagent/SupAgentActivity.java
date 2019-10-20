@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+
+
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -26,7 +28,7 @@ import java.util.HashMap;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class SupAgentActivity extends ActionBarActivity implements SupFragmentDrawer.FragmentDrawerListener,View.OnClickListener {
+public class SupAgentActivity extends AppCompatActivity implements SupFragmentDrawer.FragmentDrawerListener,View.OnClickListener {
     private Toolbar mToolbar;
     int count = 1;
     private SupFragmentDrawer drawerSupFragment;

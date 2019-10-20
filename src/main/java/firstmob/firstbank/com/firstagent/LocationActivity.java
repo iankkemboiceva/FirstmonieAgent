@@ -1,24 +1,24 @@
 package firstmob.firstbank.com.firstagent;
 
-import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.support.design.widget.Snackbar;
+import android.Manifest;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -26,21 +26,22 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import backgroundlocation.LocationRequestHelper;
+import backgroundlocation.LocationResultHelper;
 import backgroundlocation.LocationUpdatesBroadcastReceiver;
 
-/**
- * Created by ian on 7/23/2018.
- */
 
-public class BaseActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+/**
+ * The only activity in this sample. Displays UI widgets for requesting and removing location
+ * updates, and for the batched location updates that are reported.
+ *
+ * Location updates requested through this activity continue even when the activity is not in the
+ * foreground. Note: apps running on "O" devices (regardless of targetSdkVersion) may receive
+ * updates less frequently than the interval specified in the {@link LocationRequest} when the app
+ * is no longer in the foreground.
+ */
+public class LocationActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         SharedPreferences.OnSharedPreferenceChangeListener {
-    public static final long TIMEOUT_IN_MILLI = 1000*60*3;
-    public static final String PREF_FILE = "App_Pref";
-    public static final String KEY_SP_LAST_INTERACTION_TIME = "KEY_SP_LAST_INTERACTION_TIME";
-    SessionManagement session;
-
-
 
     private static final String TAG = LocationActivity.class.getSimpleName();
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
@@ -71,80 +72,65 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.C
     /**
      * The entry point to Google Play Services.
      */
-    private static  GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient mGoogleApiClient;
+
+    // UI Widgets.
+    private Button mRequestUpdatesButton;
+    private Button mRemoveUpdatesButton;
+    private TextView mLocationUpdatesResultView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_location);
 
+        mRequestUpdatesButton = (Button) findViewById(R.id.request_updates_button);
+        mRemoveUpdatesButton = (Button) findViewById(R.id.remove_updates_button);
+        mLocationUpdatesResultView = (TextView) findViewById(R.id.location_updates_result);
+
+        // Check if the user revoked runtime permissions.
         if (!checkPermissions()) {
             requestPermissions();
         }
+
         buildGoogleApiClient();
-    }
-
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        if (isValidLogin())
-            getSharedPreference().edit().putLong(KEY_SP_LAST_INTERACTION_TIME, System.currentTimeMillis()).apply();
-        else gohome();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-        if (isValidLogin())
-            getSharedPreference().edit().putLong(KEY_SP_LAST_INTERACTION_TIME, System.currentTimeMillis()).apply();
-        else gohome();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this);
     }
 
 
-    public SharedPreferences getSharedPreference() {
-        return getSharedPreferences(PREF_FILE, MODE_PRIVATE);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateButtonsState(LocationRequestHelper.getRequesting(this));
+        mLocationUpdatesResultView.setText(LocationResultHelper.getSavedLocationResult(this));
     }
 
-    public boolean isValidLogin() {
-        long last_edit_time = getSharedPreference().getLong(KEY_SP_LAST_INTERACTION_TIME, 0);
-        return last_edit_time == 0 || System.currentTimeMillis() - last_edit_time < TIMEOUT_IN_MILLI;
+    @Override
+    protected void onStop() {
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
+        super.onStop();
     }
 
-    public void gohome() {
-        Intent intent = new Intent(this, FMobActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-     //   Toast.makeText(this, "User logout due to inactivity", Toast.LENGTH_SHORT).show();
-        getSharedPreference().edit().remove(KEY_SP_LAST_INTERACTION_TIME).apply(); // make shared preference null.
-    }
-
-    public  void LogOut(){
-        session = new SessionManagement(this);
-        session.logoutUser();
-
-        // After logout redirect user to Loing Activity
-        finish();
-        Intent i = new Intent(getApplicationContext(), SignInActivity.class);
-
-        // Staring Login Activity
-        startActivity(i);
-        Toast.makeText(
-                getApplicationContext(),
-                "You have been locked out of the app.Please call customer care for further details",
-                Toast.LENGTH_LONG).show();
-        // Toast.makeText(getApplicationContext(), "You have logged out successfully", Toast.LENGTH_LONG).show();
-
-    }
-
-
+    /**
+     * Sets up the location request. Android has two location request settings:
+     * {@code ACCESS_COARSE_LOCATION} and {@code ACCESS_FINE_LOCATION}. These settings control
+     * the accuracy of the current location. This sample uses ACCESS_FINE_LOCATION, as defined in
+     * the AndroidManifest.xml.
+     * <p/>
+     * When the ACCESS_FINE_LOCATION setting is specified, combined with a fast update
+     * interval (5 seconds), the Fused Location Provider API returns location updates that are
+     * accurate to within a few feet.
+     * <p/>
+     * These settings are appropriate for mapping applications that show real-time location
+     * updates.
+     */
     private void createLocationRequest() {
         mLocationRequest = new LocationRequest();
 
@@ -182,7 +168,6 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.i(TAG, "GoogleApiClient connected");
-        requestLocationUpdates();
     }
 
     private PendingIntent getPendingIntent() {
@@ -243,7 +228,7 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.C
                         @Override
                         public void onClick(View view) {
                             // Request permission
-                            ActivityCompat.requestPermissions(BaseActivity.this,
+                            ActivityCompat.requestPermissions(LocationActivity.this,
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     REQUEST_PERMISSIONS_REQUEST_CODE);
                         }
@@ -254,7 +239,7 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.C
             // Request permission. It's possible this can be auto answered if device policy
             // sets the permission in a given state or the user denied the permission
             // previously and checked "Never ask again".
-            ActivityCompat.requestPermissions(BaseActivity.this,
+            ActivityCompat.requestPermissions(LocationActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
@@ -311,11 +296,19 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if (s.equals(LocationResultHelper.KEY_LOCATION_UPDATES_RESULT)) {
+            mLocationUpdatesResultView.setText(LocationResultHelper.getSavedLocationResult(this));
+        } else if (s.equals(LocationRequestHelper.KEY_LOCATION_UPDATES_REQUESTED)) {
+            updateButtonsState(LocationRequestHelper.getRequesting(this));
+        }
+    }
 
     /**
      * Handles the Request Updates button and requests start of location updates.
      */
-    public void requestLocationUpdates() {
+    public void requestLocationUpdates(View view) {
         try {
             Log.i(TAG, "Starting location updates");
             LocationRequestHelper.setRequesting(this, true);
@@ -330,16 +323,11 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.C
     /**
      * Handles the Remove Updates button, and requests removal of location updates.
      */
-    public void removeLocationUpdates() {
+    public void removeLocationUpdates(View view) {
         Log.i(TAG, "Removing location updates");
         LocationRequestHelper.setRequesting(this, false);
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
                 getPendingIntent());
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-
     }
 
     /**
@@ -347,4 +335,13 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.C
      * if the user is not requesting location updates. The Stop Updates button is enabled if the
      * user is requesting location updates.
      */
+    private void updateButtonsState(boolean requestingLocationUpdates) {
+        if (requestingLocationUpdates) {
+            mRequestUpdatesButton.setEnabled(false);
+            mRemoveUpdatesButton.setEnabled(true);
+        } else {
+            mRequestUpdatesButton.setEnabled(true);
+            mRemoveUpdatesButton.setEnabled(false);
+        }
+    }
 }

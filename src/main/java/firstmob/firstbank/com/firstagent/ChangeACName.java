@@ -157,7 +157,7 @@ RelativeLayout rlbutton;
         agemail.setText(txtemail);
         agentname.setText(txtagname);
 
-        myact = (Button) rootView.findViewById(R.id.tdispedit);
+
         chglgpin = (Button) rootView.findViewById(R.id.button10);
 
 
@@ -218,34 +218,6 @@ RelativeLayout rlbutton;
 
         }
 
-        if(v.getId() == R.id.homepagead){
-            if(chkast.isChecked()){
-                session.setAst();
-
-            }else{
-                session.UnSetAst();
-            }
-
-            Toast.makeText(
-                    getActivity(),
-                    "Settings Applied Successfully",
-                    Toast.LENGTH_LONG).show();
-
-        }
-        if(v.getId() == R.id.shwbal){
-            if(chkbal.isChecked()){
-                session.UnSetShwBal();
-
-            }else{
-                session.setShwbal();
-            }
-
-            Toast.makeText(
-                    getActivity(),
-                    "Settings Applied Successfully",
-                    Toast.LENGTH_LONG).show();
-
-        }
         if(v.getId() == R.id.distpin){
             if(chktpin.isChecked()){
                 session.setTpinPref();

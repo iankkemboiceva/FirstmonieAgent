@@ -71,42 +71,7 @@ String p = planetsList.get(i).getName();
 
 
 
-        if( p.equals("Cable TV")){
-            Fragment  fragment = new PayServices();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Cable TV");
-            fragmentTransaction.addToBackStack("Cable TV");
-            fragmentTransaction.commit();
-            ((MainActivity)getActivity())
-                    .setActionBarTitle("Cable TV");
 
-        }
-        if( p.equals("Internet Subscription")){
-            Fragment  fragment = new InternetServices();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Internet");
-            fragmentTransaction.addToBackStack("Internet");
-            fragmentTransaction.commit();
-            ((MainActivity)getActivity())
-                    .setActionBarTitle("Internet");
-
-        }
-        if( p.equals("Transport")){
-            Fragment  fragment = new TransportServ();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Transport");
-            fragmentTransaction.addToBackStack("Transport");
-            fragmentTransaction.commit();
-            ((MainActivity)getActivity())
-                    .setActionBarTitle("Transport");
-
-        }
 
         if( p.equals("Mobile Money Wallet")){
             Fragment  fragment = new SendOtherWallet();
@@ -116,8 +81,7 @@ String p = planetsList.get(i).getName();
             fragmentTransaction.replace(R.id.container_body, fragment,"Mobile Money Wallet");
             fragmentTransaction.addToBackStack("Mobile Money Wallet");
             fragmentTransaction.commit();
-            ((MainActivity)getActivity())
-                    .setActionBarTitle("Mobile Money Wallet");
+
 
         }/*else if( i == 3){
             Fragment  fragment = new ProductsFrag();
@@ -139,31 +103,7 @@ String p = planetsList.get(i).getName();
 
         }
 
-        else if( p.equals("Airtime TopUp")){
-            Fragment  fragment = new AirtimeTransf();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Airtime TopUp");
-            fragmentTransaction.addToBackStack("Airtime TopUp");
-            fragmentTransaction.commit();
-            ((MainActivity)getActivity())
-                    .setActionBarTitle("Airtime TopUp");
 
-
-        }
-        if( p.equals("Bill Payment")){
-            Fragment  fragment = new PayServices();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Payment Services");
-            fragmentTransaction.addToBackStack("Payment Services");
-            ((MainActivity)getActivity())
-                    .setActionBarTitle("Payment Services");
-            fragmentTransaction.commit();
-
-        }
 
       /*  if( i == 4){
             Fragment  fragment = new MyProfile();
@@ -180,17 +120,6 @@ String p = planetsList.get(i).getName();
 
 
 
-        }else if( p.equals("Open Account")){
-          //  checkInternetConnection();
-            Fragment  fragment = new OpenAcc();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Open Account");
-            fragmentTransaction.addToBackStack("Open Account");
-            fragmentTransaction.commit();
-            ((MainActivity)getActivity())
-                    .setActionBarTitle("Open Account");
         }
         else if( p.equals("Withdraw")) {
             Fragment fragment = new Withdraw();
@@ -200,8 +129,7 @@ String p = planetsList.get(i).getName();
             fragmentTransaction.replace(R.id.container_body, fragment, "Withdraw");
             fragmentTransaction.addToBackStack("Withdraw");
             fragmentTransaction.commit();
-            ((MainActivity)getActivity())
-                    .setActionBarTitle("Withdraw");
+
         }
 
     /*   else if( i == 6){

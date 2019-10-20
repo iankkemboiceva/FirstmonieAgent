@@ -688,8 +688,7 @@ tv.setText(custname);
                 fragmentTransaction.replace(R.id.container_body, fragment,title);
                 fragmentTransaction.addToBackStack(title);
                 fragmentTransaction.commit();
-                ((MainActivity)getActivity())
-                        .setActionBarTitle(title);
+
             }
         }
     }

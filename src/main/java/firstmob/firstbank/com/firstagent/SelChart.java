@@ -141,7 +141,7 @@ public class SelChart extends Fragment implements View.OnClickListener,OnChartVa
         finpfrom = datew;
         finpto = dated;
 
-        mChart = (BarChart) rootView.findViewById(R.id.chart1);
+
         mChart.setOnChartValueSelectedListener(this);
 
         mChart.setDrawBarShadow(false);

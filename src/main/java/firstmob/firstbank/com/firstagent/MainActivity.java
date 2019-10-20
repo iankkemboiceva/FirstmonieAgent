@@ -6,7 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +21,7 @@ import java.util.HashMap;
 import security.SecurityLayer;
 import tablayout.SlidingTabLayout;
 
-public class MainActivity extends ActionBarActivity  {
+public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
 int count = 1;
     private FragmentDrawerNewUI drawerFragment;

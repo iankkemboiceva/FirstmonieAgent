@@ -32,6 +32,9 @@ public class SessionManagement {
     public static final String STUDIDTHREE = "studthree";
     public static final String US_TYPE = "ustype";
 
+    public final static String KEY_LATITUDE = "latitude";
+    public final static String KEY_LONGIT = "longitude";
+
     public static final String SESS_REG = "sessreg";
     public static final String KEY_THEME = "theme";
     public static final String SCHONE = "schone";

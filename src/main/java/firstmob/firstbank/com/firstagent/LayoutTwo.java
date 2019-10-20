@@ -57,7 +57,7 @@ public class LayoutTwo extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.txt){
-         startActivity(new Intent(getActivity(),AddProdActivity.class));
+
         }
     }
 }

@@ -224,7 +224,7 @@ ignored.printStackTrace();
                 final String baseimage = Utility.getBase64Image(ct);
                 System.out.println("baseimage [" + baseimage+ "]");
                 int count = 0;
-                SessionManagement sess = new SessionManagement(ct);
+                final SessionManagement sess = new SessionManagement(ct);
                 final String appid = Utility.getNewAppID(ct);
 
 
@@ -235,6 +235,16 @@ ignored.printStackTrace();
                         Request request = null;
                         String appidnew = appid;
                         String useridnew = userid;
+
+                        String strlat = sess.getString(SessionManagement.KEY_LATITUDE);
+                        String strlongt = sess.getString(SessionManagement.KEY_LONGIT);
+
+                        if(!Utility.isNotNull(strlat)){
+                            strlat = "NA";
+                        }
+                        if(!Utility.isNotNull(strlongt)){
+                            strlongt = "NA";
+                        }
                         if(appid == null){
                             appidnew = "N";
                         }
@@ -247,6 +257,7 @@ ignored.printStackTrace();
                                     request = original.newBuilder()
                                             .header("man", useridnew)
                                             .header("serial", appidnew)
+
                                .header("base64", baseimage)
                                             .method(original.method(), original.body())
                                             .build();
@@ -254,6 +265,7 @@ ignored.printStackTrace();
                                     request = original.newBuilder()
                                             .header("man", useridnew)
                                             .header("serial", appidnew)
+
 
                                             .method(original.method(), original.body())
                                             .build();
