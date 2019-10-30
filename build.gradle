@@ -73,9 +73,7 @@ repositories {
     mavenCentral()
 
     maven { url "https://jitpack.io" }
-    maven {
-        url 'http://dl.bintray.com/amulyakhare/maven'
-    }
+
     maven { url 'https://maven.fabric.io/public' }
 }
 

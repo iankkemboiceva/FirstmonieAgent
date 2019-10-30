@@ -455,7 +455,12 @@ onBackPressed();
                             } else {
                                 respfee = Utility.returnNumberFormat(respfee);
                                 finalrespfee = respfee;
-                                txtfee.setText(ApplicationConstants.KEY_NAIRA + respfee);
+                                if(Utility.checkStateCollect(serviceid)) {
+                                    txtfee.setText(ApplicationConstants.KEY_NAIRA + "60.00");
+                                }else {
+                                    txtfee.setText(ApplicationConstants.KEY_NAIRA + respfee);
+
+                                }
                             }
 
 

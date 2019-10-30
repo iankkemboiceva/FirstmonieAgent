@@ -183,12 +183,21 @@ public class FinalConfirmCableTVActivity extends BaseActivity implements View.On
             recname.setText(fullname);
             txtrfcd.setText(strtref);
             reccustid.setText(txtcustid);
-            recfee.setText(ApplicationConstants.KEY_NAIRA+strfee);
+
+            if(Utility.checkStateCollect(serviceid)) {
+                recfee.setText(ApplicationConstants.KEY_NAIRA + "60.00");
+                recagcmn.setText(ApplicationConstants.KEY_NAIRA+"30.00");
+
+            }else {
+                recfee.setText(ApplicationConstants.KEY_NAIRA + strfee);
+                recagcmn.setText(ApplicationConstants.KEY_NAIRA+stragcms);
+
+            }
             rectrref.setText(strtref);
 
             recamo.setText(ApplicationConstants.KEY_NAIRA+txtamou);
 
-            recagcmn.setText(ApplicationConstants.KEY_NAIRA+stragcms);
+
 
 
             String redatetim = intent.getStringExtra("datetime");
@@ -209,7 +218,7 @@ public class FinalConfirmCableTVActivity extends BaseActivity implements View.On
             recsendnam.setText(ednamee);
             recsendnum.setText(ednumbb);
             txtlabel.setText(strlabel);
-            recagcmn.setText(ApplicationConstants.KEY_NAIRA+stragcms);
+
         /*   try {
                 findBT();
                 openBT();
