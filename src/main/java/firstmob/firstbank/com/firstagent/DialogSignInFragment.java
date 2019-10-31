@@ -91,27 +91,6 @@ String finpin;
        // getDialog().setTitle("Enter Attendant PIN");
 
 
-        Bundle bundle = getArguments();
-
-        serv = bundle.getString("SERV","");
-
-        if(serv.equals("PROF")) {
-            txserv.setText("My Profile");
-        }
-        if(serv.equals("MYPERF")) {
-            txserv.setText("My Performance");
-        }
-        if(serv.equals("INBOX")) {
-            txserv.setText("My Inbox");
-        }
-
-        if(serv.equals("MINIST")) {
-            txserv.setText("Agent Account");
-        }
-        if(serv.equals("COMM")) {
-            txserv.setText("Commission Wallet");
-        }
-
         mPinLockView = (PinLockView) view.findViewById(R.id.pin_lock_view);
         mPinLockView.setPinLockListener(mPinLockListener);
         mIndicatorDots = (IndicatorDots) view.findViewById(R.id.indicator_dots);
@@ -315,10 +294,10 @@ setDialog(responsemessage);
               encpin =   Utility.b64_sha256(finpin);
                 SecurityLayer.Log("Enc Pin",encpin);
                // encpin = Utility.b64_sha256(encpin);
-                String usid = Utility.gettUtilUserId(getActivity());
+                String supervis = session.getString("SUPERID");
                 String mobnoo = Utility.gettUtilMobno(getActivity());
                 SecurityLayer.Log("Base64 Pin",encpin);
-                String params = "1" + "/" + usid + "/" + encpin + "/" + mobnoo;
+                String params = "1" + "/" + supervis + "/" + encpin + "/" + mobnoo;
                 LogRetro(params,serv);
             }else{
                 Toast.makeText(

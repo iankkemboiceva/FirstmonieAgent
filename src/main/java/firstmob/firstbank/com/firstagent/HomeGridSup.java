@@ -97,25 +97,9 @@ public class HomeGridSup extends Fragment implements View.OnClickListener {
 
         String cntopen = session.getString(SessionManagement.KEY_SETCNTOPEN);
 
-        if(checktpref == false){
-            if(session.getString(SessionManagement.KEY_SETBANKS).equals("N")) {
-              //  GetServv();
-            }
-            //  setBalInquSec();
-         /*   rlpybill.setBackgroundResource(R.drawable.fbnmiddle);
-            rlopenacc.setBackgroundResource(R.drawable.fbnmiddle);*/
-        }else{
-            //rlbuttons.setVisibility(View.GONE);
-    /*        rlpybill.setBackgroundResource(R.drawable.fbnbottomright);
-            rlopenacc.setBackgroundResource(R.drawable.fbnbottomleft);*/
-        }
+
         ((SupHomeActivity) getActivity()).getSupportActionBar().setCustomView(R.layout.newtoolbar);
-        checkAppvers();
-        String chkappvs = session.getString("APPVERSBOOL");
-        SecurityLayer.Log("chkappvs",chkappvs);
-      if(chkappvs.equals("Y")) {
-            GetAppversion();
-      }
+
         return root;
     }
 

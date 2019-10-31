@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
+import rest.RetrofitInstance;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,6 +82,8 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
 
         btnsub = (Button)findViewById(R.id.button2);
         btnsub.setOnClickListener(this);
+
+        NameInquirySec();
 
 
 
@@ -168,36 +171,28 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
 
 
 
-    private void NameInquirySec(String acno) {
+    private void NameInquirySec() {
 
         String endpoint= "transfer/nameenq.action";
-
-
-        String usid = Utility.gettUtilUserId(getApplicationContext());
-        String agentid = Utility.gettUtilAgentId(getApplicationContext());
-        String mobileno = Utility.gettUtilAgentId(getApplicationContext());
-        String params = "1/"+usid+"/"+agentid+"/"+mobileno+"/0/"+acno;
-
-        String urlparams = "";
-        try {
-            urlparams = SecurityLayer.genURLCBC(params,endpoint,getApplicationContext());
-            //SecurityLayer.Log("cbcurl",url);
-            SecurityLayer.Log("RefURL",urlparams);
-            SecurityLayer.Log("refurl", urlparams);
-            SecurityLayer.Log("params", params);
-        } catch (Exception e) {
-            SecurityLayer.Log("encryptionerror",e.toString());
-        }
 
 
 
 
 
         ApiInterface apiService =
-                ApiSecurityClient.getClient(getApplicationContext()).create(ApiInterface.class);
+                RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
+
+        try {
+            JSONObject paramObject = new JSONObject();
+
+            paramObject.put("userId", "SURESH");
+            paramObject.put("channel", "1");
+            paramObject.put("storeId", "25140001-S0001");
+
+            Call<String> call = apiService.loaneligibility(paramObject.toString());
 
 
-        Call<String> call = apiService.setGenericRequestRaw(urlparams);
+
 
         call.enqueue(new Callback<String>() {
             @Override
@@ -208,7 +203,7 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
                     SecurityLayer.Log("response..:", response.body());
                     JSONObject obj = new JSONObject(response.body());
                     //obj = Utility.onresp(obj,getApplicationContext());
-                    obj = SecurityLayer.decryptTransaction(obj, getApplicationContext());
+
                     SecurityLayer.Log("decrypted_response", obj.toString());
 
                     String respcode = obj.optString("responseCode");
@@ -228,23 +223,7 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
                                 SecurityLayer.Log("Response Message", responsemessage);
 
 //                                    SecurityLayer.Log("Respnse getResults",datas.toString());
-                                if (!(plan == null)) {
-                                    acname = plan.optString("accountName");
 
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            "Account Name: " + acname,
-                                            Toast.LENGTH_LONG).show();
-                                    accountoname.setText(acname);
-                                } else {
-
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            "This is not a valid account number.Please check again",
-                                            Toast.LENGTH_LONG).show();
-
-
-                                }
 
                             } else {
                                 Toast.makeText(
@@ -308,6 +287,10 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
                 }
             }
         });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

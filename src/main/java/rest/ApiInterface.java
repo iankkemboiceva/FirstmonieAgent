@@ -27,7 +27,10 @@ import model.UploadPic;
 import model.WithdrawalConfirmOTP;
 import model.WithdrawalSendOTP;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -127,6 +130,10 @@ public interface ApiInterface {
 
     @POST("{string}")
     Call<String> setGenericRequestRaw(@Path(value="string",encoded=true) String string);
+
+    @Headers("Content-Type: application/json")
+    @POST("agentcredit/api/loan/eligibility")
+    Call<String> loaneligibility(@Body String params);
 
 
 }

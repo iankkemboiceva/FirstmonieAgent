@@ -226,7 +226,7 @@ pro = new ProgressDialog(this);
 		gethelp.setOnClickListener(this);
 		signinn = (Button) findViewById(R.id.signinn);
 		signinn.setOnClickListener(this);
-		String supervis = session.getString("SUPERID");
+
 	//	Toast.makeText(getApplicationContext(), "Supervisor is "+supervis, Toast.LENGTH_LONG).show();
 		updateAndroidSecurityProvider(this);
 
@@ -322,7 +322,9 @@ onKeyMetric();
 		if (v.getId() == R.id.text14) {
 			//	checkInternetConnection();
 
-			showEditDialog();
+			startActivity(new Intent(getApplicationContext(),SupHomeActivity.class));
+
+			//showEditDialog();
 		}
 
 	}
@@ -604,6 +606,16 @@ public void loginRetrofit(){
 								String mobno = datas.optString("mobileNo");
 								String accno = datas.optString("acountNumber");
 									String cntopen = datas.optString("canOpenAccount");
+									JSONArray admusers = datas.optJSONArray("adminUsers");
+									JSONObject json_data = null;
+									for (int i = 0; i < admusers.length(); i++) {
+										json_data = admusers.getJSONObject(i);
+										String role = json_data.optString("role");
+										String superid = json_data.optString("userid");
+										if(role.equals("MS")){
+											session.setString("SUPERID",superid);
+										}
+									}
 
 
 									session.setString(SessionManagement.KEY_SETCNTOPEN,cntopen);

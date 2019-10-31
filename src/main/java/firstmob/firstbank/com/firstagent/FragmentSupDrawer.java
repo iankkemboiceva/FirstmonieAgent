@@ -210,8 +210,8 @@ public class FragmentSupDrawer extends Fragment implements View.OnClickListener 
         String useridd = session.getString("SUPERID");
         tvusid.setText(useridd);
         String strlastl = Utility.getLastl(getActivity());
-        strlastl = Utility.convertDate(strlastl);
-        tvlastl.setText("Last Login: "+strlastl.substring(0,strlastl.length() -12));
+
+      
 //        tvlastl.setText(Utility.getLastl(getContext()));
      //   tvmobno.setText('0'+Utility.gettUtilMobno(getContext()));
         String usid = Utility.gettUtilUserId(getActivity());
