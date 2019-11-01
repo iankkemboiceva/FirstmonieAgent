@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,9 +43,12 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
     TextView accountoname;
     String depositid;
     String acname;
-    RelativeLayout rlid;
+    RelativeLayout rlid,lybut;
+    LinearLayout lyamo;
+
     ProgressDialog prgDialog;
-    @Override
+    TextView txelig;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loanreq);
@@ -64,6 +68,7 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
 
         rlid = (RelativeLayout)findViewById(R.id.rlid);
         accountoname = (TextView) findViewById(R.id.cname);
+        txelig = (TextView) findViewById(R.id.txtelig);
 
 
         edacc = (EditText) findViewById(R.id.input_payacc);
@@ -73,7 +78,8 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
         txtamount = (EditText) findViewById(R.id.amount);
         txtnarr = (EditText) findViewById(R.id.ednarr);
 
-
+        lyamo = (LinearLayout) findViewById(R.id.lyamo);
+        lybut = (RelativeLayout) findViewById(R.id.rl5);
         View.OnFocusChangeListener ofcListener = new MyFocusChangeListener();
         txtamount.setOnFocusChangeListener(ofcListener);
 
@@ -172,7 +178,7 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
 
 
     private void NameInquirySec() {
-
+prgDialog.show();
         String endpoint= "transfer/nameenq.action";
 
 
@@ -208,7 +214,7 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
 
                     String respcode = obj.optString("responseCode");
 
-                    String responsemessage = obj.optString("message");
+                    String responsemessage = obj.optString("responseMessage");
 
 
                     JSONObject plan = obj.optJSONObject("data");
@@ -222,16 +228,24 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
 
                                 SecurityLayer.Log("Response Message", responsemessage);
 
+                                String creditlimit = plan.optString("creditLimit");
+
+                                txelig.setText("Congratulations,you are eligible for a loan with an upper limit of "+creditlimit+ApplicationConstants.KEY_NAIRA);
+
 //                                    SecurityLayer.Log("Respnse getResults",datas.toString());
 
 
                             } else {
+
+                            txelig.setText(responsemessage);
+                            txelig.setTextColor(R.color.black);
                                 Toast.makeText(
                                         getApplicationContext(),
                                         responsemessage,
                                         Toast.LENGTH_LONG).show();
                             }
                         } else {
+                            txelig.setText("There was an error processing your loan eligibility request");
                             Toast.makeText(
                                     getApplicationContext(),
                                     "There was an error processing your request ",

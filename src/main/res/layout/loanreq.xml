@@ -170,14 +170,24 @@
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
                             android:layout_marginTop="20dp"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Congratulations BREEBREE you are eligible for 20,000(\u20A6) loan. The payback period is 24 hours at 12% interest. Proceed to enter loan amount below:"
+                                android:text="Welcome to Loan Request facility.Your loan eligibility status  is below"
                                 android:textSize="14sp"
                                 android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/txtelig"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="20dp"
+                                android:text=""
+                                android:textSize="16sp"
+                           />
 
 
                         </LinearLayout>
@@ -194,11 +204,25 @@
                             android:paddingBottom="5dip"
                             android:paddingTop="1dip"
                             android:background="@color/white"
+                            android:id="@+id/lyamo"
+                            android:visibility="gone"
 
 
                             >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:text="Proceed to enter loan amount request below"/>
+                            </LinearLayout>
 
                             <LinearLayout
+
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:layout_marginLeft="10dp"
@@ -288,6 +312,7 @@
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
+                            android:visibility="gone"
                             android:layout_below="@+id/rl5"
                             android:layout_height="wrap_content">
                             <Button
