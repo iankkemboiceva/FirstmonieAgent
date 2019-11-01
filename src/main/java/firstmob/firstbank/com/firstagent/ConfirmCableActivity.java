@@ -456,7 +456,7 @@ onBackPressed();
                                 respfee = Utility.returnNumberFormat(respfee);
                                 finalrespfee = respfee;
                                 if(Utility.checkStateCollect(serviceid)) {
-                                    txtfee.setText(ApplicationConstants.KEY_NAIRA + "60.00");
+                                    txtfee.setText(ApplicationConstants.KEY_NAIRA + "63.00");
                                 }else {
                                     txtfee.setText(ApplicationConstants.KEY_NAIRA + respfee);
 
