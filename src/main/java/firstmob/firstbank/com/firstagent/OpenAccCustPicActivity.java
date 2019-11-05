@@ -235,6 +235,7 @@ lyupl.setVisibility(View.VISIBLE);
 
         prgDialog.show();
 
+
         String sessid = UUID.randomUUID().toString();
 
 

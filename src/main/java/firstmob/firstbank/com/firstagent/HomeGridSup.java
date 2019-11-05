@@ -154,7 +154,7 @@ public class HomeGridSup extends Fragment implements View.OnClickListener {
         }  if (view.getId() == R.id.rl1) {
 
 
-            startActivity(new Intent(getActivity(), LoanRequest.class));
+         //   startActivity(new Intent(getActivity(), LoanRequest.class));
 
         }
         if (view.getId() == R.id.rl5) {

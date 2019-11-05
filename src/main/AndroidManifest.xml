@@ -110,10 +110,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".LoanRequest"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name" />
-        <activity
             android:name=".ConfirmLoanRequest"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
