@@ -12,11 +12,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,13 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+import model.GetStatesData;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
 import rest.RetrofitInstance;
@@ -36,18 +45,20 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoanRequest extends BaseSupActivity implements View.OnClickListener {
     ImageView imageView1;
-    EditText amon, edacc,pno,txtamount,txtnarr;
+    EditText amon, edacc,pno,txtamount,txtnarr,pin;
     Button btnsub;
     SessionManagement session;
 
     TextView accountoname;
     String depositid;
     String acname;
+    String amolimit = "NA";
     RelativeLayout rlid,lybut;
     LinearLayout lyamo;
-
+Spinner spstore;
     ProgressDialog prgDialog;
     TextView txelig;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,9 +82,10 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
         txelig = (TextView) findViewById(R.id.txtelig);
 
 
-        edacc = (EditText) findViewById(R.id.input_payacc);
+        amon = (EditText) findViewById(R.id.amount);
+
         prgDialog = new ProgressDialog(this);
-        prgDialog.setMessage("Loading Account Details....");
+        prgDialog.setMessage("Loading ....");
         prgDialog.setCancelable(false);
         txtamount = (EditText) findViewById(R.id.amount);
         txtnarr = (EditText) findViewById(R.id.ednarr);
@@ -82,6 +94,16 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
         lybut = (RelativeLayout) findViewById(R.id.rl5);
         View.OnFocusChangeListener ofcListener = new MyFocusChangeListener();
         txtamount.setOnFocusChangeListener(ofcListener);
+
+
+        spstore = (Spinner) findViewById(R.id.spstore);
+        List<String> lists = new ArrayList<String>();
+        String store = session.getString("store");
+        lists.add(store);
+        ArrayAdapter<String> adapter= new ArrayAdapter<String>(this, R.layout.my_spinner, lists);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spstore.setAdapter(adapter);
 
 
 
@@ -158,8 +180,18 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
 
         }
         if (view.getId() == R.id.button2) {
-            Intent intent = new Intent(LoanRequest.this, ConfirmLoanRequest.class);
-            startActivity(intent);
+            String amont = amon.getText().toString();
+            if(Utility.isNotNull(amont)) {
+                Double inpamo = Double.parseDouble(amont);
+                Double dbamolimit = Double.parseDouble(amolimit);
+                if(inpamo<=dbamolimit) {
+                    Intent intent = new Intent(LoanRequest.this, ConfirmLoanRequest.class);
+                    intent.putExtra("amount", amont);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Kindly enter an amount below your loan limit",Toast.LENGTH_LONG).show();
+                }
+            }
         }
 
 
@@ -184,16 +216,18 @@ prgDialog.show();
 
 
 
-
+         String storeid = spstore.getSelectedItem().toString();
+        session.setString("STOREID",storeid);
+         String adminid = session.getString("ADMINID");
         ApiInterface apiService =
                 RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
 
         try {
             JSONObject paramObject = new JSONObject();
 
-            paramObject.put("userId", "SURESH");
+            paramObject.put("userId", adminid);
             paramObject.put("channel", "1");
-            paramObject.put("storeId", "25140001-S0001");
+            paramObject.put("storeId", storeid);
 
             Call<String> call = apiService.loaneligibility(paramObject.toString());
 
@@ -228,10 +262,11 @@ prgDialog.show();
 
                                 SecurityLayer.Log("Response Message", responsemessage);
 
-                                String creditlimit = plan.optString("creditLimit");
+                                amolimit = plan.optString("creditLimit");
 
-                                txelig.setText("Congratulations,you are eligible for a loan with an upper limit of "+creditlimit+ApplicationConstants.KEY_NAIRA);
-
+                                txelig.setText("Congratulations,you are eligible for a loan upto "+amolimit+ApplicationConstants.KEY_NAIRA);
+lyamo.setVisibility(View.VISIBLE);
+lybut.setVisibility(View.VISIBLE);
 //                                    SecurityLayer.Log("Respnse getResults",datas.toString());
 
 

@@ -126,7 +126,7 @@ android:weightSum="100"
 
 android:layout_centerHorizontal="true"
                             android:layout_marginTop="1dp"
-                            android:text="Login as Supervisor"
+                            android:text="Login as Administrator"
                             android:textStyle="bold"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="17sp" />

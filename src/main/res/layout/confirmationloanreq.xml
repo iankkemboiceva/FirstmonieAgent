@@ -642,7 +642,7 @@ android:visibility="gone"
                                 android:textSize="@dimen/textsize"
                                 android:textColor="@color/black" />
                             <TextView
-                                android:id="@+id/textViewnb2"
+                                android:id="@+id/txloamount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dip"
@@ -659,7 +659,7 @@ android:visibility="gone"
 
                         <RelativeLayout
 
-
+android:visibility="gone"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -691,7 +691,7 @@ android:layout_margin="5dp"
                         </RelativeLayout>
                                 <RelativeLayout
 
-
+android:visibility="gone"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
@@ -722,7 +722,7 @@ android:layout_margin="5dp"
                                 </RelativeLayout>
                         <RelativeLayout
 
-
+android:visibility="gone"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"

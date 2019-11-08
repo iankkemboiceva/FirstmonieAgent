@@ -322,9 +322,9 @@ onKeyMetric();
 		if (v.getId() == R.id.text14) {
 			//	checkInternetConnection();
 
-			startActivity(new Intent(getApplicationContext(),SupHomeActivity.class));
+		//	startActivity(new Intent(getApplicationContext(),SupHomeActivity.class));
 
-			//showEditDialog();
+			showEditDialog();
 		}
 
 	}

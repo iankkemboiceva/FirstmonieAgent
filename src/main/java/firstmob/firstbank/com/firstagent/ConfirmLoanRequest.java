@@ -23,6 +23,7 @@ import model.GetFee;
 import rest.ApiClient;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
+import rest.RetrofitInstance;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,11 +60,13 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
         recname = (TextView) findViewById(R.id.textViewcvv);
         etpin = (EditText) findViewById(R.id.pin);
         acbal = (TextView) findViewById(R.id.txtacbal);
-        recamo = (TextView) findViewById(R.id.textViewrrs);
+        recamo = (TextView) findViewById(R.id.txloamount);
         recnarr = (TextView)findViewById(R.id.textViewrr);
         txtfee = (TextView) findViewById(R.id.txtfee);
         step1 = (TextView) findViewById(R.id.tv);
         step1.setOnClickListener(this);
+
+
 
 
 
@@ -73,6 +76,12 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
 
         btnsub = (Button) findViewById(R.id.button2);
         btnsub.setOnClickListener(this);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            amou = intent.getStringExtra("amount");
+            recamo.setText(amou+ApplicationConstants.KEY_NAIRA);
+        }
 
 
     }
@@ -96,8 +105,12 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
     public void onClick(View view) {
 
         if (view.getId() == R.id.button2) {
-            Intent intent  = new Intent(ConfirmLoanRequest.this,LoanRequestConfirm.class);
-startActivity(intent);
+            String pin = etpin.getText().toString();
+            if(Utility.isNotNull(pin)){
+                ConfirmRequest(pin);
+            }else{
+                Toast.makeText(getApplicationContext(),"Please enter a valid value for pin",Toast.LENGTH_LONG).show();
+            }
 
         }
         if (view.getId() == R.id.tv) {
@@ -216,6 +229,137 @@ startActivity(intent);
         }
 
         super.onDestroy();
+    }
+
+
+    private void ConfirmRequest(String pin) {
+        prgDialog2.show();
+
+
+
+
+
+
+        ApiInterface apiService =
+                RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
+        String adminid = session.getString("ADMINID");
+        String storeid = session.getString("STOREID");
+        String encpin = session.getString("ENCPIN");
+
+        try {
+            JSONObject paramObject = new JSONObject();
+
+            paramObject.put("userId", adminid);
+            paramObject.put("channel", "1");
+            paramObject.put("storeId", storeid);
+            paramObject.put("amount", amou);
+            paramObject.put("pin", encpin);
+
+            Call<String> call = apiService.loanrequest(paramObject.toString());
+
+
+
+
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        // JSON Object
+
+                        SecurityLayer.Log("response..:", response.body());
+                        JSONObject obj = new JSONObject(response.body());
+                        //obj = Utility.onresp(obj,getApplicationContext());
+
+                        SecurityLayer.Log("decrypted_response", obj.toString());
+
+                        String respcode = obj.optString("responseCode");
+
+                        String responsemessage = obj.optString("responseMessage");
+
+
+                        JSONObject plan = obj.optJSONObject("data");
+                        //session.setString(SecurityLayer.KEY_APP_ID,appid);
+                        if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+                            if ((Utility.checkUserLocked(respcode))) {
+                                LogOut();
+                            }
+                            if (!(response.body() == null)) {
+                                if (respcode.equals("00")) {
+
+                                    Intent intent  = new Intent(ConfirmLoanRequest.this,LoanRequestConfirm.class);
+                                    startActivity(intent);
+
+
+                                } else {
+
+
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            responsemessage,
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        "There was an error processing your request ",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        // TODO Auto-generated catch block
+                        if(!(getApplicationContext() == null)) {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                            // SecurityLayer.Log(e.toString());
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                    } catch (Exception e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        if(!(getApplicationContext() == null)) {
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                        // SecurityLayer.Log(e.toString());
+                    }
+                    try {
+                        if ((prgDialog2 != null) && prgDialog2.isShowing() && !(getApplicationContext() == null)) {
+                            prgDialog2.dismiss();
+                        }
+                    } catch (final IllegalArgumentException e) {
+                        // Handle or log or ignore
+                    } catch (final Exception e) {
+                        // Handle or log or ignore
+                    } finally {
+                        //   prgDialog = null;
+                    }
+
+                    //   prgDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // Log error here since request failed
+                    SecurityLayer.Log("Throwable error",t.toString());
+
+
+                    if ((prgDialog2 != null) && prgDialog2.isShowing() && !(getApplicationContext() == null)) {
+                        prgDialog2.dismiss();
+                    }
+                    if(!(getApplicationContext() == null)) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was an error processing your request",
+                                Toast.LENGTH_LONG).show();
+                        SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                    }
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

@@ -135,5 +135,9 @@ public interface ApiInterface {
     @POST("agentcredit/api/loan/eligibility")
     Call<String> loaneligibility(@Body String params);
 
+    @Headers("Content-Type: application/json")
+    @POST("agentcredit/api/loan/request")
+    Call<String> loanrequest(@Body String params);
+
 
 }

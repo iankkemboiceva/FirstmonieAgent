@@ -118,7 +118,7 @@ android:layout_centerHorizontal="true"
             android:id="@+id/sdf2"
 
 
-            android:text="Last Login: 12 July 2012 "
+            android:text=""
 
 
             /></LinearLayout>

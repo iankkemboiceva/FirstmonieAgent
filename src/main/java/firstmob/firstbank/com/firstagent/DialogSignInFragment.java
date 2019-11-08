@@ -171,19 +171,21 @@ String finpin;
                                 dismiss();
                                 String status = datas.optString("status");
                                 String cntopen = datas.optString("canOpenAccount");
+                                String store = datas.optString("store");
                                 session.setString(SessionManagement.KEY_SETCNTOPEN,cntopen);
                                 if(status.equals("F")) {
                                     getActivity().finish();
                                     Intent mIntent = new Intent(getActivity(), ForceResetPin.class);
                                     mIntent.putExtra("pinna", encpin);
+                                    mIntent.putExtra("type", "ADM");
                                     startActivity(mIntent);
                                 }else {
 
-
-                                   /* getActivity().finish();
+                                   session.setString("store",store);
+                                   getActivity().finish();
                                     startActivity(new Intent(getActivity(), SupHomeActivity.class));
-                                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
-
+                                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+/*
 
                                     if (service.equals("PROF")) {
 //
@@ -214,7 +216,7 @@ String finpin;
 
 
                                         startActivity(new Intent(getActivity(), CommissionActivity.class));
-                                    }
+                                    }*/
                                 }
                             }
                         }   else if(respcode.equals("002")){
@@ -293,11 +295,14 @@ setDialog(responsemessage);
             if(Utility.isNotNull(finpin)) {
               encpin =   Utility.b64_sha256(finpin);
                 SecurityLayer.Log("Enc Pin",encpin);
+                session.setString("ENCPIN",encpin);
                // encpin = Utility.b64_sha256(encpin);
                 String supervis = session.getString("SUPERID");
                 String mobnoo = Utility.gettUtilMobno(getActivity());
                 SecurityLayer.Log("Base64 Pin",encpin);
-                String params = "1" + "/" + supervis + "/" + encpin + "/" + mobnoo;
+                String adminid = "10113911106";
+                session.setString("ADMINID",adminid);
+                String params = "1" + "/"+adminid+"/" + encpin + "/" + mobnoo;
                 LogRetro(params,serv);
             }else{
                 Toast.makeText(

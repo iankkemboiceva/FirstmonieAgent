@@ -57,12 +57,12 @@ public class ForceResetPin extends AppCompatActivity implements View.OnClickList
         pDialog = new ProgressDialog(this);
         pDialog.setTitle("Loading");
         pDialog.setCancelable(false);
-        updateAndroidSecurityProvider(getParent());
+
         if(!(getIntent() == null)){
             value = getIntent().getExtras().getString("pinna");
             String type = getIntent().getExtras().getString("type");
             if(!(type == null ) || type.equals("")){
-                if(type.equals("SUP")){
+                if(type.equals("ADM")){
                     blchk = true;
                 }
             }
@@ -108,7 +108,7 @@ public class ForceResetPin extends AppCompatActivity implements View.OnClickList
 
                                     String usid = null;
                                     if(blchk){
-                                        usid = session.getString("SUPERVID");
+                                        usid = "10113911106";
                                     }else {
                                         usid = Utility.gettUtilUserId(getApplicationContext());
                                     }

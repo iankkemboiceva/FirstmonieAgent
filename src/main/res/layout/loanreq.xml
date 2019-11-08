@@ -174,10 +174,21 @@
 
                             <TextView
                                 android:layout_width="wrap_content"
+
                                 android:layout_height="wrap_content"
-                                android:text="Welcome to Loan Request facility.Your loan eligibility status  is below"
+                                android:text="Welcome to Loan Request facility.Select the store you wish to take a loan from"
                                 android:textSize="14sp"
                                 android:textColor="@color/black" />
+
+                            <Spinner
+                                android:id="@+id/spstore"
+                                style="@style/SpinnerAppTheme"
+                                android:layout_marginTop="20dp"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            </Spinner>
 
                             <TextView
                                 android:id="@+id/txtelig"
@@ -185,8 +196,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="20dp"
+
+                                android:textColor="@color/black"
                                 android:text=""
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                            />
 
 
@@ -198,7 +211,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="20dp"
                             android:paddingLeft="5dip"
                             android:paddingRight="5dip"
                             android:paddingBottom="5dip"
@@ -312,8 +325,9 @@
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
+                            android:id="@+id/rl5"
                             android:visibility="gone"
-                            android:layout_below="@+id/rl5"
+
                             android:layout_height="wrap_content">
                             <Button
                                 android:id="@+id/button2"

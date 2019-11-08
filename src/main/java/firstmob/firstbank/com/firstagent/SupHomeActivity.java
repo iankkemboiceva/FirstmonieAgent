@@ -158,7 +158,7 @@ public class SupHomeActivity extends BaseSupActivity implements FragmentSupDrawe
                         fragment = new HomeGridSup();
                     }
                     if(list.equals("list")) {
-                        fragment = new HomeAccountFragNewUI();
+                     //   fragment = new HomeAccountFragNewUI();
                     }}
                 title = "Welcome";
 
@@ -172,7 +172,7 @@ public class SupHomeActivity extends BaseSupActivity implements FragmentSupDrawe
                         fragment = new HomeGridSup();
                     }
                     if (list.equals("list")) {
-                        fragment = new HomeAccountFragNewUI();
+                    //    fragment = new HomeAccountFragNewUI();
                     }
                 }
                 title = "Welcome";
