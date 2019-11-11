@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
     List<GetCitiesData> citylist = new ArrayList<GetCitiesData>();
     Button btnconfirm;
     Spinner sp1;
+    RelativeLayout rlbvn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,8 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
         txtstrstate = (TextView)findViewById(R.id.txtstrstate);
         txtstrgender = (TextView)findViewById(R.id.txtstrgender);
         txtstraddr = (TextView)findViewById(R.id.txtstraddr);
+
+        rlbvn = (RelativeLayout) findViewById(R.id.title);
 
 
 
@@ -107,7 +111,9 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
             }
 
 
-
+            if(Utility.isNotNull(strsalut) || strsalut.equals("")){
+                rlbvn.setVisibility(View.VISIBLE);
+            }
             sp1 = (Spinner)findViewById(R.id.spinsal);
 
             ArrayAdapter<CharSequence> adapter = null;
