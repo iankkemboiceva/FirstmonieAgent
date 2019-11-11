@@ -384,7 +384,7 @@ android:layout_gravity="center"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentRight="true"
-                                        android:layout_marginLeft="60dip"
+                                        android:layout_marginLeft="80dip"
                                         android:layout_marginTop="10dip"
                                         android:text=""
                                         android:textColor="#3C2415"
@@ -425,7 +425,39 @@ android:layout_gravity="center"
                                         android:textSize="@dimen/textsize" />
 
                                 </RelativeLayout>
+                                <RelativeLayout
 
+
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginRight="10dp"
+                                    android:orientation="vertical"
+
+                                    android:layout_marginTop="10dp"
+                                    >
+
+                                    <TextView
+                                        android:id="@+id/txtsal"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select Title"
+                                        android:textSize="12sp"
+                                        android:textAppearance="?android:attr/textAppearanceMedium"
+                                        android:textColor="@color/black"
+
+
+                                        />
+
+                                    <Spinner
+                                        android:id="@+id/spinsal"
+                                        style="@style/SpinnerAppTheme"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/txtsal">
+
+                                    </Spinner>
+                                </RelativeLayout>
                                 <RelativeLayout
 
 
