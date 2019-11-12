@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,15 +31,16 @@ import retrofit2.Response;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ConfirmLoanRequest extends BaseActivity implements View.OnClickListener {
-    TextView recacno,recname,recamo,recnarr,txtfee,acbal;
+public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickListener {
+    TextView recacno, recname, recamo, recnarr, txtfee, acbal;
     Button btnsub;
-    String recanno, amou ,narra, ednamee,ednumbb,txtname,finalfee =null,agbalance;
+    String recanno, amou, narra, ednamee, ednumbb, txtname, finalfee = null, agbalance, storeid;
     ProgressDialog prgDialog2;
     EditText etpin;
     private FirebaseAnalytics mFirebaseAnalytics;
     TextView step1;
     SessionManagement session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,13 +63,10 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
         etpin = (EditText) findViewById(R.id.pin);
         acbal = (TextView) findViewById(R.id.txtacbal);
         recamo = (TextView) findViewById(R.id.txloamount);
-        recnarr = (TextView)findViewById(R.id.textViewrr);
+        recnarr = (TextView) findViewById(R.id.textViewrr);
         txtfee = (TextView) findViewById(R.id.txtfee);
         step1 = (TextView) findViewById(R.id.tv);
         step1.setOnClickListener(this);
-
-
-
 
 
         prgDialog2 = new ProgressDialog(this);
@@ -80,7 +79,8 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
         Intent intent = getIntent();
         if (intent != null) {
             amou = intent.getStringExtra("amount");
-            recamo.setText(amou+ApplicationConstants.KEY_NAIRA);
+            storeid = intent.getStringExtra("storeid");
+            recamo.setText(amou + ApplicationConstants.KEY_NAIRA);
         }
 
 
@@ -106,10 +106,10 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
 
         if (view.getId() == R.id.button2) {
             String pin = etpin.getText().toString();
-            if(Utility.isNotNull(pin)){
+            if (Utility.isNotNull(pin)) {
                 ConfirmRequest(pin);
-            }else{
-                Toast.makeText(getApplicationContext(),"Please enter a valid value for pin",Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Please enter a valid value for pin", Toast.LENGTH_LONG).show();
             }
 
         }
@@ -127,15 +127,7 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
             fragmentTransaction.commit();*/
 
 
-            finish();
 
-
-
-            Intent intent  = new Intent(ConfirmLoanRequest.this,CashDepoActivity.class);
-
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            startActivity(intent);
         }
         if (view.getId() == R.id.tv2) {
            /* Fragment  fragment = new FTMenu();
@@ -154,15 +146,14 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
 
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         // put your code here...
 
 
-
     }
 
-    public void ClearPin(){
+    public void ClearPin() {
         etpin.setText("");
     }
 
@@ -198,17 +189,18 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
         }
     }
 
-    public void setDialog(String message){
+    public void setDialog(String message) {
         new MaterialDialog.Builder(getApplicationContext())
                 .title("Error")
                 .content(message)
 
                 .negativeText("Dismiss")
-                .callback(new MaterialDialog.ButtonCallback()  {
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         dialog.dismiss();
                     }
+
                     @Override
                     public void onNegative(MaterialDialog dialog) {
                         dialog.dismiss();
@@ -223,7 +215,7 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
         // TODO Auto-generated method stub
 
 
-        if(prgDialog2!=null && prgDialog2.isShowing()){
+        if (prgDialog2 != null && prgDialog2.isShowing()) {
 
             prgDialog2.dismiss();
         }
@@ -236,14 +228,10 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
         prgDialog2.show();
 
 
-
-
-
-
         ApiInterface apiService =
                 RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
         String adminid = session.getString("ADMINID");
-        String storeid = session.getString("STOREID");
+
         String encpin = Utility.b64_sha256(pin);
 
         try {
@@ -256,8 +244,6 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
             paramObject.put("pin", encpin);
 
             Call<String> call = apiService.loanrequest(paramObject.toString());
-
-
 
 
             call.enqueue(new Callback<String>() {
@@ -286,7 +272,7 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
                             if (!(response.body() == null)) {
                                 if (respcode.equals("00")) {
 
-                                    Intent intent  = new Intent(ConfirmLoanRequest.this,LoanRequestConfirm.class);
+                                    Intent intent = new Intent(ConfirmLoanRequest.this, LoanRequestConfirm.class);
                                     startActivity(intent);
 
 
@@ -310,14 +296,14 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
                     } catch (JSONException e) {
                         SecurityLayer.Log("encryptionJSONException", e.toString());
                         // TODO Auto-generated catch block
-                        if(!(getApplicationContext() == null)) {
+                        if (!(getApplicationContext() == null)) {
                             Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
                             // SecurityLayer.Log(e.toString());
                             SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
                         }
                     } catch (Exception e) {
                         SecurityLayer.Log("encryptionJSONException", e.toString());
-                        if(!(getApplicationContext() == null)) {
+                        if (!(getApplicationContext() == null)) {
                             SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
                         }
                         // SecurityLayer.Log(e.toString());
@@ -340,13 +326,13 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
                     // Log error here since request failed
-                    SecurityLayer.Log("Throwable error",t.toString());
+                    SecurityLayer.Log("Throwable error", t.toString());
 
 
                     if ((prgDialog2 != null) && prgDialog2.isShowing() && !(getApplicationContext() == null)) {
                         prgDialog2.dismiss();
                     }
-                    if(!(getApplicationContext() == null)) {
+                    if (!(getApplicationContext() == null)) {
                         Toast.makeText(
                                 getApplicationContext(),
                                 "There was an error processing your request",
@@ -363,7 +349,7 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
     }
 
 
-    public  void LogOut(){
+    public void LogOut() {
         session.logoutUser();
 
         // After logout redirect user to Loing Activity

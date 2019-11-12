@@ -321,7 +321,7 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:id="@+id/rlagac"
-
+android:visibility="gone"
                     android:layout_weight="0.5"
                     android:layout_height="50dp">
                     <ImageView
@@ -343,7 +343,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:id="@+id/rlcommwal"
-
+android:visibility="gone"
                     android:layout_height="50dp">
                     <View
                         android:layout_width="1dp"

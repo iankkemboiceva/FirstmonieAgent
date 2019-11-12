@@ -114,7 +114,7 @@ public class FMobActivity extends BaseActivity implements FragmentDrawer.Fragmen
     }
 
 
-  @Override
+ /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
       MenuInflater inflater = getMenuInflater();
@@ -122,7 +122,7 @@ public class FMobActivity extends BaseActivity implements FragmentDrawer.Fragmen
           inflater.inflate(R.menu.main, menu);
 
       return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -225,7 +225,9 @@ showEditDialog("MYPERF");
 
               /*  fragment = new ChangeACName();
                 title = "My Profile";*/
-                showEditDialog("PROF");
+           //     showEditDialog("PROF");
+                Intent ip = new Intent(FMobActivity.this, ChangeAcNameActivity.class);
+                startActivity(ip);
                 break;
             case 3:
 

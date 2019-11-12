@@ -271,13 +271,13 @@ setDialog(responsemessage);
               encpin =   Utility.b64_sha256(finpin);
                 SecurityLayer.Log("Enc Pin",encpin);
                 session.setString("ENCPIN",encpin);
-               // encpin = Utility.b64_sha256(encpin);
+
                 String supervis = session.getString("SUPERID");
                 String mobnoo = Utility.gettUtilMobno(getActivity());
                 SecurityLayer.Log("Base64 Pin",encpin);
               String adminid = session.getString("ADMINID");
                 String params = "1" + "/"+adminid+"/" + encpin + "/" + mobnoo;
-                //LogRetro(params,serv);
+
                 AdminLogin(finpin);
             }else{
                 Toast.makeText(

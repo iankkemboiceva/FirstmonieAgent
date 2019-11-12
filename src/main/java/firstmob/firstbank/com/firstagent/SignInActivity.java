@@ -612,8 +612,8 @@ public void loginRetrofit(){
 										json_data = admusers.getJSONObject(i);
 										String role = json_data.optString("role");
 										String superid = json_data.optString("userid");
-										if(role.equals("MS")){
-											session.setString("SUPERID",superid);
+										if(role.equals("MA")){
+											session.setString("ADMINID",superid);
 										}
 									}
 

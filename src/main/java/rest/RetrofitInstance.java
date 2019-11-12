@@ -89,6 +89,33 @@ public class RetrofitInstance {
                     return chain.proceed(newRequest);
                 }
             });
+
+            builder.addInterceptor(new Interceptor() {
+                @Override
+                public okhttp3.Response intercept(Chain chain) throws IOException {
+                    Request original = chain.request();
+                    Request request = null;
+                    String adminid = session.getString("ADMINID");
+
+
+
+                    if(adminid == null){
+                        adminid = "N";
+                    }
+
+
+
+
+                        request = original.newBuilder()
+                                .header("userId", adminid)
+
+                                .method(original.method(), original.body())
+                                .build();
+
+
+                    return chain.proceed(request);
+                }
+            });
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 // set your desired log level
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);

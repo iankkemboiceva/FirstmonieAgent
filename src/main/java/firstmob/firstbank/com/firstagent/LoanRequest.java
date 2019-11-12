@@ -182,12 +182,15 @@ Spinner spstore;
         }
         if (view.getId() == R.id.button2) {
             String amont = amon.getText().toString();
+            String storeid  = storelist.get(spstore.getSelectedItemPosition()).getstoreid();
             if(Utility.isNotNull(amont)) {
                 Double inpamo = Double.parseDouble(amont);
                 Double dbamolimit = Double.parseDouble(amolimit);
                 if(inpamo<=dbamolimit) {
+
                     Intent intent = new Intent(LoanRequest.this, ConfirmLoanRequest.class);
                     intent.putExtra("amount", amont);
+                    intent.putExtra("storeid", storeid);
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(),"Kindly enter an amount below your loan limit",Toast.LENGTH_LONG).show();
@@ -218,6 +221,7 @@ prgDialog.show();
 
 
         String storeid  = storelist.get(spstore.getSelectedItemPosition()).getstoreid();
+
          String adminid = session.getString("ADMINID");
         ApiInterface apiService =
                 RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
