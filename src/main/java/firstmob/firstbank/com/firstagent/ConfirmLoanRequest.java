@@ -244,7 +244,7 @@ public class ConfirmLoanRequest extends BaseActivity implements View.OnClickList
                 RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
         String adminid = session.getString("ADMINID");
         String storeid = session.getString("STOREID");
-        String encpin = session.getString("ENCPIN");
+        String encpin = Utility.b64_sha256(pin);
 
         try {
             JSONObject paramObject = new JSONObject();

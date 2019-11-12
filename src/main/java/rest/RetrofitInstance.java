@@ -15,6 +15,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import firstmob.firstbank.com.firstagent.ApplicationConstants;
+import firstmob.firstbank.com.firstagent.SessionManagement;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,8 +27,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitInstance {
   public  static   Retrofit retrofit = null;
     public  static  OkHttpClient okHttpClient = null;
+    public  static  SessionManagement session = null;
     public static Retrofit getClient(Context ct) {
-
+        session = new SessionManagement(ct);
         try {
             // Create a trust manager that does not validate certificate chains
             final TrustManager[] trustAllCerts = new TrustManager[]{
@@ -76,11 +78,13 @@ public class RetrofitInstance {
                 }
             });
 
+            final String token = session.getString("TOKEN");
+
             builder.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer " + "121212121212")
+                            .addHeader("Authorization", "Bearer " + token)
                             .build();
                     return chain.proceed(newRequest);
                 }

@@ -24,16 +24,20 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
 import model.GetStatesData;
+import model.GetStores;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
 import rest.RetrofitInstance;
@@ -48,6 +52,8 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
     EditText amon, edacc,pno,txtamount,txtnarr,pin;
     Button btnsub;
     SessionManagement session;
+    List<GetStores> storelist = new ArrayList<GetStores>();
+    ArrayAdapter<GetStores> maradapt;
 
     TextView accountoname;
     String depositid;
@@ -97,14 +103,9 @@ Spinner spstore;
 
 
         spstore = (Spinner) findViewById(R.id.spstore);
-        List<String> lists = new ArrayList<String>();
-        String store = session.getString("store");
-        lists.add(store);
-        ArrayAdapter<String> adapter= new ArrayAdapter<String>(this, R.layout.my_spinner, lists);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spstore.setAdapter(adapter);
 
+        SetStores();
 
 
 
@@ -211,13 +212,12 @@ Spinner spstore;
 
     private void NameInquirySec() {
 prgDialog.show();
-        String endpoint= "transfer/nameenq.action";
 
 
 
 
-         String storeid = spstore.getSelectedItem().toString();
-        session.setString("STOREID",storeid);
+
+        String storeid  = storelist.get(spstore.getSelectedItemPosition()).getstoreid();
          String adminid = session.getString("ADMINID");
         ApiInterface apiService =
                 RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
@@ -403,6 +403,62 @@ lybut.setVisibility(View.VISIBLE);
                 "You have been locked out of the app.Please call customer care for further details",
                 Toast.LENGTH_LONG).show();
         // Toast.makeText(getApplicationContext(), "You have logged out successfully", Toast.LENGTH_LONG).show();
+
+    }
+
+
+    public void SetStores() {
+        String strjsarray = session.getString("STORES");
+
+        JSONArray servdata = null;
+        try {
+            servdata = new JSONArray(strjsarray);
+            if (servdata.length() > 0) {
+                JSONObject json_data = null;
+
+                for (int i = 0; i < servdata.length(); i++) {
+                    json_data = servdata.getJSONObject(i);
+
+
+                    String storeid = json_data.optString("storeId");
+                    String storename = json_data.optString("storeName");
+
+
+
+                    storelist.add(new GetStores(storeid, storename));
+                }
+                if (!(storelist == null)) {
+                    if (storelist.size() > 0) {
+
+
+
+                        Collections.sort(storelist, new Comparator<GetStores>() {
+                            public int compare(GetStores d1, GetStores d2) {
+                                return d1.getstorename().compareTo(d2.getstorename());
+                            }
+                        });
+if(storelist.size() > 1) {
+    GetStores sa = new GetStores("0000", "Select Store");
+    storelist.add(sa);
+}
+
+                        //  Collections.swap(planetsList,0,planetsList.size() -1);
+                        maradapt = new ArrayAdapter<GetStores>(this, R.layout.my_spinner, storelist);
+                        maradapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spstore.setAdapter(maradapt);
+                        spstore.setSelection(storelist.size() -1);
+                    } else {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "No stores available  ",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 }

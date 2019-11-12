@@ -419,6 +419,25 @@ public static JSONArray getNubanAlgo(String account){
 		return outputString;
 
 	}
+
+	public static String expeb64_sha256(String inputString) {
+		String outputString= null;
+		if (inputString != null) {
+			outputString = Base64.encodeToString(
+					DigestUtils.sha256(inputString),Base64.DEFAULT).trim();
+		} else {
+			System.out.println("Input String Missing for b64_sha256");
+		}
+
+		try {
+			outputString = toHex(outputString);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		return outputString;
+
+	}
 	public static String gettUtilAgentId(Context c){
 		session = new SessionManagement(c);
 		HashMap<String, String> defa = session.getAgentID();

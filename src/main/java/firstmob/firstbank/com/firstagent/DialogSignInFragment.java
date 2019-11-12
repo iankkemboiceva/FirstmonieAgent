@@ -1,6 +1,7 @@
 package firstmob.firstbank.com.firstagent;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,15 +24,20 @@ import com.andrognito.pinlockview.IndicatorDots;
 import com.andrognito.pinlockview.PinLockListener;
 import com.andrognito.pinlockview.PinLockView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
+import rest.RetrofitInstance;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import security.SecurityLayer;
+
+import static security.SecurityLayer.KEY_SIV;
+import static security.SecurityLayer.KEY_SKEY;
 
 
 public class DialogSignInFragment extends DialogFragment implements View.OnClickListener {
@@ -185,38 +191,7 @@ String finpin;
                                    getActivity().finish();
                                     startActivity(new Intent(getActivity(), SupHomeActivity.class));
                                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-/*
 
-                                    if (service.equals("PROF")) {
-//
-                                        startActivity(new Intent(getActivity(), ChangeAcNameActivity.class));
-                                    }
-                                    if (service.equals("MYPERF")) {
-
-
-
-                                        startActivity(new Intent(getActivity(), MyPerfActivity.class));
-                                    }
-                                    if (service.equals("INBOX")) {
-
-
-
-
-                                        startActivity(new Intent(getActivity(), InboxActivity.class));
-                                    }
-
-                                    if (service.equals("MINIST")) {
-
-
-
-                                        startActivity(new Intent(getActivity(), MinistatActivity.class));
-                                    }
-                                    if (service.equals("COMM")) {
-
-
-
-                                        startActivity(new Intent(getActivity(), CommissionActivity.class));
-                                    }*/
                                 }
                             }
                         }   else if(respcode.equals("002")){
@@ -300,10 +275,10 @@ setDialog(responsemessage);
                 String supervis = session.getString("SUPERID");
                 String mobnoo = Utility.gettUtilMobno(getActivity());
                 SecurityLayer.Log("Base64 Pin",encpin);
-                String adminid = "10113911106";
-                session.setString("ADMINID",adminid);
+              String adminid = session.getString("ADMINID");
                 String params = "1" + "/"+adminid+"/" + encpin + "/" + mobnoo;
-                LogRetro(params,serv);
+                //LogRetro(params,serv);
+                AdminLogin(finpin);
             }else{
                 Toast.makeText(
                         getActivity(),
@@ -337,4 +312,190 @@ dismiss();
                 })
                 .show();
     }
+
+
+
+
+    private void AdminLogin(String pin) {
+        pro.show();
+
+
+
+
+        String encrypted = Utility.b64_sha256(pin);
+
+        String skey = session.getString(KEY_SKEY);
+        String siv = session.getString(KEY_SIV);
+        String adminid = session.getString("ADMINID");
+        ApiInterface apiService =
+                RetrofitInstance.getClient(getActivity()).create(ApiInterface.class);
+
+        try {
+            JSONObject paramObject = new JSONObject();
+
+            paramObject.put("loginUserId", adminid);
+            paramObject.put("channel", "1");
+            paramObject.put("pin", encrypted);
+            paramObject.put("key", "650dc9fc52d141e2");
+            paramObject.put("iv", "505ad5e148f7f115");
+
+
+
+            Call<String> call = apiService.adminlogin(paramObject.toString());
+
+
+
+
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        // JSON Object
+
+                        SecurityLayer.Log("response..:", response.body());
+                        JSONObject obj = new JSONObject(response.body());
+                        //obj = Utility.onresp(obj,getApplicationContext());
+
+                        SecurityLayer.Log("decrypted_response", obj.toString());
+
+                        String respcode = obj.optString("responseCode");
+
+                        String responsemessage = obj.optString("responseMessage");
+
+
+                        JSONObject plan = obj.optJSONObject("data");
+                        JSONObject datas = obj.optJSONObject("data");
+                        //session.setString(SecurityLayer.KEY_APP_ID,appid);
+                        if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+
+                            if (!(response.body() == null)) {
+                                if (respcode.equals("00")) {
+                                    if (!(datas == null)) {
+                                        dismiss();
+                                        String status = datas.optString("status");
+                                        String cntopen = datas.optString("canOpenAccount");
+                                        String store = datas.optString("store");
+                                        String token = datas.optString("token");
+                                        JSONArray stores = datas.optJSONArray("stores");
+                                        session.setString("STORES",stores.toString());
+                                        session.setString("TOKEN",token);
+                                        session.setString(SessionManagement.KEY_SETCNTOPEN,cntopen);
+                                        if(status.equals("F")) {
+                                            getActivity().finish();
+                                            Intent mIntent = new Intent(getActivity(), ForceResetPin.class);
+                                            mIntent.putExtra("pinna", encpin);
+                                            mIntent.putExtra("type", "ADM");
+                                            startActivity(mIntent);
+                                        }else {
+
+                                            session.setString("store",store);
+                                            getActivity().finish();
+                                            startActivity(new Intent(getActivity(), SupHomeActivity.class));
+                                            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                                        }
+                                    }
+                                } else {
+                                    dismiss();
+                                    Toast.makeText(
+                                            getActivity(), responsemessage,
+                                            Toast.LENGTH_LONG).show();
+
+                                    ((SignInActivity) getActivity()).showEditDialog();
+                                }
+                            } else {
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        // TODO Auto-generated catch block
+                        if(!(getActivity() == null)) {
+                            Toast.makeText(getActivity(), getActivity().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                            // SecurityLayer.Log(e.toString());
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getActivity());
+                        }
+                    } catch (Exception e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        if(!(getActivity() == null)) {
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getActivity());
+                        }
+                        // SecurityLayer.Log(e.toString());
+                    }
+                    try {
+                        if ((pro != null) && pro.isShowing() && !(getActivity() == null)) {
+                            pro.dismiss();
+                        }
+                    } catch (final IllegalArgumentException e) {
+                        // Handle or log or ignore
+                    } catch (final Exception e) {
+                        // Handle or log or ignore
+                    } finally {
+                        //   prgDialog = null;
+                    }
+
+                    //   prgDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // Log error here since request failed
+                    SecurityLayer.Log("Throwable error",t.toString());
+
+
+                    if ((pro != null) && pro.isShowing() && !(getActivity() == null)) {
+                        pro.dismiss();
+                    }
+                    if(!(getActivity() == null)) {
+                        Toast.makeText(
+                                getActivity(),
+                                "There was an error processing your request",
+                                Toast.LENGTH_LONG).show();
+                        SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getActivity());
+                    }
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public void SetForceOutDialog(String msg, final String title, final Context c) {
+        if (!(c == null)) {
+            new MaterialDialog.Builder(getActivity())
+                    .title(title)
+                    .content(msg)
+
+                    .negativeText("CONTINUE")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+
+                            dialog.dismiss();
+                            getActivity().finish();
+                            session.logoutUser();
+
+                            // After logout redirect user to Loing Activity
+                            Intent i = new Intent(c, SignInActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            // Staring Login Activity
+                            startActivity(i);
+
+                        }
+                    })
+                    .show();
+        }
+    }
+
+
+
 }
