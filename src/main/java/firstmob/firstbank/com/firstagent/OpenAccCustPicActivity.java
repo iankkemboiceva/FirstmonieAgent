@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -489,6 +490,16 @@ private void convertSignedImage(Bitmap origbit){
     thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
     String filename = "signed.jpg";
 
+    final File path = new File(Environment.getExternalStorageDirectory(), "FirstAgent");
+
+
+    // Make sure the path directory exists.
+    if (!path.exists()) {
+        // Make it, if it doesn't exit
+        path.mkdirs();
+        Log.v("was it crated", "created");
+    }
+
         finalFile = new File(Environment.getExternalStorageDirectory(),"FirstAgent/"+filename);
 
     FileOutputStream fo;
@@ -546,6 +557,16 @@ if(uploadpic) {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
             String filename = "camerapic.jpg";
+
+            final File path = new File(Environment.getExternalStorageDirectory(), "FirstAgent");
+
+
+            // Make sure the path directory exists.
+            if (!path.exists()) {
+                // Make it, if it doesn't exit
+                path.mkdirs();
+                Log.v("was it crated", "created");
+            }
             finalFile = new File(Environment.getExternalStorageDirectory(),"FirstAgent/"+filename);
             FileOutputStream fo;
             try {
