@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -113,6 +114,52 @@ Spinner spstore;
         btnsub.setOnClickListener(this);
 
         NameInquirySec();
+
+        spstore.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /*
+                onItemSelected
+                    void onItemSelected (AdapterView<?> parent,
+                                    View view,
+                                    int position,
+                                    long id)
+
+                    Callback method to be invoked when an item in this view has been selected.
+                    This callback is invoked only when the newly selected position is different
+                    from the previously selected position or if there was no selected item.
+
+                    Impelmenters can call getItemAtPosition(position) if they need to access the
+                    data associated with the selected item.
+
+                    Parameters
+                        parent AdapterView: The AdapterView where the selection happened
+                        view View: The view within the AdapterView that was clicked
+                        position int: The position of the view in the adapter
+                        id long: The row id of the item that is selected
+            */
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // Get the spinner selected item text
+                String selectedItemText = (String) adapterView.getItemAtPosition(i);
+                // Display the selected item into the TextView
+               NameInquirySec();
+            }
+
+            /*
+                onNothingSelected
+
+                    void onNothingSelected (AdapterView<?> parent)
+                    Callback method to be invoked when the selection disappears from this view.
+                    The selection can disappear for instance when touch is activated or when
+                    the adapter becomes empty.
+
+                    Parameters
+                        parent AdapterView: The AdapterView that now contains no selected item.
+            */
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
 
@@ -282,6 +329,8 @@ lybut.setVisibility(View.VISIBLE);
                                         getApplicationContext(),
                                         responsemessage,
                                         Toast.LENGTH_LONG).show();
+                                lyamo.setVisibility(View.GONE);
+                                lybut.setVisibility(View.GONE);
                             }
                         } else {
                             txelig.setText("There was an error processing your loan eligibility request");
@@ -289,6 +338,8 @@ lybut.setVisibility(View.VISIBLE);
                                     getApplicationContext(),
                                     "There was an error processing your request ",
                                     Toast.LENGTH_LONG).show();
+                            lyamo.setVisibility(View.GONE);
+                            lybut.setVisibility(View.GONE);
                         }
                     }
 
@@ -441,10 +492,7 @@ lybut.setVisibility(View.VISIBLE);
                                 return d1.getstorename().compareTo(d2.getstorename());
                             }
                         });
-if(storelist.size() > 1) {
-    GetStores sa = new GetStores("0000", "Select Store");
-    storelist.add(sa);
-}
+
 
                         //  Collections.swap(planetsList,0,planetsList.size() -1);
                         maradapt = new ArrayAdapter<GetStores>(this, R.layout.my_spinner, storelist);
