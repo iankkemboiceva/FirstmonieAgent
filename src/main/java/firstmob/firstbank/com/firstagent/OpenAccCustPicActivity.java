@@ -152,9 +152,13 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
             strgender = intent.getStringExtra("gender");
             straddr = intent.getStringExtra("straddr");
 
+
+
         }
         step2 = (TextView) findViewById(R.id.tv2);
         step2.setOnClickListener(this);
+
+
 
         step1 = (TextView) findViewById(R.id.tv);
         step1.setOnClickListener(this);
@@ -238,6 +242,9 @@ lyupl.setVisibility(View.VISIBLE);
 
 
         String sessid = UUID.randomUUID().toString();
+
+
+
 
 
 

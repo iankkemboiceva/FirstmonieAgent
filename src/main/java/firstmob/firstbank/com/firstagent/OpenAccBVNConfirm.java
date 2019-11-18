@@ -79,7 +79,7 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
             strfname = intent.getStringExtra("fname");
             strlname = intent.getStringExtra("lname");
             strmidnm = intent.getStringExtra("midname");
-            stryob = intent.getStringExtra("yob");
+           String txstringryob = intent.getStringExtra("yob");
             stremail = intent.getStringExtra("email");
             strhmdd = intent.getStringExtra("hmadd");
             strmobn = intent.getStringExtra("mobn");
@@ -94,7 +94,9 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
           //  Toast.makeText(getApplicationContext(),stryob,  Toast.LENGTH_LONG).show();
 
             txtstrfname.setText(strfname+" "+strlname);
-            txtstryob.setText(stryob);
+            txtstryob.setText(txstringryob);
+
+            stryob = Utility.convertBVNdate(txstringryob);
             txtstremail.setText(stremail);
             txtstrmobn.setText(strmobn);
             txtstrmarst.setText(strmarst);
@@ -163,7 +165,7 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
         if(view.getId() == R.id.button2) {
             Intent intent  = new Intent(OpenAccBVNConfirm.this,OpenAccUpPicActivity.class);
 
-            stryob = Utility.convertBVNdate(stryob);
+
 
 
             if(strmarst.equals("Single")){

@@ -563,29 +563,6 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                                     intent.putExtra("fee",totfee);
                                     startActivity(intent);
 
-                                 /*   Bundle b = new Bundle();
-                                    b.putString("recanno", recanno);
-                                    b.putString("amou", amou);
-                                    //      String refcodee = datas.optString("referenceCode");
-                                    b.putString("refcode", refcodee);
-                                    b.putString("narra", narra);
-                                    b.putString("ednamee", ednamee);
-                                    b.putString("ednumbb", ednumbb);
-                                    b.putString("txtname", txtname);
-                                    b.putString("agcmsn", agcmsn);
-                                    b.putString("fee", totfee);
-                                    b.putString("trantype", "D");
-                                    Fragment fragment = new FinalConfDepoTrans();
-
-                                    fragment.setArguments(b);
-                                    FragmentManager fragmentManager = getFragmentManager();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                    //  String tag = Integer.toString(title);
-                                    fragmentTransaction.replace(R.id.container_body, fragment, "Confirm Transfer");
-                                    fragmentTransaction.addToBackStack("Confirm Transfer");
-                                    ((FMobActivity) getApplicationContext())
-                                            .setActionBarTitle("Confirm Transfer");
-                                    fragmentTransaction.commit();*/
                                 }
 
                                 else if(respcode.equals("002")){
@@ -596,7 +573,6 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
 
                                     setAlertDialog();
 
-                                    //   ((FMobActivity)getApplicationContext()).showWrongPinDialog(serv);
                                 }else {
                                     new MaterialDialog.Builder(TransactionProcessingActivity.this)
                                             .title("Error")
@@ -618,29 +594,9 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
 
                                     txstatus.setText("TRANSACTION FAILURE");
                                     txdesc.setText(responsemessage);
-                                   /* Bundle params = new Bundle();
-                                    params.putString("deposit_error", responsemessage);
-                                    params.putString("response_code", respcode);
-                                    mFirebaseAnalytics.logEvent("cash_deposit", params);
 
-                                    Answers.getInstance().logCustom(new CustomEvent("cash_deposit error code")
-
-                                            .putCustomAttribute("deposit_error", responsemessage)
-                                            .putCustomAttribute("response_code", respcode)
-                                    );*/
-
-                                 /*   Toast.makeText(
-                                            getApplicationContext(),
-                                            "" + responsemessage,
-                                            Toast.LENGTH_LONG).show();*/
                                 }
                             } else {
-                              /*  getApplicationContext().finish();
-                                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        "You have been locked out of the app.Please call customer care for further details",
-                                        Toast.LENGTH_LONG).show();*/
 
                                LogOut();
                             }
