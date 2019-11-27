@@ -97,7 +97,7 @@ public class InboxActivity extends BaseActivity implements View.OnClickListener,
 
     ProgressDialog pro ;
     SearchView sv;
-    String tdate,firdate;
+    String tdate,firdate,finpin;
     EditText editsearch;
     private Toolbar mToolbar;
     SimpleDateFormat format1 = new SimpleDateFormat("" +
@@ -117,6 +117,14 @@ public class InboxActivity extends BaseActivity implements View.OnClickListener,
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
         ab.setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
+
+
+        Intent intent = getIntent();
+        if (intent != null) {
+
+
+            finpin = intent.getStringExtra("pinna");
+        }
 
 
 
@@ -179,7 +187,7 @@ public class InboxActivity extends BaseActivity implements View.OnClickListener,
             frmdymonth = "0" + frmdymonth;
         }
         String frmyear = Integer.toString(year);
-        frmyear = frmyear.substring(2, 4);
+
         String tdate = frmdymonth + "-" + (month) + "-" + frmyear;
         String firdate = "01" + "-" + (month) + "-" + frmyear;
 
@@ -375,12 +383,30 @@ Log.v("Am i in","Yes");
         }
     }
     public void SetDialog(String msg,String title){
-        new MaterialDialog.Builder(getApplicationContext())
+        new MaterialDialog.Builder(InboxActivity.this)
                 .title(title)
                 .content(msg)
 
                 .negativeText("Close")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+
+                        dialog.dismiss();
+                        finish();
+
+
+                    }
+                })
                 .show();
+
+
+
     }
 
     public void SetMinist(String stdate,String enddate) {
@@ -402,7 +428,7 @@ Log.v("Am i in","Yes");
                 frmdymonth = "0" + frmdymonth;
             }
             String frmyear = Integer.toString(year);
-            frmyear = frmyear.substring(2, 4);
+
             SimpleDateFormat format1 = new SimpleDateFormat("" +
                     "MMMM dd yyyy");
             String fdate = frmdymonth + "-" + (month) + "-" + frmyear;
@@ -418,7 +444,9 @@ Log.v("Am i in","Yes");
             String usid = Utility.gettUtilUserId(getApplicationContext());
             String agentid = Utility.gettUtilAgentId(getApplicationContext());
             String mobnoo = Utility.gettUtilMobno(getApplicationContext());
-            String params = "1/" + usid + "/" + agentid + "/" + mobnoo + "/TXNRPT/" + stdate + "/" + enddate;
+
+     //       “/report/newinbox.action/{channel}/{userId}/{merchantId}/{mobileNumber}/{reportType}/{fromDate}/{toDate}/{pin}”{
+            String params = "1/" + usid + "/" + agentid + "/" + mobnoo + "/TXNRPT/" + stdate + "/" + enddate+"/"+finpin;
             SecurityLayer.Log("inbox params", params);
             Inbox(params);
         /*Call<GetPerf> call = apiService.getPerfData("1",usid,agentid,"0000","TXNRPT","09-09-16",fdate);
@@ -486,7 +514,7 @@ if(temp.size() == 0){
             aAdpt.clear();
             aAdpt.notifyDataSetChanged();
         }
-        String endpoint= "report/genrpt.action";
+        String endpoint= "report/newinbox.action";
 
 
 
@@ -533,10 +561,12 @@ if(temp.size() == 0){
                     SecurityLayer.Log("decrypted_response", obj.toString());
 
 
-
+                    JSONArray comperf = null;
 
                     JSONObject comdatas = obj.optJSONObject("data");
-                    JSONArray comperf = comdatas.optJSONArray("transaction");
+                    if(!(comdatas == null)) {
+                        comperf = comdatas.optJSONArray("transactions");
+                    }
                     //session.setString(SecurityLayer.KEY_APP_ID,appid);
 
                     if(!(response.body() == null)) {
@@ -549,9 +579,10 @@ if(temp.size() == 0){
                             if (!(Utility.checkUserLocked(respcode))) {
                                 SecurityLayer.Log("Response Message", responsemessage);
 
-                                if (respcode.equals("00")){
-                                    SecurityLayer.Log("JSON Aray", comperf.toString());
-                                    if(comperf.length() > 0){
+                                if (respcode.equals("00")) {
+                                    if (!(comperf == null)){
+                                        SecurityLayer.Log("JSON Aray", comperf.toString());
+                                    if (comperf.length() > 0) {
 
 
                                         JSONObject json_data = null;
@@ -561,6 +592,8 @@ if(temp.size() == 0){
                                             String fintoacnum = "";
                                             String finfromacnum = "";
 
+                                            //[{"txnCode":"CASHDEP","amount":555,"txndateTime":"2019-05-22 12:14:04","fee":null,"approvedBy":"111242816","id":5627809,"status":"FAILURE"}
+
                                             String txnCode = json_data.optString("txnCode");
                                             double agentCmsn = json_data.optDouble("agentCmsn");
                                             String txndateTime = json_data.optString("txndateTime");
@@ -569,29 +602,29 @@ if(temp.size() == 0){
                                             String toAcNum = json_data.optString("toAcNum");
                                             String refNumber = json_data.optString("refNumber");
                                             String fromaccnum = json_data.optString("fromAccountNum");
-                                            Log.v("my amount",amount);
-                                            double dbam =0;
-                                            if((amount != null) && (!(amount.equals("null"))) ) {
-                                                Log.v("It is NOT null",amount);
+                                            Log.v("my amount", amount);
+                                            double dbam = 0;
+                                            if ((amount != null) && (!(amount.equals("null")))) {
+                                                Log.v("It is NOT null", amount);
                                                 dbam = Double.parseDouble(amount);
-                                            }else{
+                                            } else {
                                                 dbam = 0;
-                                                Log.v("It is really null",amount);
+                                                Log.v("It is really null", amount);
                                             }
-                                            if(txnCode.equals("CASHDEP") || txnCode.equals("FTINTRABANK") || txnCode.equals("CWDBYACT")  || txnCode.equals("BILLPAYMENT") ||  txnCode.equals("MMO")  ||  txnCode.equals("FTINTERBANK") ){
+                                            if (txnCode.equals("CASHDEP") || txnCode.equals("FTINTRABANK") || txnCode.equals("CWDBYACT") || txnCode.equals("BILLPAYMENT") || txnCode.equals("MMO") || txnCode.equals("FTINTERBANK")) {
                                                 fintoacnum = fromaccnum;
-                                                finfromacnum  = toAcNum;
+                                                finfromacnum = toAcNum;
                                                 toAcNum = fintoacnum;
                                                 fromaccnum = finfromacnum;
                                             }
-                                            if( (dbam > 0)) {
-                                                planetsList.add(new GetCommPerfData(txnCode, txndateTime, agentCmsn, status, amount, toAcNum, refNumber,fromaccnum));
+                                            if ((dbam > 0)) {
+                                                planetsList.add(new GetCommPerfData(txnCode, txndateTime, agentCmsn, status, amount, toAcNum, refNumber, fromaccnum));
 
                                             }
 
 
                                         }
-                                        if(!(this == null)) {
+                                        if (!(this == null)) {
                                             //   planetsList.add(new GetCommPerfData("1334", "13 Sep 2012 9:12", 45.00, "N", "450.00", "3123442", "242244432","1239032"));
 
                                             aAdpt = new InboxListAdapter(planetsList, InboxActivity.this);
@@ -599,17 +632,22 @@ if(temp.size() == 0){
 
                                             lv.setAdapter(aAdpt);
 
-                                         //   registerForContextMenu(lv);
+                                            //   registerForContextMenu(lv);
                                         }
 
 
                                     }
+                                }else {
+                                        SetDialog(responsemessage,"Error");
+                                    }
 
                                 }else{
-                                    Toast.makeText(
+                                  /*  Toast.makeText(
                                             getApplicationContext(),
                                             "" + responsemessage,
-                                            Toast.LENGTH_LONG).show();
+                                            Toast.LENGTH_LONG).show();*/
+
+                                    SetDialog(responsemessage,"Error");
                                 }
                             } else {
                                 finish();
@@ -735,7 +773,7 @@ if(temp.size() == 0){
                 frmdymonth = "0" + frmdymonth;
             }
             String frmyear = Integer.toString(year);
-            frmyear = frmyear.substring(2, 4);
+
             String  fromd = frmdymonth + "-" +(monthOfYear) + "-" + frmyear;
             String frmenddymonth = Integer.toString(dayOfMonthEnd);
             if (dayOfMonthEnd < 10) {
@@ -743,7 +781,7 @@ if(temp.size() == 0){
             }
 
             String frmendyr = Integer.toString(yearEnd);
-            frmendyr = frmendyr.substring(2, 4);
+
             String endd = frmenddymonth + "-" + (monthOfYearEnd) + "-" + frmendyr;
             SetMinist(fromd,endd);
         }else{
@@ -994,7 +1032,7 @@ if(temp.size() == 0){
                 frmdymonth = "0" + frmdymonth;
             }
             String frmyear = Integer.toString(year);
-            frmyear = frmyear.substring(2, 4);
+
             String  fromd = frmdymonth + "-" +(monthOfYear) + "-" + frmyear;
             String frmenddymonth = Integer.toString(dayOfMonthEnd);
             if (dayOfMonthEnd < 10) {
@@ -1002,7 +1040,7 @@ if(temp.size() == 0){
             }
 
             String frmendyr = Integer.toString(yearEnd);
-            frmendyr = frmendyr.substring(2, 4);
+
             String endd = frmenddymonth + "-" + (monthOfYearEnd) + "-" + frmendyr;
             SetMinist(fromd,endd);
         }else{

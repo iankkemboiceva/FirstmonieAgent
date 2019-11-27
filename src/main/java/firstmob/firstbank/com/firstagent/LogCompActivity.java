@@ -122,6 +122,8 @@ public class LogCompActivity extends BaseActivity implements View.OnClickListene
             String usid = Utility.gettUtilUserId(getApplicationContext());
             String agentid = Utility.gettUtilAgentId(getApplicationContext());
             String mobnoo = Utility.gettUtilMobno(getApplicationContext());
+
+
             String params = "1/" + usid + "/" + agentid + "/" + stracno +"/"+stramo+"/"+strdatee+"/"+desc;
             String urlparams = "";
             try {
@@ -173,17 +175,7 @@ public class LogCompActivity extends BaseActivity implements View.OnClickListene
 
                                         finish();
                                         startActivity(new Intent(getApplicationContext(), FMobActivity.class));
-                                       /* Fragment  fragment = new ViewAgentRequests();
 
-
-                                        FragmentManager fragmentManager = getFragmentManager();
-                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                        //  String tag = Integer.toString(title);
-                                        fragmentTransaction.replace(R.id.container_body, fragment,"View Requests");
-                                        fragmentTransaction.addToBackStack("View Requests");
-                                        ((FMobActivity)getActivity())
-                                                .setActionBarTitle("View Requests");
-                                        fragmentTransaction.commit();*/
                                     }
 
                                 } else {

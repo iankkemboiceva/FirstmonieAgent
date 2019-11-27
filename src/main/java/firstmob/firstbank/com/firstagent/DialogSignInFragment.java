@@ -313,13 +313,32 @@ setDialog(responsemessage);
 
             if(Utility.isNotNull(finpin)) {
               encpin =   Utility.b64_sha256(finpin);
-                SecurityLayer.Log("Enc Pin",encpin);
+              /*  SecurityLayer.Log("Enc Pin",encpin);
                // encpin = Utility.b64_sha256(encpin);
                 String usid = Utility.gettUtilUserId(getActivity());
                 String mobnoo = Utility.gettUtilMobno(getActivity());
                 SecurityLayer.Log("Base64 Pin",encpin);
                 String params = "1" + "/" + usid + "/" + encpin + "/" + mobnoo;
-                LogRetro(params,serv);
+                LogRetro(params,serv);*/
+
+                if (serv.equals("INBOX")) {
+
+
+                    dismiss();
+                    Intent mIntent = new Intent(getActivity(), InboxActivity.class);
+                    mIntent.putExtra("pinna", encpin);
+                    startActivity(mIntent);
+                }
+
+                if (serv.equals("MINIST")) {
+
+                    dismiss();
+                    Intent mIntent = new Intent(getActivity(), MinistatActivity.class);
+                    mIntent.putExtra("pinna", encpin);
+                    startActivity(mIntent);
+                }
+
+
             }else{
                 Toast.makeText(
                         getActivity(),

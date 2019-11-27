@@ -225,7 +225,9 @@ showEditDialog("MYPERF");
 
               /*  fragment = new ChangeACName();
                 title = "My Profile";*/
-                showEditDialog("PROF");
+             //   showEditDialog("PROF");
+
+                startActivity(new Intent(this, ChangeAcNameActivity.class));
                 break;
             case 3:
 
