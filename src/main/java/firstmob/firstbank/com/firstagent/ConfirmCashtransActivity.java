@@ -135,7 +135,7 @@ public class ConfirmCashtransActivity extends BaseActivity implements View.OnCli
                             if (Utility.isNotNull(ednamee)) {
                                 if (Utility.isNotNull(ednumbb)) {
                                     if (Utility.isNotNull(agpin)) {
-                                        if(Utility.isNotNull(agbalance)){
+
                                         double dbamo = Double.parseDouble(amou);
                                         Double dbagbal = Double.parseDouble(agbalance);
                                         if(dbamo <= dbagbal){
@@ -295,12 +295,7 @@ public class ConfirmCashtransActivity extends BaseActivity implements View.OnCli
                                                     Toast.LENGTH_LONG).show();
                                         }
 
-                                    }  else {
-                                            Toast.makeText(
-                                                    getApplicationContext(),
-                                                    "The amount set is higher than your agent balance",
-                                                    Toast.LENGTH_LONG).show();
-                                        }
+
                                     }  else {
                                         Toast.makeText(
                                                 getApplicationContext(),

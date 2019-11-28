@@ -171,12 +171,7 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
                                                 double dbamo = Double.parseDouble(amou);
                                                 Double dbagbal = 0.0;
 
-                                                if (Utility.isNotNull(agbalance)) {
-                                                    dbagbal = Double.parseDouble(agbalance);
-                                                    if (dbamo > dbagbal) {
-                                                        chkdb = false;
-                                                    }
-                                                }
+
                                             }catch (NumberFormatException e){
                                                 e.printStackTrace();
                                             }
