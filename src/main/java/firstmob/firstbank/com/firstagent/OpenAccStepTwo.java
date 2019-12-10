@@ -107,7 +107,7 @@ public class OpenAccStepTwo extends Fragment implements View.OnClickListener{
         sp3 = (Spinner)root.findViewById(R.id.spin3);
 
         edemail = (EditText) root.findViewById(R.id.email);
-        edhm = (EditText) root.findViewById(R.id.hmaddr);
+       // edhm = (EditText) root.findViewById(R.id.hmaddr);
         edmobno = (EditText) root.findViewById(R.id.mobno);
    
 

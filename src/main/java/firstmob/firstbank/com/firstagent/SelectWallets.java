@@ -3,12 +3,9 @@ package firstmob.firstbank.com.firstagent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +20,7 @@ import adapter.adapter.DepoMenuAdapt;
 import adapter.adapter.OTBList;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class FTMenuActivity extends BaseActivity {
+public class SelectWallets extends BaseActivity {
     GridView gridView;
     List<OTBList> planetsList = new ArrayList<OTBList>();
     String ptype;
@@ -75,32 +72,13 @@ public class FTMenuActivity extends BaseActivity {
                 if (position == 0) {
                     /*fragment = new CashDepoTrans();
                     title = "Cash Deposit";*/
-                    startActivity(new Intent(FTMenuActivity.this, CashDepoTransActivity.class));
+                    startActivity(new Intent(SelectWallets.this, SelectFmonieWallet.class));
                 } else if (position == 1) {
                 /*    fragment = new SendOTB();
                     title = "Other Bank";*/
 
-                    startActivity(new Intent(FTMenuActivity.this, SendOTBActivity.class));
-                }/* else if (position == 2) {
-                    fragment = new SendtoWallet();
-                    title = "Send to Wallet";
-                } */
-                else if (position == 2) {
-                    startActivity(new Intent(FTMenuActivity.this, SelectWallets.class));
+                    startActivity(new Intent(SelectWallets.this, SendOtherWalletActivity.class));
                 }
-
-                if (fragment != null) {
-                   /* FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    //  String tag = Integer.toString(title);
-                    fragmentTransaction.replace(R.id.container_body, fragment, title);
-                    fragmentTransaction.addToBackStack(null);
-                    ((FMobActivity)getActivity())
-                            .setActionBarTitle(title);
-                    fragmentTransaction.commit();*/
-                }
-
-
             }
         });
 
@@ -139,10 +117,9 @@ public class FTMenuActivity extends BaseActivity {
         aAdpt = new DashboardAdapter( planetsList,getActivity());
         gridView.setAdapter(aAdpt);*/
 
-        planetsList.add(new OTBList("FirstBank","057"));
-        planetsList.add(new OTBList("Other Banks","058"));
-        //    planetsList.add(new OTBList("FirstMonie","059"));
-        planetsList.add(new OTBList("Mobile Money Wallet","059"));
+        planetsList.add(new OTBList("Firstmonie Wallets","057"));
+        planetsList.add(new OTBList("Other Wallets","058"));
+
         aAdpt = new DepoMenuAdapt(planetsList, this);
         lv.setAdapter(aAdpt);
     }

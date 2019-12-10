@@ -24,6 +24,7 @@ import java.util.Date;
 
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
+import rest.RetrofitInstance;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -253,7 +254,7 @@ public class OpenAccBVN extends AppCompatActivity implements View.OnClickListene
             if (Utility.isNotNull(agid)) {
 
                 if (Utility.checkInternetConnection(getApplicationContext())) {
-                    GetBVN(agid);
+                    GetBVNMicro(agid);
 
                 }
 
@@ -267,7 +268,7 @@ public class OpenAccBVN extends AppCompatActivity implements View.OnClickListene
         }
 
         if(view.getId() == R.id.button5) {
-OpenAcc();
+
         }
         }
 
@@ -307,138 +308,6 @@ OpenAcc();
 
 
 
-
-    private void OpenAcc() {
-        pro.show();
-
-       String endpoint= "bvn/openaccount.action";
-        if(!(getApplicationContext() == null)) {
-            String usid = Utility.gettUtilUserId(getApplicationContext());
-            String appid = Utility.getFinAppid(getApplicationContext());
-            String appvers = Utility.getAppVersion(getApplicationContext());
-
-            String params = "1/" + usid + "/Mr/Ian/Kipkemboi/Midname/Married/2018-12-12/ian@cevaltd.com/M/03/04/ders/0718754578/12341421/22222222226/12344/12345";
- // /bvn/openaccount.action/{channel}/{userId}/{salutation}/{firstName}/{lastName}/{midName}/{maritalStatus}/{dob}/{email}/{gender}/{state}/{city}/{address}/{phone}/{mandateCard}/{bvn}/{otp}/{pin}
-
-            SecurityLayer.Log("params", params);
-            String urlparams = "";
-            try {
-                urlparams = SecurityLayer.genURLCBC(params, endpoint, getApplicationContext());
-                //SecurityLayer.Log("cbcurl",url);
-                SecurityLayer.Log("RefURL", urlparams);
-                SecurityLayer.Log("refurl", urlparams);
-                SecurityLayer.Log("params", params);
-            } catch (Exception e) {
-                SecurityLayer.Log("encryptionerror", e.toString());
-            }
-
-
-            ApiInterface apiService =
-                    ApiSecurityClient.getClient(getApplicationContext()).create(ApiInterface.class);
-
-
-            Call<String> call = apiService.setGenericRequestRaw(urlparams);
-
-            call.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    try {
-                        // JSON Object
-
-
-                        SecurityLayer.Log("Cable TV Resp", response.body());
-                        SecurityLayer.Log("response..:", response.body());
-                        JSONObject obj = new JSONObject(response.body());
-                        //obj = Utility.onresp(obj,getApplicationContext());
-                        obj = SecurityLayer.decryptTransaction(obj, getApplicationContext());
-                        SecurityLayer.Log("decrypted_response", obj.toString());
-
-
-                        JSONObject servdata = obj.optJSONObject("data");
-                        //session.setString(SecurityLayer.KEY_APP_ID,appid);
-
-                        if (!(response.body() == null)) {
-                            String respcode = obj.optString("responseCode");
-                            String responsemessage = obj.optString("message");
-
-                            SecurityLayer.Log("Response Message", responsemessage);
-
-                            if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
-                                if (!(Utility.checkUserLocked(respcode))) {
-                                    SecurityLayer.Log("Response Message", responsemessage);
-
-
-                                } else {
-                                  /*  getApplicationContext().finish();
-                                    startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            "You have been locked out of the app.Please call customer care for further details",
-                                            Toast.LENGTH_LONG).show();*/
-                                    if(!(getApplicationContext() == null)) {
-                                        ((FMobActivity) getApplicationContext()).LogOut();
-                                    }
-                                }
-                            } else {
-
-                               /* Toast.makeText(
-                                        getApplicationContext(),
-                                        "There was an error on your request",
-                                        Toast.LENGTH_LONG).show();*/
-
-
-                            }
-                        } else {
-
-                          /*  Toast.makeText(
-                                    getApplicationContext(),
-                                    "There was an error on your request",
-                                    Toast.LENGTH_LONG).show();
-*/
-
-                        }
-                        // prgDialog2.dismiss();
-
-
-                    } catch (JSONException e) {
-                        SecurityLayer.Log("encryptionJSONException", e.toString());
-                        // TODO Auto-generated catch block
-                        if(!(getApplicationContext() == null)) {
-                            Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
-                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
-
-                        }
-                        // SecurityLayer.Log(e.toString());
-
-                    } catch (Exception e) {
-                        SecurityLayer.Log("encryptionJSONException", e.toString());
-                        if(!(getApplicationContext() == null)) {
-                            Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
-                            // SecurityLayer.Log(e.toString());
-                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
-                        }
-                        // SecurityLayer.Log(e.toString());
-                    }
-                    if(!(getApplicationContext() == null)){
-                        pro.dismiss();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    // Log error here since request failed
-                    // Log error here since request failed
-                    SecurityLayer.Log("throwable error", t.toString());
-pro.dismiss();
-
-
-
-
-                }
-            });
-        }
-    }
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -452,4 +321,160 @@ pro.dismiss();
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void GetBVNMicro(final String bvn) {
+        pro.show();
+
+        String usid = Utility.gettUtilUserId(getApplicationContext());
+
+        ApiInterface apiService =
+                RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
+
+        try {
+            JSONObject paramObject = new JSONObject();
+
+            paramObject.put("channel", "1");
+            paramObject.put("userid", usid);
+            paramObject.put("bvnNumber", bvn);
+
+
+
+
+
+
+            Call<String> call = apiService.validatebvn(paramObject.toString());
+
+
+
+
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        // JSON Object
+
+                        SecurityLayer.Log("response..:", response.body());
+                        JSONObject obj = new JSONObject(response.body());
+                        //obj = Utility.onresp(obj,getApplicationContext());
+
+                        SecurityLayer.Log("decrypted_response", obj.toString());
+
+                        String respcode = obj.optString("responseCode");
+
+                        String responsemessage = obj.optString("responseMessage");
+
+
+                        JSONObject servdata = obj.optJSONObject("data");
+                        //session.setString(SecurityLayer.KEY_APP_ID,appid);
+                        if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+                            if ((Utility.checkUserLocked(respcode))) {
+                                //LogOut();
+                            }
+                            if (!(response.body() == null)) {
+                                if (respcode.equals("00")) {
+                                    String fname = servdata.optString("firstName");
+                                    String lname = servdata.optString("lastName");
+
+                                    String midname = servdata.optString("midName");
+                                    String maritalStatus = servdata.optString("maritalStatus");
+
+                                    String yob = servdata.optString("dob");
+                                    String gender = servdata.optString("gender");
+
+                                    String email = servdata.optString("email");
+                                    String state = servdata.optString("state");
+
+                                    String address = servdata.optString("address");
+                                    String mobileNumber = servdata.optString("mobileNumber");
+
+                                    String salutation = servdata.optString("salutation");
+                                    Intent intent  = new Intent(OpenAccBVN.this,OpenAccBVNConfirm.class);
+
+
+
+                                    intent.putExtra("fname", fname);
+                                    intent.putExtra("lname", lname);
+                                    intent.putExtra("midname", midname);
+                                    intent.putExtra("yob", yob);
+                                    intent.putExtra("gender", gender);
+                                    intent.putExtra("city", "NA");
+                                    intent.putExtra("state", state);
+                                    intent.putExtra("straddr", address);
+                                    intent.putExtra("email", email);
+                                    intent.putExtra("hmadd", bvn);
+                                    intent.putExtra("mobn", mobileNumber);
+                                    intent.putExtra("salut", salutation);
+                                    intent.putExtra("marstatus", maritalStatus);
+
+
+
+
+                                    startActivity(intent);
+
+                                } else {
+
+
+                                }
+                            } else {
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        // TODO Auto-generated catch block
+                        if(!(getApplicationContext() == null)) {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                            // SecurityLayer.Log(e.toString());
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                    } catch (Exception e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        if(!(getApplicationContext() == null)) {
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                        // SecurityLayer.Log(e.toString());
+                    }
+                    try {
+                        if ((pro != null) && pro.isShowing() && !(getApplicationContext() == null)) {
+                            pro.dismiss();
+                        }
+                    } catch (final IllegalArgumentException e) {
+                        // Handle or log or ignore
+                    } catch (final Exception e) {
+                        // Handle or log or ignore
+                    } finally {
+                        //   prgDialog = null;
+                    }
+
+                    //   prgDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // Log error here since request failed
+                    SecurityLayer.Log("Throwable error",t.toString());
+
+
+                    if ((pro != null) && pro.isShowing() && !(getApplicationContext() == null)) {
+                        pro.dismiss();
+                    }
+                    if(!(getApplicationContext() == null)) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was an error processing your request",
+                                Toast.LENGTH_LONG).show();
+                        // SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                    }
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }

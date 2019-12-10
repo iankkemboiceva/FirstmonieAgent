@@ -379,6 +379,10 @@
         <activity android:name=".ChooseBVNorNoBVN" />
         <activity android:name=".FinalConfAccountOpening" />
         <activity android:name=".SupHomeActivity"></activity>
+        <activity android:name=".SelectWallets"></activity>
+        <activity android:name=".SelectFmonieWallet"></activity>
+        <activity android:name=".DepositToFmonieWallet"></activity>
+        <activity android:name=".ConfirmFmoniWalletActivity"></activity>
     </application>
 
 </manifest>

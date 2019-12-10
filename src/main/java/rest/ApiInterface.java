@@ -28,6 +28,8 @@ import model.WithdrawalConfirmOTP;
 import model.WithdrawalSendOTP;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -127,6 +129,29 @@ public interface ApiInterface {
 
     @POST("{string}")
     Call<String> setGenericRequestRaw(@Path(value="string",encoded=true) String string);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("wallettxns/app/walletdeposit/enquiry.action")
+    Call<String> getwalletnameenq(@Body String params);
+
+    @Headers("Content-Type: application/json")
+    @POST("wallettxns/app/secure/walletdeposit/deposit.action")
+    Call<String> walletdeposit(@Body String params);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("accountopen/app/bvn/validatebvn.action")
+    Call<String> validatebvn(@Body String params);
+
+    @Headers("Content-Type: application/json")
+    @POST("accountopen/app/bvn/openaccount.action")
+    Call<String> bvnaccopen(@Body String params);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("accountopen/app/core/openaccount.action")
+    Call<String> nonbvnaccopen(@Body String params);
 
 
 }

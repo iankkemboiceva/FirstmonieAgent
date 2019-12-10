@@ -135,10 +135,7 @@ public class ConfirmCashtransActivity extends BaseActivity implements View.OnCli
                             if (Utility.isNotNull(ednamee)) {
                                 if (Utility.isNotNull(ednumbb)) {
                                     if (Utility.isNotNull(agpin)) {
-                                        if(Utility.isNotNull(agbalance)){
-                                        double dbamo = Double.parseDouble(amou);
-                                        Double dbagbal = Double.parseDouble(agbalance);
-                                        if(dbamo <= dbagbal){
+
                                             String encrypted = null;
                                             encrypted = Utility.b64_sha256(agpin);
                                             if(!(prgDialog2 == null)) {
@@ -288,19 +285,7 @@ public class ConfirmCashtransActivity extends BaseActivity implements View.OnCli
                                                         }
                                                     });*/
                                             ClearPin();
-                                        }  else {
-                                            Toast.makeText(
-                                                    getApplicationContext(),
-                                                    "There was an error getting your balance",
-                                                    Toast.LENGTH_LONG).show();
-                                        }
 
-                                    }  else {
-                                            Toast.makeText(
-                                                    getApplicationContext(),
-                                                    "The amount set is higher than your agent balance",
-                                                    Toast.LENGTH_LONG).show();
-                                        }
                                     }  else {
                                         Toast.makeText(
                                                 getApplicationContext(),

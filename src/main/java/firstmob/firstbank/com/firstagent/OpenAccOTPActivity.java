@@ -49,6 +49,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
@@ -75,6 +76,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
+import rest.RetrofitInstance;
 import rest.TLSSocketFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -905,7 +907,12 @@ String title = "Bank Info";
             String edpin = pin.getText().toString();
 
 
-            String encrypted = Utility.b64_sha256(edpin);
+            String encrypted = null;
+            try {
+                encrypted = Utility.generateHashString(edpin);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted+"/"+straddr;
 
           //  finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted;
@@ -922,9 +929,10 @@ String title = "Bank Info";
                 if (!(refnumber.equals(""))) {
 if(session.getString("ISBVN").equals("Y")) {
 
-    BVNOpenAcc(bvnparams);
+ //   BVNOpenAcc(bvnparams);
+    BVNAccOpenMicro(edotp,encrypted);
 }else{
-    invokeAccOTP(finparams);
+    AccOpenMicro(edotp,encrypted);
 }
                 }/**/
             }
@@ -1146,22 +1154,6 @@ if(session.getString("ISBVN").equals("Y")) {
             SecurityLayer.Log("encryptionerror", e.toString());
         }
 
-      /*  try {
-           // MySSLSocketFactory.SecureURL(client, getApplicationContext());
-        } catch (KeyStoreException e) {
-            SecurityLayer.Log(e.toString());
-            SecurityLayer.Log(e.toString());
-        } catch (IOException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (NoSuchAlgorithmException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (CertificateException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (UnrecoverableKeyException e) {
-            SecurityLayer.Log(e.toString());
-        } catch (KeyManagementException e) {
-            SecurityLayer.Log(e.toString());
-        }*/
         String encimage = getImageBase64();
         SecurityLayer.Log("Image Base 64", encimage);
         session.setString("Base64image", encimage);
@@ -1279,5 +1271,277 @@ if(session.getString("ISBVN").equals("Y")) {
                 }
             }
         });
+    }
+
+
+
+    private void BVNAccOpenMicro(String otpp,String pin) {
+        prgDialog.show();
+
+        String usid = Utility.gettUtilUserId(getApplicationContext());
+
+        ApiInterface apiService =
+                RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
+
+        try {
+            JSONObject paramObject = new JSONObject();
+          //  String bvnparams = "1/" + usid + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + straddr + "/" + strmobn + "/" + refnumber + "/" + strhmdd + "/" + edotp + "/" + encrypted;
+
+
+            paramObject.put("channel", "1");
+            paramObject.put("salutation", strsalut);
+            paramObject.put("firstName", strfname);
+            paramObject.put("lastName", strlname);
+            paramObject.put("midName", strmidnm);
+            paramObject.put("maritalStatus", strmarst);
+            paramObject.put("dob", stryob);
+            paramObject.put("gender", strgender);
+            paramObject.put("state", strstate);
+            paramObject.put("city", strcity);
+            paramObject.put("address", usid);
+            paramObject.put("phone", strmobn);
+            paramObject.put("mandateCard", refnumber);
+            paramObject.put("userId", usid);
+            paramObject.put("pin", pin);
+            paramObject.put("otp", otpp);
+            paramObject.put("bvn", strhmdd);
+            paramObject.put("street", straddr);
+
+
+
+
+
+
+
+            Call<String> call = apiService.bvnaccopen(paramObject.toString());
+
+
+
+
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        // JSON Object
+
+                        SecurityLayer.Log("response..:", response.body());
+                        JSONObject obj = new JSONObject(response.body());
+                        //obj = Utility.onresp(obj,getApplicationContext());
+
+                        SecurityLayer.Log("decrypted_response", obj.toString());
+
+                        String respcode = obj.optString("responseCode");
+
+                        String responsemessage = obj.optString("responseMessage");
+
+
+                        JSONObject servdata = obj.optJSONObject("data");
+                        //session.setString(SecurityLayer.KEY_APP_ID,appid);
+                        if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+                            if ((Utility.checkUserLocked(respcode))) {
+                                //LogOut();
+                            }
+                            if (!(response.body() == null)) {
+                                if (respcode.equals("00")) {
+
+
+                                } else {
+
+
+                                }
+                            } else {
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        // TODO Auto-generated catch block
+                        if(!(getApplicationContext() == null)) {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                            // SecurityLayer.Log(e.toString());
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                    } catch (Exception e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        if(!(getApplicationContext() == null)) {
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                        // SecurityLayer.Log(e.toString());
+                    }
+                    try {
+                        if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
+                            prgDialog.dismiss();
+                        }
+                    } catch (final IllegalArgumentException e) {
+                        // Handle or log or ignore
+                    } catch (final Exception e) {
+                        // Handle or log or ignore
+                    } finally {
+                        //   prgDialog = null;
+                    }
+
+                    //   prgDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // Log error here since request failed
+                    SecurityLayer.Log("Throwable error",t.toString());
+
+
+                    if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
+                        prgDialog.dismiss();
+                    }
+                    if(!(getApplicationContext() == null)) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was an error processing your request",
+                                Toast.LENGTH_LONG).show();
+                        // SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                    }
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+    private void AccOpenMicro(String otpp,String pin) {
+        prgDialog.show();
+
+        String usid = Utility.gettUtilUserId(getApplicationContext());
+
+        ApiInterface apiService =
+                RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
+
+        try {
+            JSONObject paramObject = new JSONObject();
+            //  String bvnparams = "1/" + usid + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + straddr + "/" + strmobn + "/" + refnumber + "/" + strhmdd + "/" + edotp + "/" + encrypted;
+
+
+            paramObject.put("channel", "1");
+            paramObject.put("salutation", strsalut);
+            paramObject.put("firstName", strfname);
+            paramObject.put("lastName", strlname);
+            paramObject.put("midName", strmidnm);
+            paramObject.put("maritalStatus", strmarst);
+            paramObject.put("dob", stryob);
+            paramObject.put("gender", strgender);
+            paramObject.put("state", strstate);
+            paramObject.put("city", strcity);
+            paramObject.put("address", strhmdd);
+            paramObject.put("phone", strmobn);
+            paramObject.put("mandateCard", refnumber);
+            paramObject.put("userId", usid);
+            paramObject.put("pin", pin);
+            paramObject.put("otp", otpp);
+            paramObject.put("bvn", "");
+            paramObject.put("street", straddr);
+
+
+
+
+
+
+
+            Call<String> call = apiService.nonbvnaccopen(paramObject.toString());
+
+
+
+
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        // JSON Object
+
+                        SecurityLayer.Log("response..:", response.body());
+                        JSONObject obj = new JSONObject(response.body());
+                        //obj = Utility.onresp(obj,getApplicationContext());
+
+                        SecurityLayer.Log("decrypted_response", obj.toString());
+
+                        String respcode = obj.optString("responseCode");
+
+                        String responsemessage = obj.optString("responseMessage");
+
+
+                        JSONObject servdata = obj.optJSONObject("data");
+                        //session.setString(SecurityLayer.KEY_APP_ID,appid);
+                        if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+                            if ((Utility.checkUserLocked(respcode))) {
+                                //LogOut();
+                            }
+                            if (!(response.body() == null)) {
+                                if (respcode.equals("00")) {
+
+
+                                } else {
+
+
+                                }
+                            } else {
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        // TODO Auto-generated catch block
+                        if(!(getApplicationContext() == null)) {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                            // SecurityLayer.Log(e.toString());
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                    } catch (Exception e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        if(!(getApplicationContext() == null)) {
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                        // SecurityLayer.Log(e.toString());
+                    }
+                    try {
+                        if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
+                            prgDialog.dismiss();
+                        }
+                    } catch (final IllegalArgumentException e) {
+                        // Handle or log or ignore
+                    } catch (final Exception e) {
+                        // Handle or log or ignore
+                    } finally {
+                        //   prgDialog = null;
+                    }
+
+                    //   prgDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // Log error here since request failed
+                    SecurityLayer.Log("Throwable error",t.toString());
+
+
+                    if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
+                        prgDialog.dismiss();
+                    }
+                    if(!(getApplicationContext() == null)) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was an error processing your request",
+                                Toast.LENGTH_LONG).show();
+                        // SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                    }
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

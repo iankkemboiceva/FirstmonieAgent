@@ -117,9 +117,9 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
         sp3 = (Spinner)findViewById(R.id.spin3);
 
         edemail = (EditText) findViewById(R.id.email);
-        edhm = (EditText) findViewById(R.id.hmaddr);
+        edhm = (EditText) findViewById(R.id.houseno);
         edmobno = (EditText) findViewById(R.id.mobno);
-        edstraddr = (EditText) findViewById(R.id.straddr);
+        edstraddr = (EditText) findViewById(R.id.streetadrr);
 
 
 

@@ -40,6 +40,7 @@ import java.net.SocketTimeoutException;
 
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
+import rest.RetrofitInstance;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +51,7 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
     Button btnsub;
     String recanno, amou ,narra, ednamee,ednumbb,txtname,strfee,stragcms,bankname,bankcode,txpin,newparams,serv ;
     String txtcustid,serviceid,billid,txtfee,strtref,strlabel,strbillnm,fullname,telcoop,marketnm;
-
+    String wallamou ,wallnarra, walltxtname,walphno;
     ProgressDialog prgDialog2;
     RelativeLayout rlsendname,rlsendno;
     EditText etpin;
@@ -155,6 +156,21 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                 newparams = params;
                 Log.v("Params",newparams+"/"+txpin);
                 IntraTranBankResp(newparams+"/"+txpin);
+
+            }
+
+            if(serv.equals("FMONIWALLET")) {
+
+                wallamou = intent.getStringExtra("amou");
+                wallnarra = intent.getStringExtra("narra");
+
+                walltxtname = intent.getStringExtra("txtname");
+                walphno = intent.getStringExtra("phoneno");
+                String params  = intent.getStringExtra("params");
+
+                txpin = intent.getStringExtra("txpin");
+
+                DepositFMoniWallet();
 
             }
             if(serv.equals("WDRAW")) {
@@ -1711,6 +1727,133 @@ String datetimee = "";
         });
 
     }
+
+
+
+
+
+    private void DepositFMoniWallet() {
+        prgDialog2.show();
+
+        ApiInterface apiService =
+                RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
+
+        try {
+
+            String userid = Utility.gettUtilUserId(getApplicationContext());
+            JSONObject paramObject = new JSONObject();
+
+            paramObject.put("channel", "1");
+            paramObject.put("amount", wallamou);
+            paramObject.put("customerMobile", walphno);
+            paramObject.put("customerName", walltxtname);
+            paramObject.put("makerId", userid);
+            paramObject.put("narration", wallnarra);
+            paramObject.put("pin", txpin);
+
+
+
+
+
+            Call<String> call = apiService.walletdeposit(paramObject.toString());
+
+
+
+
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        // JSON Object
+
+                        SecurityLayer.Log("response..:", response.body());
+                        JSONObject obj = new JSONObject(response.body());
+                        //obj = Utility.onresp(obj,getApplicationContext());
+
+                        SecurityLayer.Log("decrypted_response", obj.toString());
+
+                        String respcode = obj.optString("responseCode");
+
+                        String responsemessage = obj.optString("responseMessage");
+
+
+                        JSONObject plan = obj.optJSONObject("data");
+                        //session.setString(SecurityLayer.KEY_APP_ID,appid);
+                        if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+                            if ((Utility.checkUserLocked(respcode))) {
+                                LogOut();
+                            }
+                            if (!(response.body() == null)) {
+                                if (respcode.equals("00")) {
+
+
+
+                                } else {
+
+
+                                }
+                            } else {
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        // TODO Auto-generated catch block
+                        if(!(getApplicationContext() == null)) {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                            // SecurityLayer.Log(e.toString());
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                    } catch (Exception e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        if(!(getApplicationContext() == null)) {
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                        // SecurityLayer.Log(e.toString());
+                    }
+                    try {
+                        if ((prgDialog2 != null) && prgDialog2.isShowing() && !(getApplicationContext() == null)) {
+                            prgDialog2.dismiss();
+                        }
+                    } catch (final IllegalArgumentException e) {
+                        // Handle or log or ignore
+                    } catch (final Exception e) {
+                        // Handle or log or ignore
+                    } finally {
+                        //   prgDialog = null;
+                    }
+
+                    //   prgDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // Log error here since request failed
+                    SecurityLayer.Log("Throwable error",t.toString());
+
+
+                    if ((prgDialog2 != null) && prgDialog2.isShowing() && !(getApplicationContext() == null)) {
+                        prgDialog2.dismiss();
+                    }
+                    if(!(getApplicationContext() == null)) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was an error processing your request",
+                                Toast.LENGTH_LONG).show();
+                        // SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                    }
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 
 
     @Override

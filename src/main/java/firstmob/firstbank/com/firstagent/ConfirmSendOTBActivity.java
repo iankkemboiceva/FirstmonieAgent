@@ -174,9 +174,7 @@ public class ConfirmSendOTBActivity extends BaseActivity implements View.OnClick
                             if (Utility.isNotNull(ednamee)) {
                                 if (Utility.isNotNull(ednumbb)) {
                                     if (Utility.isNotNull(agpin)) {
-                                        double dbamo = Double.parseDouble(amou);
-                                        Double dbagbal = Double.parseDouble(agbalance);
-                                        if(dbamo <= dbagbal){
+
                                             String encrypted = null;
                                             encrypted = Utility.b64_sha256(agpin);
                                             OkHttpClient client = new OkHttpClient();
@@ -299,12 +297,7 @@ public class ConfirmSendOTBActivity extends BaseActivity implements View.OnClick
                                             })
                                             .show();*/
                                             ClearPin();
-                                        }  else {
-                                            Toast.makeText(
-                                                    getApplicationContext(),
-                                                    "The amount set is higher than your agent balance",
-                                                    Toast.LENGTH_LONG).show();
-                                        }
+
                                     }  else {
                                         Toast.makeText(
                                                 getApplicationContext(),

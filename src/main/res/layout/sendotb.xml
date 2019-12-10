@@ -174,12 +174,12 @@ android:id="@+id/layl"
 
                             android:textStyle="bold"
                             android:layout_centerHorizontal="true"
-                            android:text="Please enter account number below then select bank"
+                            android:text=""
                             android:textSize="12sp"
                             android:textColor="@color/colorPrimary" />
                         <TextView
                             android:id="@+id/textVipp"
-                            android:visibility="gone"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dip"

@@ -328,9 +328,8 @@ public class ConfirmCashDepoActivity extends BaseActivity implements View.OnClic
                                 if (Utility.isNotNull(ednumbb)) {
                                     if (Utility.isNotNull(agpin)) {
                                         if(!(finalfee == null)){
-                                            double dbamo = Double.parseDouble(amou);
-                                            Double dbagbal = Double.parseDouble(agbalance);
-                                       //     if(dbamo <= dbagbal){
+
+
                                                 String encrypted = null;
                                                 encrypted = Utility.b64_sha256(agpin);
 
