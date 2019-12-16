@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +32,7 @@ import retrofit2.Response;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class OpenAccBVN extends AppCompatActivity implements View.OnClickListener {
+public class OpenAccBVN extends BaseActivity implements View.OnClickListener {
     ProgressDialog pro ;
     Button btnnext,btnopenacc;
     EditText agentid;
@@ -65,6 +66,10 @@ public class OpenAccBVN extends AppCompatActivity implements View.OnClickListene
 
         btnopenacc = (Button) findViewById(R.id.button5);
         btnopenacc.setOnClickListener(this);
+
+        SecurityLayer.Log("plain appid",Utility.getPlainAppid(getApplicationContext()));
+        Log.v("plain appid",Utility.getPlainAppid(getApplicationContext()));
+      //  Toast.makeText(getApplicationContext(),Utility.getPlainAppid(getApplicationContext()),Toast.LENGTH_LONG).show();
 
     }
 
@@ -262,7 +267,7 @@ public class OpenAccBVN extends AppCompatActivity implements View.OnClickListene
             } else {
                 Toast.makeText(
                         getApplicationContext(),
-                        "Please enter a valid value for Agent ID",
+                        "Please enter a valid value for BVN",
                         Toast.LENGTH_LONG).show();
             }
         }
@@ -339,11 +344,21 @@ public class OpenAccBVN extends AppCompatActivity implements View.OnClickListene
             paramObject.put("bvnNumber", bvn);
 
 
+            String data = SecurityLayer.encryptdata(paramObject.toString(),getApplicationContext());
+            String hash = SecurityLayer.gethasheddata(paramObject);
+            String appid = Utility.getNewAppID(getApplicationContext());
+
+            JSONObject finalparam = new JSONObject();
+            finalparam.put("data", data);
+            finalparam.put("hash", hash);
+            finalparam.put("appId", appid);
 
 
 
 
-            Call<String> call = apiService.validatebvn(paramObject.toString());
+
+
+            Call<String> call = apiService.validatebvn(finalparam.toString());
 
 
 
@@ -414,10 +429,16 @@ public class OpenAccBVN extends AppCompatActivity implements View.OnClickListene
 
                                 } else {
 
-
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            responsemessage,
+                                            Toast.LENGTH_LONG).show();
                                 }
                             } else {
-
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        "There was an error processing your request",
+                                        Toast.LENGTH_LONG).show();
                             }
                         }
 

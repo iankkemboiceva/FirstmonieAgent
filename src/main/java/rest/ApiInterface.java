@@ -145,6 +145,10 @@ public interface ApiInterface {
     Call<String> validatebvn(@Body String params);
 
     @Headers("Content-Type: application/json")
+    @POST("wallettxns/app/walletdeposit/validatetoken.action")
+    Call<String> validatetoken(@Body String params);
+
+    @Headers("Content-Type: application/json")
     @POST("accountopen/app/bvn/openaccount.action")
     Call<String> bvnaccopen(@Body String params);
 

@@ -361,21 +361,21 @@ public class OpenAccStepTwoActivity extends BaseActivity implements View.OnClick
             }
             if (Utility.checkInternetConnection(getApplicationContext())) {
                 if (Utility.isNotNull(strmobn)) {
-                    if (Utility.isNotNull(strhmadd)) {
+                    if (Utility.isNotNull(straddr)) {
 
 
                         if(strmobn.length() > 9){
                             if(!(sp2.getSelectedItemPosition() == 0)){
                                 if(!(sp1.getSelectedItemPosition() == 0)){
                                     if(boolemail){
-                                        if(!(Utility.isNotNull(straddr))|| straddr.equals("")){
-                                            straddr = "NA";
+                                        if(!(Utility.isNotNull(strhmadd))|| straddr.equals("")){
+                                            strhmadd = "NA";
                                         }
                                         if (!(Utility.isNotNull(stremail)) || stremail.equals("")) {
                                             stremail = "NA";
                                         }
 
-strmobn = strmobn.substring(strmobn.length() - 10);
+strmobn = "234"+strmobn.substring(strmobn.length() - 10);
 
                                         Intent intent  = new Intent(OpenAccStepTwoActivity.this,OpenAccUpPicActivity.class);
 

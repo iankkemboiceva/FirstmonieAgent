@@ -1,8 +1,10 @@
 package firstmob.firstbank.com.firstagent;
 
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -44,12 +46,12 @@ import retrofit2.Response;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class SendOTBActivity extends BaseActivity implements View.OnClickListener {
+public class SendOTBActivity extends BaseActivity implements View.OnClickListener,OtherBankPage.OnFragmentCommunicationListener {
     ImageView imageView1;
 
     EditText amon, edacc,pno,txtamount,txtnarr,edname,ednumber;
     Button btnsub;
-    String bankname,bankcode,recanno;
+   public String bankname,bankcode,recanno;
     SessionManagement session;
     ProgressDialog prgDialog;
     private static int SPLASH_TIME_OUT = 2500;
@@ -117,29 +119,30 @@ public class SendOTBActivity extends BaseActivity implements View.OnClickListene
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (edacc.getText().toString().length() == 10) {
                     if (!(getApplicationContext() == null)) {
-                     /*   if (!(bankcode == null)) {*/
+                       if (!(bankcode == null)) {
 
                         if (Utility.checkInternetConnection(getApplicationContext())) {
                             Utility.hideKeyboardFrom(getApplicationContext(), edacc);
                             if (!(prgDialog == null)) {
                                 String acno = edacc.getText().toString();
-                                  /*  prgDialog.show();
+                                   prgDialog.show();
 
-                                    String acno = edacc.getText().toString();
+
                                     String usid = Utility.gettUtilUserId(getApplicationContext());
                                     String agentid = Utility.gettUtilAgentId(getApplicationContext());
                                     String mobnoo = Utility.gettUtilMobno(getApplicationContext());
                                     String params = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + bankcode + "/" + acno;
                                     NameInquirySec(params);
-                                }*/showNubanDialog(acno);
-                            }
+                                }
+                                 // showNubanDialog(acno);
+
                         }
-                      /*  } else {
+                        } else {
                             Toast.makeText(
                                     getApplicationContext(),
                                     "Please select a bank ",
                                     Toast.LENGTH_LONG).show();
-                        }*/
+                        }
                         // TODO Auto-generated method stub
                     }
                 }
@@ -163,15 +166,31 @@ public class SendOTBActivity extends BaseActivity implements View.OnClickListene
         adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 
+    @Override
+    public void setBankInfo(String varbankname, String varbankcode) {
 
-    public void showNubanDialog(String recanno) {
+        bankname = varbankname;
+        bankcode = varbankcode;
+
+        if (Utility.isNotNull(bankname) && Utility.isNotNull(bankcode)) {
+            SecurityLayer.Log("Inside If", "Inside If");
+            //   edacc.setText(recanno);
+            bankselected.setText("Change Bank");
+
+            bankchosen.setText(bankname);
+        }
+
+    }
+
+
+   /* public void showNubanDialog(String recanno) {
         FragmentManager fm = getSupportFragmentManager();
         DialogNubanBanks nubbanks = new DialogNubanBanks();
         Bundle bundle = new Bundle();
         bundle.putString("recanno",recanno);
         nubbanks.setArguments(bundle);
         nubbanks.show(fm, "fragment_edit_name");
-    }
+    }*/
 
     private class MyFocusChangeListener implements View.OnFocusChangeListener {
 
@@ -249,26 +268,7 @@ public class SendOTBActivity extends BaseActivity implements View.OnClickListene
 
                                             startActivity(intent);
 
-                                          /*  Bundle b  = new Bundle();
-                                            b.putString("recanno",recanno);
-                                            b.putString("amou",amou);
-                                            b.putString("narra",narra);
-                                            b.putString("ednamee",ednamee);
-                                            b.putString("ednumbb",ednumbb);
-                                            b.putString("txtname",acname);
-                                            b.putString("bankname",bankname);
-                                            b.putString("bankcode",bankcode);
-                                            Fragment fragment = new ConfirmSendOTB();
 
-                                            fragment.setArguments(b);
-                                            FragmentManager fragmentManager = getFragmentManager();
-                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                            //  String tag = Integer.toString(title);
-                                            fragmentTransaction.replace(R.id.container_body, fragment,"Confirm Other Bank");
-                                            fragmentTransaction.addToBackStack("Confirm Other Bank");
-                                            ((FMobActivity)getApplicationContext())
-                                                    .setActionBarTitle("Confirm Other Bank");
-                                            fragmentTransaction.commit();*/
                                         }  else {
                                             Toast.makeText(
                                                     getApplicationContext(),
@@ -331,17 +331,11 @@ public class SendOTBActivity extends BaseActivity implements View.OnClickListene
         if (view.getId() == R.id.textVipp) {
             //   SetDialog("Select Bank");
 
-           /* Fragment  fragment = new OtherBankPage();
 
+            FragmentManager fm = getSupportFragmentManager();
+            OtherBankPage othbank = new OtherBankPage();
 
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Select Bank");
-            fragmentTransaction.addToBackStack("Select Bank");
-            ((FMobActivity)getApplicationContext())
-                    .setActionBarTitle("Select Bank");
-            fragmentTransaction.commit();*/
+            othbank.show(fm, "fragment_edit_name");
 
         }
 
@@ -605,28 +599,6 @@ public class SendOTBActivity extends BaseActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
 
-        bankname = session.getString("bankname");
-        bankcode = session.getString("bankcode");
-        recanno = session.getString("recanno");
-
-        if (Utility.isNotNull(bankname) && Utility.isNotNull(bankcode) && Utility.isNotNull(recanno)) {
-SecurityLayer.Log("Inside If","Inside If");
-         //   edacc.setText(recanno);
-            bankselected.setText("Change Bank");
-
-
-            String usid = Utility.gettUtilUserId(getApplicationContext());
-            String agentid = Utility.gettUtilAgentId(getApplicationContext());
-            String mobnoo = Utility.gettUtilMobno(getApplicationContext());
-            String params = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + bankcode + "/" + recanno;
-            NameInquirySec(params);
-        }else{
-            SecurityLayer.Log("Outside If","Outside If");
-        }
-
-        if(Utility.isNotNull(bankname)){
-            bankchosen.setText(bankname);
-        }
     }
 
     public void RunNuban(){

@@ -171,11 +171,11 @@ android:id="@+id/layl"
                             android:id="@+id/textVip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
+                            android:layout_margin="5dip"
                             android:textStyle="bold"
                             android:layout_centerHorizontal="true"
                             android:text=""
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             android:textColor="@color/colorPrimary" />
                         <TextView
                             android:id="@+id/textVipp"

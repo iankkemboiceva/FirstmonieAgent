@@ -907,12 +907,8 @@ String title = "Bank Info";
             String edpin = pin.getText().toString();
 
 
-            String encrypted = null;
-            try {
-                encrypted = Utility.generateHashString(edpin);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            String  encrypted = Utility.b64_sha256(edpin);
+
             finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted+"/"+straddr;
 
           //  finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted;
@@ -1308,12 +1304,23 @@ if(session.getString("ISBVN").equals("Y")) {
             paramObject.put("street", straddr);
 
 
+            SecurityLayer.Log("plain params",paramObject.toString());
+            String data = SecurityLayer.encryptdata(paramObject.toString(),getApplicationContext());
+            String hash = SecurityLayer.gethasheddata(paramObject);
+            String appid = Utility.getNewAppID(getApplicationContext());
+
+            JSONObject finalparam = new JSONObject();
+            finalparam.put("data", data);
+            finalparam.put("hash", hash);
+            finalparam.put("appId", appid);
 
 
 
 
 
-            Call<String> call = apiService.bvnaccopen(paramObject.toString());
+
+
+            Call<String> call = apiService.bvnaccopen(finalparam.toString());
 
 
 
@@ -1332,10 +1339,10 @@ if(session.getString("ISBVN").equals("Y")) {
 
                         String respcode = obj.optString("responseCode");
 
-                        String responsemessage = obj.optString("responseMessage");
+                        String responsemessage = obj.optString("message");
 
 
-                        JSONObject servdata = obj.optJSONObject("data");
+                        JSONObject datas = obj.optJSONObject("data");
                         //session.setString(SecurityLayer.KEY_APP_ID,appid);
                         if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
                             if ((Utility.checkUserLocked(respcode))) {
@@ -1343,14 +1350,34 @@ if(session.getString("ISBVN").equals("Y")) {
                             }
                             if (!(response.body() == null)) {
                                 if (respcode.equals("00")) {
+                                    String acno = "";
+                                    if(!(datas == null)){
+                                        acno = datas.optString("accountNumber")  ;
+                                    }
+
+                                    SecurityLayer.Log("Response Message", responsemessage);
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            "Account Opening request has been successfully received ",
+                                            Toast.LENGTH_LONG).show();
+
+                                    finish();
+                                    Intent i = new Intent(OpenAccOTPActivity.this, FinalConfAccountOpening.class);
+                                    i.putExtra("accountno", acno);
+                                    startActivity(i);
 
 
                                 } else {
-
-
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            responsemessage,
+                                            Toast.LENGTH_LONG).show();
                                 }
                             } else {
-
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        responsemessage,
+                                        Toast.LENGTH_LONG).show();
                             }
                         }
 
@@ -1443,13 +1470,26 @@ if(session.getString("ISBVN").equals("Y")) {
             paramObject.put("bvn", "");
             paramObject.put("street", straddr);
 
+            SecurityLayer.Log("plain params",paramObject.toString());
+
+            String data = SecurityLayer.encryptdata(paramObject.toString(),getApplicationContext());
+            String hash = SecurityLayer.gethasheddata(paramObject);
+            String appid = Utility.getNewAppID(getApplicationContext());
+
+            JSONObject finalparam = new JSONObject();
+            finalparam.put("data", data);
+            finalparam.put("hash", hash);
+            finalparam.put("appId", appid);
 
 
 
 
 
 
-            Call<String> call = apiService.nonbvnaccopen(paramObject.toString());
+
+
+
+            Call<String> call = apiService.nonbvnaccopen(finalparam.toString());
 
 
 
@@ -1468,10 +1508,10 @@ if(session.getString("ISBVN").equals("Y")) {
 
                         String respcode = obj.optString("responseCode");
 
-                        String responsemessage = obj.optString("responseMessage");
+                        String responsemessage = obj.optString("message");
 
 
-                        JSONObject servdata = obj.optJSONObject("data");
+                        JSONObject datas = obj.optJSONObject("data");
                         //session.setString(SecurityLayer.KEY_APP_ID,appid);
                         if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
                             if ((Utility.checkUserLocked(respcode))) {
@@ -1479,11 +1519,28 @@ if(session.getString("ISBVN").equals("Y")) {
                             }
                             if (!(response.body() == null)) {
                                 if (respcode.equals("00")) {
+                                    String acno = "";
+                                    if(!(datas == null)){
+                                        acno = datas.optString("accountNumber")  ;
+                                    }
+
+                                    SecurityLayer.Log("Response Message", responsemessage);
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            "Account Opening request has been successfully received ",
+                                            Toast.LENGTH_LONG).show();
+
+                                    finish();
+                                    Intent i = new Intent(OpenAccOTPActivity.this, FinalConfAccountOpening.class);
+                                    i.putExtra("accountno", acno);
+                                    startActivity(i);
 
 
                                 } else {
-
-
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            responsemessage,
+                                            Toast.LENGTH_LONG).show();
                                 }
                             } else {
 
