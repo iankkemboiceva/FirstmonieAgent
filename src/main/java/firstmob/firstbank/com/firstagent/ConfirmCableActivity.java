@@ -109,7 +109,11 @@ public class ConfirmCableActivity extends BaseActivity implements View.OnClickLi
             ednumbb = intent.getStringExtra("ednumbb");
             billname = intent.getStringExtra("billname");
             billid = intent.getStringExtra("billid");
+
             serviceid = intent.getStringExtra("serviceid");
+
+            SecurityLayer.Log("Biller ID",billid);
+            SecurityLayer.Log("Service ID",serviceid);
             servicename = intent.getStringExtra("servicename");
             strlabl = intent.getStringExtra("label");
             packid = intent.getStringExtra("packId");
@@ -452,7 +456,13 @@ onBackPressed();
                                 finalrespfee = respfee;
                                 if(Utility.checkStateCollect(serviceid)) {
                                     txtfee.setText(ApplicationConstants.KEY_NAIRA + "63.00");
-                                }else {
+                                }
+
+                                else if(billid.equals("1480")){
+
+                                    txtfee.setText(ApplicationConstants.KEY_NAIRA + "0.00");
+
+                                } else{
                                     txtfee.setText(ApplicationConstants.KEY_NAIRA + respfee);
 
                                 }
