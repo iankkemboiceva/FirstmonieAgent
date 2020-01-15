@@ -56,7 +56,7 @@ public class SecurityLayer {
             String vers = "2.0.0";
             String year = Utility.getAppVersion(context);
             String hexkey = getrandkey();
-            String imei = Utility.getDevImei(context);
+            String imei = "NA";
             String session_id = UUID.randomUUID().toString();
             SessionManagement session = new SessionManagement(context);
             session.setString(KEY_SESSION_ID, session_id);
@@ -106,7 +106,7 @@ public class SecurityLayer {
             StringBuffer sb = new StringBuffer();
             String vers = "2.0.0";
             String year = Utility.getAppVersion(context);
-            String imei = Utility.getDevImei(context);
+            String imei ="NA";
 
             String hexkey = getrandkey();
             try {
@@ -233,7 +233,7 @@ session.setString("NWAPPID",encappid);
             SecurityLayer.Log("appid gott", encappid);
             StringBuffer sb = new StringBuffer();
 
-            String imei = Utility.getDevImei(context);
+            String imei = "NA";
 
             byte[] randomKey = base64Decode(skey);
             byte[] randomSIV = base64Decode(siv);

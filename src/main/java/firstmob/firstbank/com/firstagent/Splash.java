@@ -30,8 +30,8 @@ public class Splash extends Activity {
         gm = (TextView) findViewById(R.id.gm);
 
         session.putURL(NET_URL);
-      /* if(!(Utility.isEmulator())) {
-           if(!(Utility.isRooted())) {*/
+       if(!(Utility.isEmulator())) {
+           if(!(Utility.isRooted())) {
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
@@ -71,7 +71,7 @@ public class Splash extends Activity {
 
 
                 }, SPLASH_TIME_OUT);
-        /*  }else{
+          }else{
                 Toast.makeText(
                         getApplicationContext(),
                         "You have currently rooted your device hence cant access this app"
@@ -84,7 +84,7 @@ public class Splash extends Activity {
                     "You are currently using a mobile Emulator which is not acceptable."
                     , Toast.LENGTH_LONG).show();
             finish();
-        }*/
+        }
 
 	}
 

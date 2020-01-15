@@ -68,14 +68,17 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import okhttp3.CertificatePinner;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
+import rest.NoSSLv3SocketFactory;
 import rest.RetrofitInstance;
 import rest.TLSSocketFactory;
 import retrofit2.Call;
@@ -407,7 +410,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
         //  OkHttpClient client = new OkHttpClient();
 
 
-        OkHttpClient okHttpClient = null;
+     /*   OkHttpClient okHttpClient = null;
 
         try {
             // Create a trust manager that does not validate certificate chains
@@ -480,8 +483,65 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
                             RequestBody.create(MediaType.parse("image/jpg"), file))
 
                     .build();
-            SecurityLayer.Log("Upload Url",upurl);
-            Request request = new Request.Builder().url(upurl).post(formBody).build();
+            SecurityLayer.Log("Upload Url",upurl);*/
+     try{
+        OkHttpClient okHttpClient = null;
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+
+// Can be Level.BASIC, Level.HEADERS, or Level.BODY
+// See http://square.github.io/okhttp/3.x/logging-interceptor/ to see the options.
+        CertificatePinner certificatePinner = new CertificatePinner.Builder()
+                .add(ApplicationConstants.HOSTNAME, "sha256/rqU8h4fgcUQ/pRFO98oK5FD8k9zcSWDoRMDke2hjaQc=")
+                .add(ApplicationConstants.HOSTNAME, "sha256/5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=")
+                .add(ApplicationConstants.HOSTNAME, "sha256/r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=")
+
+                .build();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.networkInterceptors().add(httpLoggingInterceptor);
+        builder.certificatePinner(certificatePinner);
+        SSLContext sslcontext = null;
+        SSLSocketFactory NoSSLv3Factory = null;
+        try {
+            sslcontext = SSLContext.getInstance("TLSv1.2");
+            sslcontext.init(null, null, null);
+            NoSSLv3Factory = new NoSSLv3SocketFactory();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        SSLSocketFactory sslSocketFactory = null;
+        try {
+            sslSocketFactory = new TLSSocketFactory();
+
+        } catch (KeyManagementException ignored) {
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+         String edpin = pin.getText().toString();
+
+
+         String  encrypted = Utility.b64_sha256(edpin);
+         SecurityLayer.Log("secret",encrypted);
+
+        okHttpClient = builder.build();
+        RequestBody formBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", "tmp_photo_" + System.currentTimeMillis(),
+                        RequestBody.create(MediaType.parse("image/jpg"), file))
+
+                .build();
+            Request request = new Request.Builder()
+         .url(upurl).post(formBody)
+
+                 .header("secret", encrypted)
+
+
+                 .build();
             //  Response<String> response = null;
             okhttp3.Response response = null;
             try {
@@ -491,7 +551,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
                 if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
                 else{
                     refnumber = response.body().string();
-                    SecurityLayer.Log("response..:",refnumber );
+                    SecurityLayer.Log("response..:",refnumber);
 
                     SecurityLayer.Log("Success upload","Success Upload");
 
@@ -900,6 +960,8 @@ String title = "Bank Info";
             if (!(getApplicationContext() == null)) {
                 prgDialog.dismiss();
             }
+
+            Toast.makeText(getApplicationContext(),refnumber,Toast.LENGTH_LONG).show();
             String usid = Utility.gettUtilUserId(getApplicationContext());
             String agentid = Utility.gettUtilAgentId(getApplicationContext());
             String mobnoo = Utility.gettUtilMobno(getApplicationContext());
@@ -931,6 +993,11 @@ if(session.getString("ISBVN").equals("Y")) {
     AccOpenMicro(edotp,encrypted);
 }
                 }/**/
+                else{
+                    Toast.makeText(getApplicationContext(),"There was an error uploading the image",Toast.LENGTH_LONG).show();
+                }
+            }else{
+                Toast.makeText(getApplicationContext(),"There was an error uploading the image",Toast.LENGTH_LONG).show();
             }
 
         }
@@ -1294,7 +1361,7 @@ if(session.getString("ISBVN").equals("Y")) {
             paramObject.put("gender", strgender);
             paramObject.put("state", strstate);
             paramObject.put("city", strcity);
-            paramObject.put("address", usid);
+            paramObject.put("address", straddr);
             paramObject.put("phone", strmobn);
             paramObject.put("mandateCard", refnumber);
             paramObject.put("userId", usid);

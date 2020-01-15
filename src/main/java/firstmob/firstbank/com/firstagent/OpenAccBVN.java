@@ -340,7 +340,7 @@ public class OpenAccBVN extends BaseActivity implements View.OnClickListener {
             JSONObject paramObject = new JSONObject();
 
             paramObject.put("channel", "1");
-            paramObject.put("userid", usid);
+            paramObject.put("userId", usid);
             paramObject.put("bvnNumber", bvn);
 
 

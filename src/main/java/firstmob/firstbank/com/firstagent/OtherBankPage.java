@@ -375,12 +375,12 @@ mListener.setBankInfo(bankname,bankcode);
                         // TODO Auto-generated catch block
                         Toast.makeText(getActivity(), getActivity().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
                         // SecurityLayer.Log(e.toString());
-                        ((FMobActivity) getActivity()).SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getActivity());
+                       // ((FMobActivity) getActivity()).SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getActivity());
 
 
                     } catch (Exception e) {
                         SecurityLayer.Log("encryptionJSONException", e.toString());
-                        ((FMobActivity) getActivity()).SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getActivity());
+                        //((FMobActivity) getActivity()).SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getActivity());
 
                         // SecurityLayer.Log(e.toString());
                     }
