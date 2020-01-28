@@ -60,7 +60,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
     NewMinListAdapter aAdpt;
     ListView lv;
     Button ok;
-    String finpin;
+    String selacc;
     ProgressDialog prgDialog2;
     TextView acno,txaco,txaccbal;
     EditText accno,mobno,fnam;
@@ -82,14 +82,6 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
         ab.setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
-
-        Intent intent = getIntent();
-        if (intent != null) {
-
-
-            finpin = intent.getStringExtra("pinna");
-        }
-
 
         txtitle = (TextView) findViewById(R.id.enddate);
         txfrom = (TextView) findViewById(R.id.from);
@@ -121,60 +113,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
 
         lv.setAdapter(aAdpt);*/
 
-        SimpleDateFormat format2 = new SimpleDateFormat("" +
-                "MMMM dd yyyy");
-
-
-
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat format1 = new SimpleDateFormat("" +
-                "yyyy-MM-dd");
-        String formattednow = format1.format(cal.getTime());
-        //    SetMinist("2017-01-01", formattednow);
-
-
-        Calendar now = Calendar.getInstance();
-        int year = now.get(Calendar.YEAR);
-        int month = now.get(Calendar.MONTH); // Note: zero based!
-        int day = now.get(Calendar.DAY_OF_MONTH);
-        now.set(year,month,01);
-
-
-        System.out.println(cal.getTime());
-// Output "Wed Sep 26 14:23:28 EST 2012"
-
-        String formattednowa = format1.format(cal.getTime());
-        String formattedstartdate = format1.format(now.getTime());
-
-        Log.v("Formatet Date",formattedstartdate);
-
-
-
-        String formatteduserend = format2.format(cal.getTime());
-        String formatteduserstart = format2.format(now.getTime());
-// Output "2012-09-26"
-        txtitle.setText(formatteduserend);
-        txfrom.setText(formatteduserstart);
-        //  checkInternetConnection2();
-
-
-        month = month+1;
-
-        String frmdymonth = Integer.toString(day);
-        if (day < 10) {
-            frmdymonth = "0" + frmdymonth;
-        }
-        String frmyear = Integer.toString(year);
-
-        String tdate = frmdymonth + "-" + (month) + "-" + frmyear;
-        String firdate = "01" + "-" + (month) + "-" + frmyear;
-
-        Calendar calfrom = Calendar.getInstance();
-        calfrom.set(year,month,1);
-
-        SetMinist(formattedstartdate, formattednow);
-
-      //   setBalInquSec();
+        setBalInquSec();
 
 
 
@@ -297,14 +236,56 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
                         if (Utility.checkInternetConnection(getApplicationContext())) {
                             SimpleDateFormat format2 = new SimpleDateFormat("" +
                                     "MMMM dd yyyy");
+                        /*    Calendar cal = Calendar.getInstance();
+                           SimpleDateFormat format2 = new SimpleDateFormat("" +
+                                    "yyyy-MM-dd");
 
+
+
+
+                            Calendar now = Calendar.getInstance();
+                            int year = now.get(Calendar.YEAR);
+                            int month = now.get(Calendar.MONTH); // Note: zero based!
+                            int day = now.get(Calendar.DAY_OF_MONTH);
+                            now.set(year,month,01);
+
+
+                            System.out.println(cal.getTime());
+// Output "Wed Sep 26 14:23:28 EST 2012"
+
+                            String formattednow = format1.format(cal.getTime());
+                            String formattedservice = format2.format(cal.getTime());
+                            String formattedstartdate = format1.format(now.getTime());
+// Output "2012-09-26"
+                            txtitle.setText(formattednow);
+                            txfrom.setText(formattedstartdate);
+                            //  checkInternetConnection2();
+
+
+                            month = month+1;
+
+                            String frmdymonth = Integer.toString(day);
+                            if (day < 10) {
+                                frmdymonth = "0" + frmdymonth;
+                            }
+                            String frmyear = Integer.toString(year);
+                            frmyear = frmyear.substring(2, 4);
+                            String tdate = frmdymonth + "-" + (month) + "-" + frmyear;
+                            String firdate = "01" + "-" + (month) + "-" + frmyear;
+
+                            Calendar calfrom = Calendar.getInstance();
+                            calfrom.set(year,month,1);
+
+                            txtitle.setText(formattednow);
+                            txfrom.setText(formattedstartdate);
+                            SetMinist("2017-01-01", formattedservice);*/
 
 
                             Calendar cal = Calendar.getInstance();
                             SimpleDateFormat format1 = new SimpleDateFormat("" +
                                     "yyyy-MM-dd");
                             String formattednow = format1.format(cal.getTime());
-                        //    SetMinist("2017-01-01", formattednow);
+                            //    SetMinist("2017-01-01", formattednow);
 
 
                             Calendar now = Calendar.getInstance();
@@ -339,7 +320,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
                                 frmdymonth = "0" + frmdymonth;
                             }
                             String frmyear = Integer.toString(year);
-
+                            frmyear = frmyear.substring(2, 4);
                             String tdate = frmdymonth + "-" + (month) + "-" + frmyear;
                             String firdate = "01" + "-" + (month) + "-" + frmyear;
 
@@ -420,7 +401,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
             String mobnoo = Utility.gettUtilMobno(getApplicationContext());
 
 
-            String params = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + firdate + "/" + enddate+"/"+finpin;
+            String params = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + firdate + "/" + enddate;
 
 
             MiniStmtt(params);
@@ -431,7 +412,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
     private void MiniStmtt(String params) {
         if(!(getApplicationContext() == null)) {
 
-            String endpoint = "core/newstmt.action";
+            String endpoint = "core/stmt.action";
 
 
             String usid = Utility.gettUtilUserId(getApplicationContext());
@@ -533,7 +514,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
                                         }
                                     }
                                 } else {
-                                  finish();
+                                    finish();
                                     startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                                     Toast.makeText(
                                             getApplicationContext(),
@@ -663,7 +644,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
                 strmnthyearend  = "0" + strmnthyearend;
             }
             String frmyear = Integer.toString(year);
-
+            frmyear = frmyear.substring(0, 4);
 
             String  fromd =  frmyear+"-"+strmnthyear+"-"+frmdymonth;
             String frmenddymonth = Integer.toString(dayOfMonthEnd);
@@ -672,7 +653,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
             }
 
             String frmendyr = Integer.toString(yearEnd);
-
+            frmendyr = frmendyr.substring(0, 4);
             String endd =  frmendyr+"-"+strmnthyearend+"-"+frmenddymonth;
             SetMinist(fromd,endd);
         }else{
@@ -733,7 +714,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
 
     @Override
     public void onDateRangeSelected(int dayOfMonth, int monthOfYear,int year ,int dayOfMonthEnd, int monthOfYearEnd, int yearEnd ) {
-       // String date = "From- " + dayOfMonth + "/" + (++monthOfYear) + "/" + year + " To " + dayOfMonthEnd + "/" + (++monthOfYearEnd) + "/" + yearEnd;
+        // String date = "From- " + dayOfMonth + "/" + (++monthOfYear) + "/" + year + " To " + dayOfMonthEnd + "/" + (++monthOfYearEnd) + "/" + yearEnd;
         //txtitle.setText(date);
 
         Calendar clfrom = Calendar.getInstance();
@@ -768,7 +749,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
                 strmnthyearend  = "0" + strmnthyearend;
             }
             String frmyear = Integer.toString(year);
-
+            frmyear = frmyear.substring(0, 4);
 
             String  fromd =  frmyear+"-"+strmnthyear+"-"+frmdymonth;
             String frmenddymonth = Integer.toString(dayOfMonthEnd);
@@ -777,7 +758,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
             }
 
             String frmendyr = Integer.toString(yearEnd);
-
+            frmendyr = frmendyr.substring(0, 4);
             String endd =  frmendyr+"-"+strmnthyearend+"-"+frmenddymonth;
             SetMinist(fromd,endd);
         }else{

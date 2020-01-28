@@ -27,10 +27,12 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import org.apache.commons.codec.DecoderException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import rest.ApiInterface;
@@ -39,6 +41,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import security.SecurityLayer;
+
+import static security.AESCBCEncryption.decrypt;
+import static security.AESCBCEncryption.initVector;
+import static security.AESCBCEncryption.key;
 
 
 public class NewHomeGrid extends Fragment implements View.OnClickListener {
@@ -936,6 +942,20 @@ pro.show();
             String usid = Utility.gettUtilUserId(getActivity());
             String appid = Utility.getFinAppid(getActivity());
             String appvers = Utility.getAppVersion(getActivity());
+
+            try {
+
+                String unhexedappid = Utility.toHexString(appid);
+
+                appid =  decrypt(key, initVector, unhexedappid);
+
+
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (DecoderException e) {
+                e.printStackTrace();
+            }
             String params = "1/" + usid + "/" + appid + "/"+appvers;
 
             SecurityLayer.Log("params", params);
@@ -1002,7 +1022,7 @@ pro.show();
                                             new MaterialDialog.Builder(getActivity())
                                                     .title(getActivity().getString(R.string.appupd_verstitle))
                                                     .content(getActivity().getString(R.string.appupd_vers))
-                                                    .positiveText("Upgrade")
+                                                    .positiveText("Update")
                                                     .negativeText("Not Now")
                                                     .callback(new MaterialDialog.ButtonCallback() {
                                                         @Override

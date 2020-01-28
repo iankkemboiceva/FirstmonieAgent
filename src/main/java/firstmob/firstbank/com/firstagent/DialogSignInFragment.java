@@ -44,7 +44,7 @@ public class DialogSignInFragment extends DialogFragment implements View.OnClick
     private IndicatorDots mIndicatorDots;
     ImageView imv;
     SessionManagement session;
-String finpin;
+    String finpin;
     private PinLockListener mPinLockListener = new PinLockListener() {
         @Override
         public void onComplete(String pin) {
@@ -88,7 +88,7 @@ String finpin;
         btnconfirm = (Button) view.findViewById(R.id.signinn);
         btnconfirm.setOnClickListener(this);
         imv.setOnClickListener(this);
-       // getDialog().setTitle("Enter Attendant PIN");
+        // getDialog().setTitle("Enter Attendant PIN");
 
 
         Bundle bundle = getArguments();
@@ -183,7 +183,7 @@ String finpin;
 
                     if (Utility.isNotNull(respcode) && Utility.isNotNull(responsemessage)) {
                         if ((Utility.checkUserLocked(respcode))) {
-                          //  ((SignInActivity) getActivity()).LogOut();
+                            //  ((SignInActivity) getActivity()).LogOut();
                         }
                         SecurityLayer.Log("Response Message", responsemessage);
 
@@ -252,8 +252,8 @@ String finpin;
                                     getActivity(),
                                     responsemessage,
                                     Toast.LENGTH_LONG).show();*/
-                           dismiss();
-setDialog(responsemessage);
+                            dismiss();
+                            setDialog(responsemessage);
 
                         }
 
@@ -275,8 +275,8 @@ setDialog(responsemessage);
                     // TODO Auto-generated catch block
                     if (!(getActivity() == null)){
                         Toast.makeText(getActivity(), getActivity().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
-                    // SecurityLayer.Log(e.toString());
-                }
+                        // SecurityLayer.Log(e.toString());
+                    }
 
                 } catch (Exception e) {
                     SecurityLayer.Log("encryptionJSONException", e.toString());
@@ -312,33 +312,14 @@ setDialog(responsemessage);
         if(view.getId() == R.id.signinn){
 
             if(Utility.isNotNull(finpin)) {
-              encpin =   Utility.b64_sha256(finpin);
-              /*  SecurityLayer.Log("Enc Pin",encpin);
-               // encpin = Utility.b64_sha256(encpin);
+                encpin =   Utility.b64_sha256(finpin);
+                SecurityLayer.Log("Enc Pin",encpin);
+                // encpin = Utility.b64_sha256(encpin);
                 String usid = Utility.gettUtilUserId(getActivity());
                 String mobnoo = Utility.gettUtilMobno(getActivity());
                 SecurityLayer.Log("Base64 Pin",encpin);
                 String params = "1" + "/" + usid + "/" + encpin + "/" + mobnoo;
-                LogRetro(params,serv);*/
-
-                if (serv.equals("INBOX")) {
-
-
-                    dismiss();
-                    Intent mIntent = new Intent(getActivity(), InboxActivity.class);
-                    mIntent.putExtra("pinna", encpin);
-                    startActivity(mIntent);
-                }
-
-                if (serv.equals("MINIST")) {
-
-                    dismiss();
-                    Intent mIntent = new Intent(getActivity(), MinistatActivity.class);
-                    mIntent.putExtra("pinna", encpin);
-                    startActivity(mIntent);
-                }
-
-
+                LogRetro(params,serv);
             }else{
                 Toast.makeText(
                         getActivity(),
@@ -349,7 +330,7 @@ setDialog(responsemessage);
 
 
         if(view.getId() == R.id.imv){
-dismiss();
+            dismiss();
         }
     }
 

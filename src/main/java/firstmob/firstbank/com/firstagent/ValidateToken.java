@@ -36,7 +36,9 @@ public class ValidateToken extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_validatetoken);
-        session = new SessionManagement(this);  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        session = new SessionManagement(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
 
@@ -199,11 +201,17 @@ public class ValidateToken extends AppCompatActivity implements View.OnClickList
 
 
                                 } else {
-
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            "There was an error processing your request",
+                                            Toast.LENGTH_LONG).show();
 
                                 }
                             } else {
-
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        "There was an error processing your request",
+                                        Toast.LENGTH_LONG).show();
                             }
                         }
 

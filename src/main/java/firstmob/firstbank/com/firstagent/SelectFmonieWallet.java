@@ -77,7 +77,7 @@ public class SelectFmonieWallet extends BaseActivity {
                 /*    fragment = new SendOTB();
                     title = "Other Bank";*/
 
-             //       startActivity(new Intent(SelectFmonieWallet.this, SendOtherWalletActivity.class));
+                   startActivity(new Intent(SelectFmonieWallet.this, ValidateToken.class));
                 }
             }
         });

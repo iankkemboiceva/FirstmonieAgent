@@ -121,10 +121,11 @@ private void checkPlayServices(){
 
                   /*  String ip = Utility.getIP(getApplicationContext());
                     String mac = Utility.getMacAddress(getApplicationContext());*/
-        String serial = "NA";
+
                   /*  String version = Utility.getDevVersion();
                     String devtype = Utility.getDevModel();*/
         String imei = "NA";
+        String serial = "NA";
         if (Utility.checkInternetConnection(getApplicationContext())){
             if (Utility.isNotNull(imei) && Utility.isNotNull(serial)) {
                 if(regId == null){

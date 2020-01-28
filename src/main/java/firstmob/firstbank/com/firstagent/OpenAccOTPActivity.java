@@ -961,7 +961,7 @@ String title = "Bank Info";
                 prgDialog.dismiss();
             }
 
-            Toast.makeText(getApplicationContext(),refnumber,Toast.LENGTH_LONG).show();
+
             String usid = Utility.gettUtilUserId(getApplicationContext());
             String agentid = Utility.gettUtilAgentId(getApplicationContext());
             String mobnoo = Utility.gettUtilMobno(getApplicationContext());

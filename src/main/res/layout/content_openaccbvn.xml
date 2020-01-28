@@ -71,6 +71,7 @@ android:textColor="@color/black"
             android:layout_height="wrap_content"
 
             android:ems="10"
+            android:maxLength="12"
 
             android:inputType="number"
             android:layout_margin="10dp"

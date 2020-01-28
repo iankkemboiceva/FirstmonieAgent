@@ -23,6 +23,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import android.util.Base64;
+
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -102,7 +105,9 @@ public class Utility {
 		// '-' and decimal.
 		return str.matches("^[a-zA-Z0-9 ]*$"); // match a number with optional
 	}
-
+	public static String toHexString(String hex) throws UnsupportedEncodingException, DecoderException {
+		return new String(Hex.decodeHex(hex.toCharArray()), "UTF-8");
+	}
 	public static boolean isValidWordStudId(String str) {
 //  return str.matches(".*[a-zA-Z]+.*"); // match a number with optional
 		// '-' and decimal.

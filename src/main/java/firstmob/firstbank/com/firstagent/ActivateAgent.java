@@ -159,7 +159,7 @@ private void checkPlayServices(){
                     serial = Utility.getSerial();
 
                     imei = Utility.getDevImei(getApplicationContext());
-                }else
+                }
                     if (Utility.checkInternetConnection(getApplicationContext())){
                         if (Utility.isNotNull(imei) && Utility.isNotNull(serial)) {
                             if(regId == null){

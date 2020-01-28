@@ -238,6 +238,8 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
         return resizedBitmap;
     }
 
+
+
     private void runFaceContourDetection(final Bitmap myBitmap, final Bitmap origbit) {
 
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(origbit);

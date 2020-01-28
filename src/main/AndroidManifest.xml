@@ -59,6 +59,12 @@
             android:name=".BluetoothPrinter"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Inbox" />
+
+
+        <activity
+            android:name=".ValidateToken"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="Inbox" />
         <activity
             android:name=".IndivChartActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

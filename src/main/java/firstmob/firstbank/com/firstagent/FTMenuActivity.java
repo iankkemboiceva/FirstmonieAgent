@@ -86,7 +86,7 @@ public class FTMenuActivity extends BaseActivity {
                     title = "Send to Wallet";
                 } */
                 else if (position == 2) {
-                    startActivity(new Intent(FTMenuActivity.this, SelectWallets.class));
+                   startActivity(new Intent(FTMenuActivity.this, SelectWallets.class));
                 }
 
                 if (fragment != null) {
