@@ -146,7 +146,7 @@ public class DepositToFmonieWallet extends BaseActivity implements View.OnClickL
                 // TODO Auto-generated method stub
             }
 
-            @Override
+
             public void afterTextChanged(Editable s) {
 
                 // TODO Auto-generated method stub

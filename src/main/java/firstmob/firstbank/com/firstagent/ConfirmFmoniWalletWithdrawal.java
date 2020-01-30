@@ -3,12 +3,8 @@ package firstmob.firstbank.com.firstagent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,11 +24,10 @@ import rest.ApiSecurityClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import security.EncryptTransactionPin;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnClickListener {
+public class ConfirmFmoniWalletWithdrawal extends BaseActivity implements View.OnClickListener {
     TextView wphoneno,recname,recamo,recnarr,recsendnum,recsendnam,recwalletname,txtfee;
     Button btnsub;
     String amou ,narra, ednamee,ednumbb,txtname,walphnno,walletname,walletcode;
@@ -43,7 +38,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm_other_wallet);
+        setContentView(R.layout.activity_confirmwithdrawwallet);
 
         wphoneno = (TextView) findViewById(R.id.textViewcvv);
         etpin = (EditText) findViewById(R.id.pin);
@@ -80,8 +75,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
         if (intent != null) {
 
 
-            walletname = intent.getStringExtra("walletname");
-            walletcode = intent.getStringExtra("walletcode");
+
             walphnno = intent.getStringExtra("wphoneno");
             amou = intent.getStringExtra("amou");
             narra = intent.getStringExtra("narra");
@@ -327,7 +321,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
 
 
 
-            Intent intent  = new Intent(ConfirmOtherWalletActivity.this,SendOtherWalletActivity.class);
+            Intent intent  = new Intent(ConfirmFmoniWalletWithdrawal.this,SendOtherWalletActivity.class);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -350,7 +344,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
 
 
 
-            Intent intent  = new Intent(ConfirmOtherWalletActivity.this,FTMenuActivity.class);
+            Intent intent  = new Intent(ConfirmFmoniWalletWithdrawal.this,FTMenuActivity.class);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -457,7 +451,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
                                             .setActionBarTitle("Confirm Other Bank");
                                     fragmentTransaction.commit();*/
 
-                                    Intent intent  = new Intent(ConfirmOtherWalletActivity.this,FinalConfOtherWalletsActivity.class);
+                                    Intent intent  = new Intent(ConfirmFmoniWalletWithdrawal.this,FinalConfOtherWalletsActivity.class);
 
 
 

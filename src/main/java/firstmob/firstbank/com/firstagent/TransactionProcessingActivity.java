@@ -1774,7 +1774,7 @@ String datetimee = "";
 
                         String respcode = obj.optString("responseCode");
 
-                        String responsemessage = obj.optString("responseMessage");
+                        String responsemessage = obj.optString("message");
 
 
                         JSONObject plan = obj.optJSONObject("data");
@@ -1785,15 +1785,20 @@ String datetimee = "";
                             }
                             if (!(response.body() == null)) {
                                 if (respcode.equals("00")) {
+                                    setDialog(responsemessage);
 
+                                } else if (respcode.equals("002")) {
+                                    Toast.makeText(
+                                            getApplicationContext(), responsemessage,
+                                            Toast.LENGTH_LONG).show();
 
-
+                                    setAlertDialog();
                                 } else {
-
-
+                                    setDialog(responsemessage);
+                                    txstatus.setText("TRANSACTION FAILURE");
+                                    txstatus.setTextColor(getResources().getColor(R.color.fab_material_red_900));
+                                    txdesc.setText(responsemessage);
                                 }
-                            } else {
-
                             }
                         }
 

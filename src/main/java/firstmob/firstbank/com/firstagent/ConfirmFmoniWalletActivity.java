@@ -166,17 +166,7 @@ public class ConfirmFmoniWalletActivity extends BaseActivity implements View.OnC
                                     responsemessage,
                                     Toast.LENGTH_LONG).show();
                             onBackPressed();
-                           /* Fragment fragment = new SendOtherWallet();
-                            String title = "Mobile Money Wallet";
 
-                            FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            //  String tag = Integer.toString(title);
-                            fragmentTransaction.replace(R.id.container_body, fragment,title);
-                            fragmentTransaction.addToBackStack(title);
-                            ((FMobActivity)getApplicationContext())
-                                    .setActionBarTitle(title);
-                            fragmentTransaction.commit();*/
 
 
                         }
@@ -421,30 +411,7 @@ public class ConfirmFmoniWalletActivity extends BaseActivity implements View.OnC
                                         totfee = datas.optString("fee");
                                     }
 
-                                /*    Bundle b = new Bundle();
-                                    b.putString("walphno", walphnno);
-                                    b.putString("amou", amou);
-                                    b.putString("narra", narra);
-                                    b.putString("ednamee", ednamee);
-                                    b.putString("ednumbb", ednumbb);
-                                    b.putString("txtname", txtname);
-                                    String refcodee = datas.optString("referenceCode");
-                                    b.putString("refcode",refcodee);
-                                    b.putString("walletname", walletname);
-                                    b.putString("walletcode", walletcode);
-                                    b.putString("agcmsn",agcmsn);
-                                    b.putString("fee",totfee);
-                                    Fragment fragment = new FinalConfOtherWallets();
 
-                                    fragment.setArguments(b);
-                                    FragmentManager fragmentManager = getFragmentManager();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                    //  String tag = Integer.toString(title);
-                                    fragmentTransaction.replace(R.id.container_body, fragment, "Confirm Other Bank");
-                                    fragmentTransaction.addToBackStack("Confirm Other Bank");
-                                    ((FMobActivity) getApplicationContext())
-                                            .setActionBarTitle("Confirm Other Bank");
-                                    fragmentTransaction.commit();*/
 
                                     Intent intent  = new Intent(ConfirmFmoniWalletActivity.this,FinalConfOtherWalletsActivity.class);
 

@@ -163,7 +163,7 @@ android:visibility="gone"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dp"
-                        android:text="DEPOSIT TO FIRSTMONIE WALLET"
+                        android:text="TRANSFER TO FIRSTMONIE WALLET"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
 
@@ -672,7 +672,7 @@ android:visibility="gone"
                     android:background="@color/nbkyellow"
 
                     android:padding="5dp"
-                    android:text="OK"
+                    android:text="Proceed"
 android:layout_marginBottom="20dp"
                     android:layout_marginTop="10dip"
                     android:textColor="@color/colorPrimary" />

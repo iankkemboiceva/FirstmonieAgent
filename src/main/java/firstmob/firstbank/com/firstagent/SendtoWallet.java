@@ -135,38 +135,7 @@ ImageView imageView1;
                     if (Utility.isNotNull(narra)) {
                         if (Utility.isNotNull(ednamee)) {
                             if (Utility.isNotNull(ednumbb)) {
-        /*    new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText("Firstmonie Wallet")
-                    .setContentText("Are you sure you want to proceed with this Transaction? \n \n" +
-                            "   Phone Number : "+phoneno+"  \n Amount: "+amou+" Naira \n Narration:  "+narra)
-                    .setConfirmText("Confirm")
-                    .setCancelText("Cancel")
-                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sDialog) {
-                            sDialog.dismissWithAnimation();
-                        }
-                    })
-                    .show();*/
 
-                                Bundle b = new Bundle();
-                                b.putString("wphoneno", phoneno);
-                                b.putString("amou", amou);
-                                b.putString("narra", narra);
-                                b.putString("ednamee", ednamee);
-                                b.putString("ednumbb", ednumbb);
-
-                                Fragment fragment = new ConfirmFmoniWallet();
-
-                                fragment.setArguments(b);
-                                FragmentManager fragmentManager = getFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                //  String tag = Integer.toString(title);
-                                fragmentTransaction.replace(R.id.container_body, fragment, "Confirm Firstmonie");
-                                fragmentTransaction.addToBackStack("Confirm Firstmonie");
-                                ((FMobActivity) getActivity())
-                                        .setActionBarTitle("Confirm Firstmonie");
-                                fragmentTransaction.commit();
                             } else {
                                 Toast.makeText(
                                         getActivity(),

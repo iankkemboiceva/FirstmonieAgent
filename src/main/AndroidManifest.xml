@@ -389,6 +389,8 @@
         <activity android:name=".SelectFmonieWallet"></activity>
         <activity android:name=".DepositToFmonieWallet"></activity>
         <activity android:name=".ConfirmFmoniWalletActivity"></activity>
+        <activity android:name=".DepoMenuActivity"></activity>
+        <activity android:name=".WithdrawalMenuActivity"></activity>
     </application>
 
 </manifest>

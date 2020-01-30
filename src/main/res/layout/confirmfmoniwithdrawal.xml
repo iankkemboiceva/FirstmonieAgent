@@ -518,7 +518,7 @@ android:visibility="gone"
                         android:background="@drawable/bg_red"
 
                         android:layout_alignLeft="@+id/div1"
-
+                        android:layout_marginBottom="20dp"
                         android:layout_marginLeft="40dp"
                         android:gravity="center_vertical|center_horizontal"
                         />
@@ -528,7 +528,7 @@ android:visibility="gone"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_marginBottom="20dp"
-
+android:visibility="gone"
                         android:layout_below="@+id/tv"
                         android:textSize="12sp"
                         android:layout_centerInParent="true"
@@ -620,7 +620,7 @@ android:visibility="gone"
                                         android:layout_below="@+id/imgg"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="5dp"
-                                        android:text="TRANSFER TO FIRSTMONIE WALLET"
+                                        android:text="WITHDRAW FROM FIRSTMONIE WALLET"
                                         android:textColor="@color/fab_material_green_900"
                                         android:textSize="14sp"
                                         android:textStyle="bold" />
@@ -652,13 +652,15 @@ android:visibility="gone"
                                         android:layout_centerHorizontal="true"
 
                                         android:textSize="14sp"
-                                        android:text=""
+                                        android:text="Oluseyi Sani"
                                         android:textColor="@color/nbkyellow"
 
                                         />
 
                                 </RelativeLayout>
-                        <RelativeLayout
+
+
+                                <RelativeLayout
 
 
                             android:layout_width="fill_parent"
@@ -674,8 +676,8 @@ android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dip"
-                                android:textSize="@dimen/textsize"
                                 android:text="Beneficiary No:"
+                                android:textSize="@dimen/textsize"
                                 android:textColor="@color/black" />
                             <TextView
                                 android:id="@+id/textViewcvv"
@@ -683,12 +685,14 @@ android:visibility="gone"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dip"
                                 android:layout_marginLeft="15dip"
+
                                 android:layout_alignParentRight = "true"
-                                android:text=""
+                                android:text="08023006220"
                                 android:textSize="@dimen/textsize"
                                 android:textColor="#3C2415" />
 
                         </RelativeLayout>
+
 
                         <RelativeLayout
 
@@ -706,7 +710,7 @@ android:layout_margin="5dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dip"
-                                android:text="Amount:"
+                                android:text="Amount: "
                                 android:textSize="@dimen/textsize"
                                 android:textColor="@color/black" />
 
@@ -716,10 +720,9 @@ android:layout_margin="5dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dip"
                                 android:layout_marginLeft="15dip"
-                                android:textSize="@dimen/textsize"
                                 android:layout_alignParentRight = "true"
-                                android:text=""
-
+                                android:text="\u20A6 230.00"
+                                android:textSize="@dimen/textsize"
                                 android:textColor="#3C2415" />
 
                         </RelativeLayout>
@@ -749,7 +752,7 @@ android:layout_margin="5dp"
                                 android:layout_marginTop="15dip"
                                 android:layout_marginLeft="15dip"
                                 android:layout_alignParentRight = "true"
-                                android:text=""
+                                android:text="narrat"
                                 android:textSize="@dimen/textsize"
                                 android:textColor="@color/black" />
 
@@ -766,10 +769,10 @@ android:layout_margin="5dp"
 
                                     >
                                     <TextView
-                                        android:id="@+id/txtviewfee"
+                                        android:id="@+id/textViewfee"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="15dip"
+                                        android:layout_marginTop="10dip"
                                         android:text="Fee:"
                                         android:textSize="@dimen/textsize"
                                         android:textColor="@color/black" />
@@ -777,14 +780,15 @@ android:layout_margin="5dp"
                                         android:id="@+id/txtfee"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="15dip"
+                                        android:layout_marginTop="10dip"
                                         android:layout_marginLeft="15dip"
                                         android:layout_alignParentRight = "true"
-                                        android:text="\u20A60.00"
+                                        android:text="\u20A6 20.00"
                                         android:textSize="@dimen/textsize"
                                         android:textColor="@color/black" />
 
                                 </RelativeLayout>
+
 
                     </LinearLayout>
                         </android.support.v7.widget.CardView>

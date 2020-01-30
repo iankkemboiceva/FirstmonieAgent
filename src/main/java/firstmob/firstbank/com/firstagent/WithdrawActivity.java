@@ -328,7 +328,7 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
                                                 String usid = Utility.gettUtilUserId(getApplicationContext());
                                                 String agentid = Utility.gettUtilAgentId(getApplicationContext());
                                                 String mobnoo = Utility.gettUtilMobno(getApplicationContext());
-                                                String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/"+recaccno+"/"+acname;
+                                                String params = "1/"+usid+"/"+agentid+"/"+recaccno+"/"+acname;
                                                
                                                 getOTP(params);
 

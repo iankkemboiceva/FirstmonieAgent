@@ -30,7 +30,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class ValidateToken extends AppCompatActivity implements View.OnClickListener {
     ProgressDialog pro ;
     Button btnnext,btnopenacc;
-    EditText agentid,mobileno;
+    EditText token,mobileno;
     SessionManagement session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class ValidateToken extends AppCompatActivity implements View.OnClickList
         pro.setCancelable(false);
 
 
-        agentid  = (EditText) findViewById(R.id.agentid);
+        token  = (EditText) findViewById(R.id.token);
         mobileno  = (EditText) findViewById(R.id.mobilee);
 
         btnnext = (Button) findViewById(R.id.button2);
@@ -73,13 +73,13 @@ public class ValidateToken extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
 
         if(view.getId() == R.id.button2) {
-            String agid = agentid.getText().toString();
+            String strtoken = token.getText().toString();
             String cmobile = mobileno.getText().toString();
 
-            if (Utility.isNotNull(agid)) {
+            if (Utility.isNotNull(strtoken)) {
 
                 if (Utility.checkInternetConnection(getApplicationContext())) {
-                    ValidateToken(agid,cmobile);
+                    ValidateToken(strtoken,cmobile);
 
                 }
 
@@ -148,7 +148,7 @@ public class ValidateToken extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void ValidateToken(String token,String customermobile) {
+    private void ValidateToken(String token, final String customermobile) {
         pro.show();
 
         String usid = Utility.gettUtilUserId(getApplicationContext());
@@ -198,6 +198,18 @@ public class ValidateToken extends AppCompatActivity implements View.OnClickList
                             }
                             if (!(response.body() == null)) {
                                 if (respcode.equals("00")) {
+
+                                    Intent intent  = new Intent(ValidateToken.this,ConfirmFmoniWalletActivity.class);
+
+
+                                  /*  intent.putExtra("wphoneno", customermobile);
+                                    intent.putExtra("txtname", acname);
+                                    intent.putExtra("amou", amou);
+                                    intent.putExtra("narra", narra);
+*/
+
+
+                                    startActivity(intent);
 
 
                                 } else {

@@ -163,7 +163,7 @@ if(Utility.isNotNull(cntopen)) {
         if (view.getId() == R.id.rl3) {
 
 
-            startActivity(new Intent(getActivity(), WithdrawActivity.class));
+            startActivity(new Intent(getActivity(), WithdrawalMenuActivity.class));
 
         } if(view.getId() == R.id.rl6){
 
@@ -178,7 +178,7 @@ if(Utility.isNotNull(cntopen)) {
         if (view.getId() == R.id.rl5) {
 
 
-            startActivity(new Intent(getActivity(), CashDepoActivity.class));
+            startActivity(new Intent(getActivity(), DepoMenuActivity.class));
 
         }
         if (view.getId() == R.id.rlopenaccinside) {
