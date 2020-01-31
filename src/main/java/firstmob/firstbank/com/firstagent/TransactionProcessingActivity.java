@@ -50,7 +50,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class TransactionProcessingActivity extends BaseActivity implements View.OnClickListener {
     Button btnsub;
     String recanno, amou ,narra, ednamee,ednumbb,txtname,strfee,stragcms,bankname,bankcode,txpin,newparams,serv ;
-    String txtcustid,serviceid,billid,txtfee,strtref,strlabel,strbillnm,fullname,telcoop,marketnm;
+    String txtcustid,serviceid,billid,txtfee,strtref,strlabel,strbillnm,fullname,telcoop,marketnm,walphnno,walletname,walletcode;
     String wallamou ,wallnarra, walltxtname,walphno;
     ProgressDialog prgDialog2;
     RelativeLayout rlsendname,rlsendno;
@@ -241,6 +241,26 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
 
 
                 InterBankResp(newparams+"/"+txpin);
+
+            }
+            if(serv.equals("OTHERWALLETS")) {
+                recanno = intent.getStringExtra("recanno");
+                amou = intent.getStringExtra("amou");
+                narra = intent.getStringExtra("narra");
+                ednamee = intent.getStringExtra("ednamee");
+                ednumbb = intent.getStringExtra("ednumbb");
+                txtname = intent.getStringExtra("txtname");
+                walletname = intent.getStringExtra("walletname");
+                walletcode = intent.getStringExtra("walletcode");
+                strfee = intent.getStringExtra("fee");
+                txtrfc = intent.getStringExtra("refcode");
+                String params  = intent.getStringExtra("params");
+                txpin = intent.getStringExtra("txpin");
+                newparams = params;
+                Log.v("Params",newparams+"/"+txpin);
+
+
+                DepoOtherWallets(newparams+"/"+txpin);
 
             }
             if(serv.equals("CABLETV")) {
@@ -499,6 +519,159 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
     }
 
 
+    private void DepoOtherWallets(String params) {
+
+        String endpoint= "transfer/depwallet.action";
+
+
+        String usid = Utility.gettUtilUserId(getApplicationContext());
+        String agentid = Utility.gettUtilAgentId(getApplicationContext());
+
+
+
+
+        String urlparams = "";
+        try {
+            urlparams = SecurityLayer.genURLCBC(params,endpoint,getApplicationContext());
+            //SecurityLayer.Log("cbcurl",url);
+            SecurityLayer.Log("RefURL",urlparams);
+            SecurityLayer.Log("refurl", urlparams);
+            SecurityLayer.Log("params", params);
+        } catch (Exception e) {
+            SecurityLayer.Log("encryptionerror",e.toString());
+        }
+
+
+
+
+
+        ApiInterface apiService =
+                ApiSecurityClient.getClient(getApplicationContext()).create(ApiInterface.class);
+
+
+        Call<String> call = apiService.setGenericRequestRaw(urlparams);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                try {
+                    // JSON Object
+
+
+                    SecurityLayer.Log("Inter Bank Resp", response.body());
+                    SecurityLayer.Log("response..:", response.body());
+                    JSONObject obj = new JSONObject(response.body());
+                    //obj = Utility.onresp(obj,getApplicationContext());
+                    obj = SecurityLayer.decryptTransaction(obj, getApplicationContext());
+                    SecurityLayer.Log("decrypted_response", obj.toString());
+
+
+
+
+                    JSONObject datas = obj.optJSONObject("data");
+                    //session.setString(SecurityLayer.KEY_APP_ID,appid);
+                    if(!(response.body() == null)) {
+                        String respcode = obj.optString("responseCode");
+                        String responsemessage = obj.optString("message");
+                        String agcmsn = obj.optString("fee");
+                        SecurityLayer.Log("Response Message", responsemessage);
+
+
+                        if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+                            if (!(Utility.checkUserLocked(respcode))) {
+                                if (respcode.equals("00")) {
+                                    String totfee = "0.00";
+                                    if(!(datas == null)){
+                                        totfee = datas.optString("fee");
+                                    }
+
+
+                                    Intent intent  = new Intent(TransactionProcessingActivity.this,FinalConfOtherWalletsActivity.class);
+
+
+
+                                    intent.putExtra("walphno", walphnno);
+                                    intent.putExtra("amou", amou);
+                                    intent.putExtra("narra", narra);
+                                    intent.putExtra("ednamee", ednamee);
+                                    intent.putExtra("ednumbb", ednumbb);
+                                    intent.putExtra("txtname", txtname);
+                                    String refcodee = datas.optString("referenceCode");
+                                    intent.putExtra("refcode",refcodee);
+                                    intent.putExtra("walletname", walletname);
+                                    intent.putExtra("walletcode", walletcode);
+                                    intent.putExtra("agcmsn",agcmsn);
+                                    intent.putExtra("fee",totfee);;
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            " " + responsemessage,
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        "You have been locked out of the app.Please call customer care for further details",
+                                        Toast.LENGTH_LONG).show();
+
+                            }
+                        } else {
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "There was an error on your request",
+                                    Toast.LENGTH_LONG).show();
+
+                        }
+                    }else{
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was an error on your request",
+                                Toast.LENGTH_LONG).show();
+                    }
+
+                    // prgDialog2.dismiss();
+
+
+
+
+                } catch (JSONException e) {
+                    SecurityLayer.Log("encryptionJSONException", e.toString());
+                    // TODO Auto-generated catch block
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                    // SecurityLayer.Log(e.toString());
+                    SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getApplicationContext());
+
+
+                } catch (Exception e) {
+                    SecurityLayer.Log("encryptionJSONException", e.toString());
+                    SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getApplicationContext());
+
+                    // SecurityLayer.Log(e.toString());
+                }
+                prgDialog2.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                SecurityLayer.Log("throwable error",t.toString());
+
+
+                Toast.makeText(
+                        getApplicationContext(),
+                        "There was an error on your request",
+                        Toast.LENGTH_LONG).show();
+
+                SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getApplicationContext());
+
+
+                prgDialog2.dismiss();
+            }
+        });
+
+    }
     private void IntraDepoBankResp(String params) {
         prgDialog2.show();
         String endpoint = "transfer/intrabank.action";

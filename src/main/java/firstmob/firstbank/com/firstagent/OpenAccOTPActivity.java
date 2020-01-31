@@ -407,13 +407,14 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
 
     public void uploadImage(File file){
 
-        //  OkHttpClient client = new OkHttpClient();
+         OkHttpClient client = new OkHttpClient();
 
 
-     /*   OkHttpClient okHttpClient = null;
+       OkHttpClient okHttpClient = null;
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
         try {
-            // Create a trust manager that does not validate certificate chains
+      if((ApplicationConstants.PROD_ENV.equals("N"))) {
             final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
@@ -447,7 +448,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
             }
             //  final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
             builder.addInterceptor(new Interceptor() {
                 @Override
                 public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -483,82 +484,81 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
                             RequestBody.create(MediaType.parse("image/jpg"), file))
 
                     .build();
-            SecurityLayer.Log("Upload Url",upurl);*/
-     try{
-        OkHttpClient okHttpClient = null;
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            SecurityLayer.Log("Upload Url",upurl);
 
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+      }else   if((ApplicationConstants.PROD_ENV.equals("Y"))) {
+          HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
 
 // Can be Level.BASIC, Level.HEADERS, or Level.BODY
 // See http://square.github.io/okhttp/3.x/logging-interceptor/ to see the options.
-        CertificatePinner certificatePinner = new CertificatePinner.Builder()
-                .add(ApplicationConstants.HOSTNAME, "sha256/rqU8h4fgcUQ/pRFO98oK5FD8k9zcSWDoRMDke2hjaQc=")
-                .add(ApplicationConstants.HOSTNAME, "sha256/5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=")
-                .add(ApplicationConstants.HOSTNAME, "sha256/r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=")
+          CertificatePinner certificatePinner = new CertificatePinner.Builder()
+                  .add(ApplicationConstants.HOSTNAME, "sha256/rqU8h4fgcUQ/pRFO98oK5FD8k9zcSWDoRMDke2hjaQc=")
+                  .add(ApplicationConstants.HOSTNAME, "sha256/5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=")
+                  .add(ApplicationConstants.HOSTNAME, "sha256/r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=")
 
-                .build();
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        builder.networkInterceptors().add(httpLoggingInterceptor);
-        builder.certificatePinner(certificatePinner);
-        SSLContext sslcontext = null;
-        SSLSocketFactory NoSSLv3Factory = null;
-        try {
-            sslcontext = SSLContext.getInstance("TLSv1.2");
-            sslcontext.init(null, null, null);
-            NoSSLv3Factory = new NoSSLv3SocketFactory();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        SSLSocketFactory sslSocketFactory = null;
-        try {
-            sslSocketFactory = new TLSSocketFactory();
+                  .build();
+          httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+          builder.networkInterceptors().add(httpLoggingInterceptor);
+          builder.certificatePinner(certificatePinner);
+          SSLContext sslcontext = null;
+          SSLSocketFactory NoSSLv3Factory = null;
+          try {
+              sslcontext = SSLContext.getInstance("TLSv1.2");
+              sslcontext.init(null, null, null);
+              NoSSLv3Factory = new NoSSLv3SocketFactory();
+          } catch (NoSuchAlgorithmException e) {
+              e.printStackTrace();
+          } catch (KeyManagementException e) {
+              e.printStackTrace();
+          }
+          SSLSocketFactory sslSocketFactory = null;
+          try {
+              sslSocketFactory = new TLSSocketFactory();
 
-        } catch (KeyManagementException ignored) {
+          } catch (KeyManagementException ignored) {
 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-         String edpin = pin.getText().toString();
-
-
-         String  encrypted = Utility.b64_sha256(edpin);
-         SecurityLayer.Log("secret",encrypted);
-
-        okHttpClient = builder.build();
-        RequestBody formBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("file", "tmp_photo_" + System.currentTimeMillis(),
-                        RequestBody.create(MediaType.parse("image/jpg"), file))
-
-                .build();
-            Request request = new Request.Builder()
-         .url(upurl).post(formBody)
-
-                 .header("secret", encrypted)
+          } catch (NoSuchAlgorithmException e) {
+              e.printStackTrace();
+          }
+      }
+          String edpin = pin.getText().toString();
 
 
-                 .build();
-            //  Response<String> response = null;
-            okhttp3.Response response = null;
-            try {
-                response = okHttpClient.newCall(request).execute();
+          String encrypted = Utility.b64_sha256(edpin);
+          SecurityLayer.Log("secret", encrypted);
+
+          okHttpClient = builder.build();
+          RequestBody formBody = new MultipartBody.Builder()
+                  .setType(MultipartBody.FORM)
+                  .addFormDataPart("file", "tmp_photo_" + System.currentTimeMillis(),
+                          RequestBody.create(MediaType.parse("image/jpg"), file))
+
+                  .build();
+          Request request = new Request.Builder()
+                  .url(upurl).post(formBody)
+
+                  .header("secret", encrypted)
 
 
-                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-                else{
-                    refnumber = response.body().string();
-                    SecurityLayer.Log("response..:",refnumber);
+                  .build();
+          //  Response<String> response = null;
+          okhttp3.Response response = null;
+          try {
+              response = okHttpClient.newCall(request).execute();
 
-                    SecurityLayer.Log("Success upload","Success Upload");
 
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+              if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+              else {
+                  refnumber = response.body().string();
+                  SecurityLayer.Log("response..:", refnumber);
+
+                  SecurityLayer.Log("Success upload", "Success Upload");
+
+              }
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);

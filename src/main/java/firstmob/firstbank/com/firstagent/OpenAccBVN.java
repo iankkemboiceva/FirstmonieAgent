@@ -377,7 +377,7 @@ public class OpenAccBVN extends BaseActivity implements View.OnClickListener {
 
                         String respcode = obj.optString("responseCode");
 
-                        String responsemessage = obj.optString("responseMessage");
+                        String responsemessage = obj.optString("message");
 
 
                         JSONObject servdata = obj.optJSONObject("data");

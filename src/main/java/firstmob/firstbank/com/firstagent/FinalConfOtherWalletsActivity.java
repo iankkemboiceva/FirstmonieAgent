@@ -39,6 +39,7 @@ public class FinalConfOtherWalletsActivity extends BaseActivity implements View.
     LinearLayout relativeLayout;
     Bitmap bitmap;
     Layout_to_Image layout_to_image;
+    TextView edagname,edattid,edagid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +96,20 @@ public class FinalConfOtherWalletsActivity extends BaseActivity implements View.
 
             String redatetim = intent.getStringExtra("datetime");
             recdatetimee.setText(Utility.changeDate(redatetim));
+
+
+
+            edagid = (TextView) findViewById(R.id.txtagid);
+            edagname = (TextView) findViewById(R.id.txtgname);
+            edattid = (TextView) findViewById(R.id.txtattid);
+
+            String stragid = Utility.gettUtilAgentId(getApplicationContext());
+            String stragname = Utility.gettUtilCustname(getApplicationContext());
+            String strattid = Utility.gettUtilUserId(getApplicationContext());
+
+            edagid.setText(stragid);
+            edagname.setText(stragname);
+            edattid.setText(strattid);
         }
 
         relativeLayout=(LinearLayout)findViewById(R.id.receipt);

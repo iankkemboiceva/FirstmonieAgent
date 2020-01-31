@@ -267,7 +267,24 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
                                         String agentid = Utility.gettUtilAgentId(getApplicationContext());
                                         String mobnoo = Utility.gettUtilMobno(getApplicationContext());
                                         String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/1/"+amou+"/"+walletcode+"/"+walphnno+"/"+txtname+"/"+narra+"/"+encrypted;
-                                        InterBankResp(params);
+
+                                        Intent intent  = new Intent(ConfirmOtherWalletActivity.this,TransactionProcessingActivity.class);
+
+                                        intent.putExtra("recanno", walphnno);
+                                        intent.putExtra("amou", amou);
+                                        intent.putExtra("narra", narra);
+                                        intent.putExtra("ednamee", ednamee);
+                                        intent.putExtra("ednumbb", ednumbb);
+                                        intent.putExtra("txtname", txtname);
+                                        intent.putExtra("walletname", walletname);
+                                        intent.putExtra("walletcode", walletcode);
+
+                                        intent.putExtra("params",params);
+                                        intent.putExtra("txpin", encrypted);
+                                        intent.putExtra("serv","OTHERWALLETS");
+                                        startActivity(intent);
+
+                                    //    InterBankResp(params);
                                        /* ApiInterface apiService =
                                                 ApiClient.getClient().create(ApiInterface.class);
                                         String usid = Utility.gettUtilUserId(getApplicationContext());

@@ -157,6 +157,17 @@ android:id="@+id/layl"
                     android:paddingBottom="5dip"
                     android:paddingTop="1dip"
                     android:background="@color/white">
+                    <TextView
+                        android:id="@+id/txtdefie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dip"
+
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
+                        android:text="SEND TO OTHER BANK ACCOUNT"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorPrimary" />
                     <RelativeLayout
 
                         android:layout_margin="5dp"
