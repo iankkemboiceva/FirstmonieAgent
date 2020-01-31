@@ -107,7 +107,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="5dip"
                                         android:text="Recipient Name:"
                                         android:layout_centerHorizontal="true"
-                                        android:textSize="@dimen/textsize"
+                                        android:textSize="@dimen/newtextsize"
                                         android:textColor="@color/black"
                                         android:layout_gravity="left|center"
                                         android:layout_weight="1"
@@ -146,7 +146,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text="Smartcard Number:"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                     <TextView
                                         android:id="@+id/textViewnb2"
@@ -157,7 +157,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text=""
                                         android:textColor="#3C2415"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                 </RelativeLayout>
                                 <RelativeLayout
@@ -179,7 +179,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text="Biller:"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                     <TextView
                                         android:id="@+id/txtbillname"
@@ -190,7 +190,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text=""
                                         android:textColor="#3C2415"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                 </RelativeLayout>
 
@@ -213,7 +213,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text="Amount:"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                     <TextView
                                         android:id="@+id/textViewrrs"
@@ -224,7 +224,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text=""
                                         android:textColor="#3C2415"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                 </RelativeLayout>
                                 <RelativeLayout
@@ -243,8 +243,8 @@ android:fillViewport="true"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="10dip"
-                                        android:text="Reference Code:"
-                                        android:textSize="@dimen/textsize"
+                                        android:text="Ref:"
+                                        android:textSize="@dimen/newtextsize"
                                         android:textColor="@color/black" />
 
                                     <TextView
@@ -255,7 +255,7 @@ android:fillViewport="true"
                                         android:layout_marginLeft="15dip"
                                         android:layout_alignParentRight = "true"
                                         android:text=""
-                                        android:textSize="@dimen/textsize"
+                                        android:textSize="@dimen/newtextsize"
                                         android:textColor="#3C2415" />
 
                                 </RelativeLayout>
@@ -279,7 +279,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text="Narration:"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                     <TextView
                                         android:id="@+id/textViewrr"
@@ -290,7 +290,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text=""
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                 </RelativeLayout>
 
@@ -313,7 +313,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text="Fee:"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                     <TextView
                                         android:id="@+id/txtfee"
@@ -324,7 +324,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text=""
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                 </RelativeLayout>
                                 <RelativeLayout
@@ -345,7 +345,7 @@ android:fillViewport="true"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="15dip"
                                         android:text="Date \u0026 Time:"
-                                        android:textSize="@dimen/textsize"
+                                        android:textSize="@dimen/newtextsize"
                                         android:textColor="@color/black" />
                                     <TextView
                                         android:id="@+id/textfinaldatet"
@@ -355,7 +355,7 @@ android:fillViewport="true"
                                         android:layout_marginLeft="15dip"
                                         android:layout_alignParentRight = "true"
                                         android:text=""
-                                        android:textSize="@dimen/textsize"
+                                        android:textSize="@dimen/newtextsize"
                                         android:textColor="@color/black" />
 
                                 </RelativeLayout>
@@ -378,7 +378,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text="Payer Name:"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                     <TextView
                                         android:id="@+id/sendnammm"
@@ -389,7 +389,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text=""
                                         android:textColor="#3C2415"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                 </RelativeLayout>
 
@@ -412,7 +412,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text="Payer Number:"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                     <TextView
                                         android:id="@+id/sendno"
@@ -423,7 +423,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text=""
                                         android:textColor="#3C2415"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                 </RelativeLayout>
 
@@ -447,7 +447,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="15dip"
                                         android:text="Tran. Reference:"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                     <TextView
                                         android:id="@+id/txref"
@@ -458,7 +458,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="15dip"
                                         android:text=""
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                 </RelativeLayout>
 
@@ -481,7 +481,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text="Agent Commision:"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                     <TextView
                                         android:id="@+id/txtaccom"
@@ -492,7 +492,7 @@ android:fillViewport="true"
                                         android:layout_marginTop="10dip"
                                         android:text="\u20A6 0.00"
                                         android:textColor="#3C2415"
-                                        android:textSize="@dimen/textsize" />
+                                        android:textSize="@dimen/newtextsize" />
 
                                 </RelativeLayout>
 
@@ -515,7 +515,7 @@ android:fillViewport="true"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="10dip"
                                         android:text="Served By:"
-                                        android:textSize="@dimen/textsize"
+                                        android:textSize="@dimen/newtextsize"
                                         android:textColor="@color/black" />
                                     <TextView
                                         android:id="@+id/txtgname"
@@ -525,7 +525,7 @@ android:fillViewport="true"
                                         android:layout_marginLeft="15dip"
                                         android:layout_alignParentRight = "true"
                                         android:text=""
-                                        android:textSize="@dimen/textsize"
+                                        android:textSize="@dimen/newtextsize"
                                         android:textColor="#3C2415" />
 
                                 </RelativeLayout>
@@ -548,7 +548,7 @@ android:fillViewport="true"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="10dip"
                                         android:text="Agent ID:"
-                                        android:textSize="@dimen/textsize"
+                                        android:textSize="@dimen/newtextsize"
                                         android:textColor="@color/black" />
                                     <TextView
                                         android:id="@+id/txtagid"
@@ -558,7 +558,7 @@ android:fillViewport="true"
                                         android:layout_marginLeft="15dip"
                                         android:layout_alignParentRight = "true"
                                         android:text=""
-                                        android:textSize="@dimen/textsize"
+                                        android:textSize="@dimen/newtextsize"
                                         android:textColor="#3C2415" />
 
                                 </RelativeLayout>
@@ -581,7 +581,7 @@ android:fillViewport="true"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="10dip"
                                         android:text="Attendant ID:"
-                                        android:textSize="@dimen/textsize"
+                                        android:textSize="@dimen/newtextsize"
                                         android:textColor="@color/black" />
                                     <TextView
                                         android:id="@+id/txtattid"
@@ -591,7 +591,7 @@ android:fillViewport="true"
                                         android:layout_marginLeft="15dip"
                                         android:layout_alignParentRight = "true"
                                         android:text=""
-                                        android:textSize="@dimen/textsize"
+                                        android:textSize="@dimen/newtextsize"
                                         android:textColor="#3C2415" />
 
                                 </RelativeLayout>

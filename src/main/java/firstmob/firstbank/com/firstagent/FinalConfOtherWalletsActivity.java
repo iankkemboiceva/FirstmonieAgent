@@ -28,6 +28,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class FinalConfOtherWalletsActivity extends BaseActivity implements View.OnClickListener {
     TextView recacno,recname,recamo,recnarr,recsendnum,recsendnam,recbnknm,recfee,recagcmn,txtrfcd,recdatetimee;
     Button btnsub;
@@ -261,5 +263,10 @@ public class FinalConfOtherWalletsActivity extends BaseActivity implements View.
             // Staring Login Activity
             startActivity(i);
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

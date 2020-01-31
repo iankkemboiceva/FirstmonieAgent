@@ -266,7 +266,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
                                         String usid = Utility.gettUtilUserId(getApplicationContext());
                                         String agentid = Utility.gettUtilAgentId(getApplicationContext());
                                         String mobnoo = Utility.gettUtilMobno(getApplicationContext());
-                                        String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/1/"+amou+"/"+walletcode+"/"+walphnno+"/"+txtname+"/"+narra+"/"+encrypted;
+                                        String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/1/"+amou+"/"+walletcode+"/"+walphnno+"/"+txtname+"/"+narra;
 
                                         Intent intent  = new Intent(ConfirmOtherWalletActivity.this,TransactionProcessingActivity.class);
 

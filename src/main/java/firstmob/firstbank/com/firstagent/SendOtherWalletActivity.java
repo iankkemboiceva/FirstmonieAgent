@@ -387,7 +387,7 @@ public class SendOtherWalletActivity extends BaseActivity implements View.OnClic
     }
 
     private void NameInquirySec(String params) {
-
+prgDialog.show();
         String endpoint= "transfer/nameenq.action";
 
 

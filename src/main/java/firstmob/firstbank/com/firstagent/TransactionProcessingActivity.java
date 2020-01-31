@@ -520,7 +520,7 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
 
 
     private void DepoOtherWallets(String params) {
-
+        prgDialog2.show();
         String endpoint= "transfer/depwallet.action";
 
 
@@ -575,6 +575,7 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                         String responsemessage = obj.optString("message");
                         String agcmsn = obj.optString("fee");
                         SecurityLayer.Log("Response Message", responsemessage);
+                        String datetimee = "";
 
 
                         if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
@@ -583,6 +584,7 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                                     String totfee = "0.00";
                                     if(!(datas == null)){
                                         totfee = datas.optString("fee");
+                                        datetimee = datas.optString("dateTime");
                                     }
 
 
@@ -600,6 +602,7 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                                     intent.putExtra("refcode",refcodee);
                                     intent.putExtra("walletname", walletname);
                                     intent.putExtra("walletcode", walletcode);
+                                    intent.putExtra("datetime",datetimee);
                                     intent.putExtra("agcmsn",agcmsn);
                                     intent.putExtra("fee",totfee);;
                                     startActivity(intent);
@@ -651,7 +654,9 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
 
                     // SecurityLayer.Log(e.toString());
                 }
-                prgDialog2.dismiss();
+                if(!(prgDialog2 == null) && prgDialog2.isShowing() && getApplicationContext() != null) {
+                    prgDialog2.dismiss();
+                }
             }
 
             @Override
@@ -667,7 +672,9 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                 SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getApplicationContext());
 
 
-                prgDialog2.dismiss();
+                if(!(prgDialog2 == null) && prgDialog2.isShowing() && getApplicationContext() != null) {
+                    prgDialog2.dismiss();
+                }
             }
         });
 

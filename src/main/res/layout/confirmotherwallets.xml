@@ -609,6 +609,17 @@ android:visibility="gone"
                                 android:textColor="#3C2415" />
 
                         </RelativeLayout>
+                                <TextView
+                                    android:id="@+id/txtdefie"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dip"
+
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_gravity="center_horizontal"
+                                    android:text="OTHER WALLETS CONFIRMATION"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/colorPrimary" />
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
