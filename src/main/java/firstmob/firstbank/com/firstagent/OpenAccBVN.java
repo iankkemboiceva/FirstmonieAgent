@@ -353,6 +353,8 @@ public class OpenAccBVN extends BaseActivity implements View.OnClickListener {
             finalparam.put("hash", hash);
             finalparam.put("appId", appid);
 
+            SecurityLayer.Log("data parm",paramObject.toString());
+
 
 
 

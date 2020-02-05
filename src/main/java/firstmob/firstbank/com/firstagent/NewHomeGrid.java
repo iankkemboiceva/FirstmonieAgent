@@ -134,6 +134,21 @@ if(Utility.isNotNull(cntopen)) {
       if(chkappvs.equals("Y")) {
             GetAppversion();
       }
+
+        try {
+            JSONObject paramObject = new JSONObject();
+
+
+            paramObject.put("userId", "SURESHD");
+
+            paramObject.put("channel", 3);
+
+            String data = SecurityLayer.encryptdata(paramObject.toString(),getActivity());
+            SecurityLayer.Log("data",data);
+            SecurityLayer.Log("paramobject",paramObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return root;
     }
 
