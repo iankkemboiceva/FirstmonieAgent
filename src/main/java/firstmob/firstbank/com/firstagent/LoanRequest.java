@@ -299,7 +299,7 @@ prgDialog.show();
 
                     String respcode = obj.optString("responseCode");
 
-                    String responsemessage = obj.optString("responseMessage");
+                    String responsemessage = obj.optString("message");
 
 
                     JSONObject plan = obj.optJSONObject("data");
@@ -464,6 +464,7 @@ lybut.setVisibility(View.VISIBLE);
 
     public void SetStores() {
         String strjsarray = session.getString("STORES");
+        SecurityLayer.Log("stores",strjsarray);
 
         JSONArray servdata = null;
         try {
@@ -475,8 +476,8 @@ lybut.setVisibility(View.VISIBLE);
                     json_data = servdata.getJSONObject(i);
 
 
-                    String storeid = json_data.optString("storeId");
-                    String storename = json_data.optString("storeName");
+                    String storeid = json_data.optString("id");
+                    String storename = json_data.optString("name");
 
 
 

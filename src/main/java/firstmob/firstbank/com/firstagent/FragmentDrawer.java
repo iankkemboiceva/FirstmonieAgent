@@ -59,13 +59,7 @@ import adapter.NavDrawerPOJO;
 import adapter.NavigationDrawerAdapter;
 import adapter.adapter.NavDrawerItemSignIn;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import security.SecurityLayer;
+
 
 
 public class FragmentDrawer extends Fragment implements View.OnClickListener {

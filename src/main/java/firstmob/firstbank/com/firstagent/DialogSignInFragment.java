@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
 import rest.RetrofitInstance;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -111,7 +112,7 @@ String finpin;
     }
 
 
-    private void LogRetro(String params, final String service) {
+    private void LogRetro(String params) {
 
 
         pro.show();
@@ -275,10 +276,11 @@ setDialog(responsemessage);
                 String supervis = session.getString("SUPERID");
                 String mobnoo = Utility.gettUtilMobno(getActivity());
                 SecurityLayer.Log("Base64 Pin",encpin);
-              String adminid = session.getString("ADMINID");
+              String adminid = session.getString("SUPERID");
                 String params = "1" + "/"+adminid+"/" + encpin + "/" + mobnoo;
+                LogRetro(params);
 
-                AdminLogin(finpin);
+              //  AdminLogin(finpin);
             }else{
                 Toast.makeText(
                         getActivity(),

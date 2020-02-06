@@ -132,16 +132,20 @@ public interface ApiInterface {
     Call<String> setGenericRequestRaw(@Path(value="string",encoded=true) String string);
 
     @Headers("Content-Type: application/json")
-    @POST("agentcredit/api/loan/eligibility")
+    @POST("loan/eligibility.action")
     Call<String> loaneligibility(@Body String params);
 
     @Headers("Content-Type: application/json")
-    @POST("agentcredit/api/loan/request")
+    @POST("loan/request.action")
     Call<String> loanrequest(@Body String params);
 
     @Headers("Content-Type: application/json")
     @POST("agentcredit/api/auth/signin")
     Call<String> adminlogin(@Body String params);
+
+    @Headers("Content-Type: application/json")
+    @POST("sup/getsupervisors")
+    Call<String> getsup(@Body String params);
 
 
 }

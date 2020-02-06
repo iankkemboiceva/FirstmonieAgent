@@ -81,12 +81,16 @@ import okhttp3.OkHttpClient;
 import rest.ApiClient;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
+import rest.RetrofitInstance;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import security.EncryptTransactionPin;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static security.SecurityLayer.KEY_SIV;
+import static security.SecurityLayer.KEY_SKEY;
 
 public class SignInActivity extends ActionBarActivity implements View.OnClickListener {
 	Button signinn,bio;
@@ -324,10 +328,149 @@ onKeyMetric();
 
 		//	startActivity(new Intent(getApplicationContext(),SupHomeActivity.class));
 
-			showEditDialog();
+		//	showEditDialog();
+
+			GetSup();
 		}
 
 	}
+
+	private void GetSup() {
+		pro.show();
+
+
+
+
+
+
+		String storeid = session.getString("STOREID");
+
+		String userid = Utility.gettUtilUserId(getApplicationContext());
+		ApiInterface apiService =
+				RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
+
+		try {
+			JSONObject paramObject = new JSONObject();
+
+			paramObject.put("loginUserId", userid);
+			paramObject.put("channel", "1");
+			paramObject.put("storeId", storeid);
+
+
+
+
+			Call<String> call = apiService.getsup(paramObject.toString());
+
+
+
+
+			call.enqueue(new Callback<String>() {
+				@Override
+				public void onResponse(Call<String> call, Response<String> response) {
+					try {
+						// JSON Object
+
+						SecurityLayer.Log("response..:", response.body());
+						JSONObject obj = new JSONObject(response.body());
+						//obj = Utility.onresp(obj,getApplicationContext());
+
+						SecurityLayer.Log("decrypted_response", obj.toString());
+
+						String respcode = obj.optString("responseCode");
+
+						String responsemessage = obj.optString("responseMessage");
+
+
+
+						JSONArray datas = obj.optJSONArray("data");
+						//session.setString(SecurityLayer.KEY_APP_ID,appid);
+						if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+
+							if (!(response.body() == null)) {
+								if (respcode.equals("00")) {
+
+									JSONObject json_data = null;
+									for (int i = 0; i < datas.length(); i++) {
+										json_data = datas.getJSONObject(i);
+										String role = json_data.optString("role");
+										String superid = json_data.optString("userid");
+										if(role.equals("MS")){
+											session.setString("SUPERID",superid);
+											JSONArray jsstores = json_data.optJSONArray("store");
+											session.setString("STORES",jsstores.toString());
+										}
+									}
+
+
+
+									showEditDialog();
+									
+								} else {
+									
+									Toast.makeText(
+											getApplicationContext(), responsemessage,
+											Toast.LENGTH_LONG).show();
+
+									
+								}
+							} else {
+
+							}
+						}
+
+					} catch (JSONException e) {
+						SecurityLayer.Log("encryptionJSONException", e.toString());
+						// TODO Auto-generated catch block
+						if(!(getApplicationContext() == null)) {
+							Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+							// SecurityLayer.Log(e.toString());
+						}
+					} catch (Exception e) {
+						SecurityLayer.Log("encryptionJSONException", e.toString());
+						if(!(getApplicationContext() == null)) {
+						}
+						// SecurityLayer.Log(e.toString());
+					}
+					try {
+						if ((pro != null) && pro.isShowing() && !(getApplicationContext() == null)) {
+							pro.dismiss();
+						}
+					} catch (final IllegalArgumentException e) {
+						// Handle or log or ignore
+					} catch (final Exception e) {
+						// Handle or log or ignore
+					} finally {
+						//   prgDialog = null;
+					}
+
+					//   prgDialog.dismiss();
+				}
+
+				@Override
+				public void onFailure(Call<String> call, Throwable t) {
+					// Log error here since request failed
+					SecurityLayer.Log("Throwable error",t.toString());
+
+
+					if ((pro != null) && pro.isShowing() && !(getApplicationContext() == null)) {
+						pro.dismiss();
+					}
+					if(!(getApplicationContext() == null)) {
+						Toast.makeText(
+								getApplicationContext(),
+								"There was an error processing your request",
+								Toast.LENGTH_LONG).show();
+
+					}
+				}
+			});
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 
 	public void forceCrash() {
 		throw new RuntimeException("This is a crash");
@@ -569,7 +712,7 @@ public void loginRetrofit(){
 					JSONObject obj = new JSONObject(response.body());
                  /*   JSONObject jsdatarsp = obj.optJSONObject("data");
                     SecurityLayer.Log("JSdata resp", jsdatarsp.toString());
-                    //obj = Utility.onresp(obj,getActivity()); */
+                    //obj = Utility.onresp(obj,getApplicationContext()); */
 					obj = SecurityLayer.decryptGeneralLogin(obj, getApplicationContext());
 					SecurityLayer.Log("decrypted_response", obj.toString());
 
@@ -747,7 +890,7 @@ public void loginRetrofit(){
 
 					SecurityLayer.Log("response..:", response.body());
 					JSONObject obj = new JSONObject(response.body());
-					//obj = Utility.onresp(obj,getActivity());
+					//obj = Utility.onresp(obj,getApplicationContext());
 					obj = SecurityLayer.decryptTransaction(obj, getApplicationContext());
 					SecurityLayer.Log("decrypted_response", obj.toString());
 

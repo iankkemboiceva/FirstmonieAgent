@@ -34,11 +34,7 @@ import org.json.JSONObject;
 import java.util.Date;
 import java.util.HashMap;
 
-import rest.ApiInterface;
-import rest.ApiSecurityClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

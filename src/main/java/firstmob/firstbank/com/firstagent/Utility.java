@@ -43,6 +43,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -313,9 +314,8 @@ public static JSONArray getNubanAlgo(String account){
 	}
 
 	public static String getDevImei(Context c) {
-		TelephonyManager telephonyManager = (TelephonyManager) c.getSystemService(c.TELEPHONY_SERVICE);
-		String imei = telephonyManager.getDeviceId();
-		return imei;
+		String uuid = UUID.randomUUID().toString();
+		return uuid;
 	}
 
 

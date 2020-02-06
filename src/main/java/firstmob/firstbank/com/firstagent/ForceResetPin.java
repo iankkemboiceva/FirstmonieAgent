@@ -108,7 +108,7 @@ public class ForceResetPin extends AppCompatActivity implements View.OnClickList
 
                                     String usid = null;
                                     if(blchk){
-                                        usid = session.getString("ADMINID");
+                                        usid = session.getString("SUPERID");
                                     }else {
                                         usid = Utility.gettUtilUserId(getApplicationContext());
                                     }

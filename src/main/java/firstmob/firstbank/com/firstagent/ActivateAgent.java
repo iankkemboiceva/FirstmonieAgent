@@ -501,6 +501,10 @@ pDialog.hide();
                                 final   String agid = agentid.getText().toString();
                                 final   String mobno = phonenumber.getText().toString();
                                 String status = datas.optString("status");
+                                String store = datas.optString("store");
+                                Toast.makeText(getApplicationContext(),store,Toast.LENGTH_LONG).show();
+
+                                session.setString("STOREID",store);
                                 //    session.SetUserID(agid);
                                 session.SetAgentID(agent);
                                 session.setString(AGMOB,mobno);
