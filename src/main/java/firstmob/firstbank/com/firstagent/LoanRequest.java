@@ -269,12 +269,13 @@ prgDialog.show();
 
         String storeid  = storelist.get(spstore.getSelectedItemPosition()).getstoreid();
 
-         String adminid = session.getString("ADMINID");
+         String adminid = session.getString("SUPERID");
         ApiInterface apiService =
                 RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
 
         try {
             JSONObject paramObject = new JSONObject();
+
 
             paramObject.put("userId", adminid);
             paramObject.put("channel", "1");
@@ -309,7 +310,7 @@ prgDialog.show();
                            LogOut();
                         }
                         if (!(response.body() == null)) {
-                            if (respcode.equals("00")) {
+                            if (respcode.equals("00") || respcode.equals("Success")) {
 
                                 SecurityLayer.Log("Response Message", responsemessage);
 

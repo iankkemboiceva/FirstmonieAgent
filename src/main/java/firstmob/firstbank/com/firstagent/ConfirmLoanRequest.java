@@ -230,7 +230,7 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
 
         ApiInterface apiService =
                 RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
-        String adminid = session.getString("ADMINID");
+        String adminid = session.getString("SUPERID");
 
         String encpin = Utility.b64_sha256(pin);
 
@@ -262,7 +262,7 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
 
                         String respcode = obj.optString("responseCode");
 
-                        String responsemessage = obj.optString("responseMessage");
+                        String responsemessage = obj.optString("message");
 
 
                         JSONObject plan = obj.optJSONObject("data");

@@ -64,8 +64,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -386,6 +388,8 @@ onKeyMetric();
 						//session.setString(SecurityLayer.KEY_APP_ID,appid);
 						if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
 
+							List<String> listItems = new ArrayList<String>();
+							int counter = 0;
 							if (!(response.body() == null)) {
 								if (respcode.equals("00")) {
 
@@ -395,15 +399,45 @@ onKeyMetric();
 										String role = json_data.optString("role");
 										String superid = json_data.optString("userid");
 										if(role.equals("MS")){
-											session.setString("SUPERID",superid);
+
 											JSONArray jsstores = json_data.optJSONArray("store");
 											session.setString("STORES",jsstores.toString());
+											SecurityLayer.Log("supervisid",superid);
+											listItems.add(superid);
+
+											counter+=1;
+
 										}
 									}
 
 
 
-									showEditDialog();
+								//	showEditDialog();
+
+								if(listItems.size() > 0) {
+									final CharSequence[] items = listItems.toArray(new CharSequence[listItems.size()]);
+
+									SecurityLayer.Log("Items","items ARE null");
+									AlertDialog.Builder builder = new AlertDialog.Builder(SignInActivity.this);
+									builder.setTitle("Select Supervisor");
+									builder.setItems(items, new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int item) {
+
+
+											session.setString("SUPERID", items[item].toString());
+											dialog.dismiss();
+
+											showEditDialog();
+										}
+									});
+									builder.show();
+								}else{
+										SecurityLayer.Log("Items","items are not null");
+									Toast.makeText(
+											getApplicationContext(), "No supervisors mapped to this user",
+											Toast.LENGTH_LONG).show();
+								}
 									
 								} else {
 									
