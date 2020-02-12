@@ -440,7 +440,7 @@ Log.v("Midnamee",midnamee);
         }
         String tdate = day+"-"+finalmon + "-" +year ;
         fintdate = year+finalmon+finalday;
-//fintdate = tdate;
+//fintdate = tdate;"dob":"14-01-1988"
         chosdate = tdate;
         tvdate.setText(tdate);
     }

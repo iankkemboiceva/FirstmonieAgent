@@ -865,7 +865,7 @@ changeddate = dateFormat.format(datefrom);
 
 			try {
 				Date datefrom = sdf.parse(dateInString);
-				SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 				changeddate = dateFormat.format(datefrom);
 				System.out.println(changeddate);
 

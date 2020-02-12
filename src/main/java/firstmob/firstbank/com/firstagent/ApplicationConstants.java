@@ -25,7 +25,7 @@ public interface ApplicationConstants {
 
 
 static final String NET_URL = "https://firstmonieagent.firstbanknigeria.com:7778/agencyapi/app/";
-	static final String IMG_URL = "https://firstmonieagent.firstbanknigeria.com:7778/agencyapi/";
+	static final String IMG_URL = "https://firstmonieagent.firstbanknigeria.com:7778/accountopen/";
 	static final String MICRO_URL = "https://firstmonieagent.firstbanknigeria.com:7778/";
 	static final String PROD_ENV = "Y";
 	static final String HOSTNAME = "http://firstmonieagent.firstbanknigeria.com";
