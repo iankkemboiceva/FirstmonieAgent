@@ -1,27 +1,39 @@
 package firstmob.firstbank.com.firstagent;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.andrognito.pinlockview.IndicatorDots;
+import com.andrognito.pinlockview.PinLockListener;
+import com.andrognito.pinlockview.PinLockView;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.vipul.hp_hp.library.Layout_to_Image;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import model.GetFee;
-import rest.ApiClient;
+import java.net.SocketTimeoutException;
+
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
 import rest.RetrofitInstance;
@@ -31,20 +43,58 @@ import retrofit2.Response;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickListener {
-    TextView recacno, recname, recamo, recnarr, txtfee, acbal;
+public class TransactionProcessingSupActivity extends BaseActivity implements View.OnClickListener {
     Button btnsub;
-    String recanno, amou, narra, ednamee, ednumbb, txtname, finalfee = null, agbalance, storeid;
+    String recanno, amou ,narra, ednamee,ednumbb,txtname,strfee,stragcms,bankname,bankcode,txpin,newparams,serv,storeid,pin;
+    String txtcustid,serviceid,billid,txtfee,strtref,strlabel,strbillnm,fullname,telcoop,marketnm;
+
     ProgressDialog prgDialog2;
+    RelativeLayout rlsendname,rlsendno;
     EditText etpin;
     private FirebaseAnalytics mFirebaseAnalytics;
-    TextView step1;
-    SessionManagement session;
+    String   txtrfc,txref;
+    Layout_to_Image layout_to_image;  //Create Object of Layout_to_Image Class
+    TextView txstatus,txdesc;
+    LinearLayout relativeLayout;   //Define Any Layout
+    Button shareImage,repissue;
+    Bitmap bitmap;                  //Bitmap for holding Image of layout
 
+    private PinLockView mPinLockView;
+    private IndicatorDots mIndicatorDots;
+    Button btnconfirm;
+    ProgressDialog pro ;
+    String finpin;
+    SessionManagement session;
+    private PinLockListener mPinLockListener = new PinLockListener() {
+        @Override
+        public void onComplete(String pin) {
+
+            //SecurityLayer.Log(TAG, "Pin complete: " + pin);
+            finpin = pin;
+        }
+
+        @Override
+        public void onEmpty() {
+            SecurityLayer.Log("Pin Empty", "Pin empty");
+        }
+
+        @Override
+        public void onPinChange(int pinLength, String intermediatePin) {
+            //	SecurityLayer.Log(TAG, "Pin changed, new length " + pinLength + " with intermediate pin " + intermediatePin);
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm_loanreq);
+        setContentView(R.layout.activity_transaction_processing);
+
+        prgDialog2 = new ProgressDialog(this);
+        prgDialog2.setMessage("Loading....");
+        prgDialog2.setCancelable(false);
+        rlsendname = (RelativeLayout)findViewById(R.id.rlsendnam);
+        rlsendno = (RelativeLayout) findViewById(R.id.rlsendnum);
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -57,30 +107,24 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
         ab.setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
-        session = new SessionManagement(this);
-        recacno = (TextView) findViewById(R.id.textViewnb2);
-        recname = (TextView) findViewById(R.id.textViewcvv);
-        etpin = (EditText) findViewById(R.id.pin);
-        acbal = (TextView) findViewById(R.id.txtacbal);
-        recamo = (TextView) findViewById(R.id.txloamount);
-        recnarr = (TextView) findViewById(R.id.textViewrr);
-        txtfee = (TextView) findViewById(R.id.txtfee);
-        step1 = (TextView) findViewById(R.id.tv);
-        step1.setOnClickListener(this);
 
 
-        prgDialog2 = new ProgressDialog(this);
-        prgDialog2.setMessage("Loading....");
-        prgDialog2.setCancelable(false);
-
-        btnsub = (Button) findViewById(R.id.button2);
+        txstatus = (TextView) findViewById(R.id.txstatus);
+        txdesc = (TextView) findViewById(R.id.txdesc);
+        btnsub = (Button)findViewById(R.id.button2);
         btnsub.setOnClickListener(this);
-
+        session = new SessionManagement(this);
+        relativeLayout=(LinearLayout)findViewById(R.id.receipt);
         Intent intent = getIntent();
         if (intent != null) {
-            amou = intent.getStringExtra("amount");
-            storeid = intent.getStringExtra("storeid");
-            recamo.setText(amou + ApplicationConstants.KEY_NAIRA);
+            serv = intent.getStringExtra("serv");
+            if (serv.equals("LOANREQ")) {
+                amou = intent.getStringExtra("amount");
+                storeid = intent.getStringExtra("storeid");
+                pin = intent.getStringExtra("pin");
+                ConfirmRequest(pin);
+
+            }
         }
 
 
@@ -90,155 +134,6 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();    //Call the back button's method
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(View view) {
-
-        if (view.getId() == R.id.button2) {
-            String pin = etpin.getText().toString();
-            if (Utility.isNotNull(pin)) {
-                //ConfirmRequest(pin);
-                String adminid = session.getString("SUPERID");
-
-
-
-                Intent intent  = new Intent(ConfirmLoanRequest.this,TransactionProcessingSupActivity.class);
-
-
-
-                intent.putExtra("serv","LOANREQ");
-
-                intent.putExtra("amount", amou);
-
-                intent.putExtra("storeid", storeid);
-                intent.putExtra("pin", pin);
-
-                startActivity(intent);
-            } else {
-                Toast.makeText(getApplicationContext(), "Please enter a valid value for pin", Toast.LENGTH_LONG).show();
-            }
-
-        }
-        if (view.getId() == R.id.tv) {
-         /*   Fragment  fragment = new CashDepo();
-
-
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Cash Depo");
-            fragmentTransaction.addToBackStack("Cash Depo");
-            ((FMobActivity)getApplicationContext())
-                    .setActionBarTitle("Cash Depo");
-            fragmentTransaction.commit();*/
-
-
-
-        }
-        if (view.getId() == R.id.tv2) {
-           /* Fragment  fragment = new FTMenu();
-
-
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Confirm Transfer");
-            fragmentTransaction.addToBackStack("Confirm Transfer");
-            ((FMobActivity)getApplicationContext())
-                    .setActionBarTitle("Confirm Transfer");
-            fragmentTransaction.commit();*/
-        }
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // put your code here...
-
-
-    }
-
-    public void ClearPin() {
-        etpin.setText("");
-    }
-
-    public void SetForceOutDialog(String msg, final String title, final Context c) {
-        if (!(c == null)) {
-            new MaterialDialog.Builder(this)
-                    .title(title)
-                    .content(msg)
-
-                    .negativeText("CONTINUE")
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            dialog.dismiss();
-                        }
-
-                        @Override
-                        public void onNegative(MaterialDialog dialog) {
-
-                            dialog.dismiss();
-                            finish();
-                            session.logoutUser();
-
-                            // After logout redirect user to Loing Activity
-                            Intent i = new Intent(c, SignInActivity.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            // Staring Login Activity
-                            startActivity(i);
-
-                        }
-                    })
-                    .show();
-        }
-    }
-
-    public void setDialog(String message) {
-        new MaterialDialog.Builder(getApplicationContext())
-                .title("Error")
-                .content(message)
-
-                .negativeText("Dismiss")
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        dialog.dismiss();
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        // TODO Auto-generated method stub
-
-
-        if (prgDialog2 != null && prgDialog2.isShowing()) {
-
-            prgDialog2.dismiss();
-        }
-
-        super.onDestroy();
-    }
-
 
     private void ConfirmRequest(String pin) {
         prgDialog2.show();
@@ -271,7 +166,8 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
                         // JSON Object
 
                         SecurityLayer.Log("response..:", response.body());
-                        JSONObject obj = new JSONObject(response.body());
+                      String jsstr = "{\"message\":\"00\",\"responseCode\":\"Success\",\"data\":{\"reference\":\"00001068CEVAAGCRED\",\"insurance\":\"1000.0\",\"interestRate\":\"0.0\",\"repaymentAmount\":\"11000.0\"},\"fee\":\"0.0\",\"commission\":\"0.0\"}";
+                        JSONObject obj = new JSONObject(jsstr);
                         //obj = Utility.onresp(obj,getApplicationContext());
 
                         SecurityLayer.Log("decrypted_response", obj.toString());
@@ -288,10 +184,22 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
                                 LogOut();
                             }
                             if (!(response.body() == null)) {
-                                if (respcode.equals("00")) {
+                                if (respcode.equals("00") || respcode.equals("Success")) {
 
-                                    Intent intent = new Intent(ConfirmLoanRequest.this, LoanRequestConfirm.class);
+String refcode = plan.optString("reference");
+                                    String insurance = plan.optString("insurance");
+                                    String interestRate = plan.optString("interestRate");
+                                    String repaymentAmount = plan.optString("repaymentAmount");
+
+                                    Intent intent = new Intent(TransactionProcessingSupActivity.this, FinalConfirmLoanRequest.class);
+                                    intent.putExtra("refcode", refcode);
+                                    intent.putExtra("repamo", repaymentAmount);
+                                    intent.putExtra("reqamo", amou);
+                                    intent.putExtra("insurance", insurance);
+                                    intent.putExtra("irate", interestRate);
+
                                     startActivity(intent);
+
 
 
                                 } else {
@@ -317,12 +225,12 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
                         if (!(getApplicationContext() == null)) {
                             Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
                             // SecurityLayer.Log(e.toString());
-                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        //    SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
                         }
                     } catch (Exception e) {
                         SecurityLayer.Log("encryptionJSONException", e.toString());
                         if (!(getApplicationContext() == null)) {
-                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                         //   SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
                         }
                         // SecurityLayer.Log(e.toString());
                     }
@@ -355,7 +263,6 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
                                 getApplicationContext(),
                                 "There was an error processing your request",
                                 Toast.LENGTH_LONG).show();
-                        SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
                     }
                 }
             });
@@ -367,12 +274,25 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
     }
 
 
-    public void LogOut() {
+
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+
+        if(prgDialog2!=null && prgDialog2.isShowing()){
+
+            prgDialog2.dismiss();
+        }
+        super.onDestroy();
+    }
+
+
+    public  void LogOut(){
         session.logoutUser();
 
         // After logout redirect user to Loing Activity
         finish();
-        Intent i = new Intent(ConfirmLoanRequest.this, SignInActivity.class);
+        Intent i = new Intent(getApplicationContext(), SignInActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         // Staring Login Activity
         startActivity(i);
@@ -383,4 +303,18 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
         // Toast.makeText(getApplicationContext(), "You have logged out successfully", Toast.LENGTH_LONG).show();
 
     }
+
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.button2) {
+            finish();
+            Intent intent = new Intent(getApplicationContext(), FMobActivity.class);
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
+    }
+
+
 }

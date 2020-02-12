@@ -777,7 +777,7 @@ android:layout_margin="5dp"
 
                                     android:inputType="numberPassword"
                                     android:layout_margin="10dp"
-                                    android:hint="Enter Admin PIN" />
+                                    android:hint="Enter Supervisor PIN" />
 
                             </android.support.design.widget.TextInputLayout>
                         </RelativeLayout>
