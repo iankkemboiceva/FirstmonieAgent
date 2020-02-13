@@ -292,6 +292,7 @@ Log.v("Midnamee",midnamee);
 
 
                                             startActivity(intent);
+
                                           /*  bundle.putString("fname", fname);
                                             bundle.putString("lname", lname);
                                             bundle.putString("midname", midnamee);

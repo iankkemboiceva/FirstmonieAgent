@@ -174,6 +174,7 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
             if(strmarst.equals("Married")){
                 strmarst = "MARR";
             }
+            Toast.makeText(getApplicationContext(),stryob,Toast.LENGTH_LONG).show();
             intent.putExtra("fname", strfname);
             intent.putExtra("lname", strlname);
             intent.putExtra("midname", strmidnm);
