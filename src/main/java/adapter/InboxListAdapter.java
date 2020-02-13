@@ -124,7 +124,7 @@ public class InboxListAdapter extends ArrayAdapter<GetCommPerfData> implements F
 		if(statss.equals("SUCCESS")){
 			holder.txtstatus.setTextColor(context.getResources().getColor(R.color.fab_material_light_green_900));
 		}
-		holder.txtstatus.setText("Status: "+statss);
+		holder.txtstatus.setText(statss);
 
 
 		holder.btnreceipt.setOnClickListener(new View.OnClickListener() {

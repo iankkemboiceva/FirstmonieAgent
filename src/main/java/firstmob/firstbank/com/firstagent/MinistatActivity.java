@@ -113,7 +113,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
 
         lv.setAdapter(aAdpt);*/
 
-          setBalInquSec();
+        setBalInquSec();
 
 
 
@@ -285,7 +285,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
                             SimpleDateFormat format1 = new SimpleDateFormat("" +
                                     "yyyy-MM-dd");
                             String formattednow = format1.format(cal.getTime());
-                        //    SetMinist("2017-01-01", formattednow);
+                            //    SetMinist("2017-01-01", formattednow);
 
 
                             Calendar now = Calendar.getInstance();
@@ -514,7 +514,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
                                         }
                                     }
                                 } else {
-                                  finish();
+                                    finish();
                                     startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                                     Toast.makeText(
                                             getApplicationContext(),
@@ -714,7 +714,7 @@ public class MinistatActivity extends BaseActivity implements DatePickerDialog.O
 
     @Override
     public void onDateRangeSelected(int dayOfMonth, int monthOfYear,int year ,int dayOfMonthEnd, int monthOfYearEnd, int yearEnd ) {
-       // String date = "From- " + dayOfMonth + "/" + (++monthOfYear) + "/" + year + " To " + dayOfMonthEnd + "/" + (++monthOfYearEnd) + "/" + yearEnd;
+        // String date = "From- " + dayOfMonth + "/" + (++monthOfYear) + "/" + year + " To " + dayOfMonthEnd + "/" + (++monthOfYearEnd) + "/" + yearEnd;
         //txtitle.setText(date);
 
         Calendar clfrom = Calendar.getInstance();

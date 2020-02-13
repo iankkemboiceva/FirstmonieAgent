@@ -3,8 +3,8 @@ package firstmob.firstbank.com.firstagent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,18 +25,16 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
+import rest.RetrofitInstance;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class SendOtherWalletActivity extends BaseActivity implements View.OnClickListener {
+public class DepositToFmonieWallet extends BaseActivity implements View.OnClickListener {
     ImageView imageView1;
     EditText amon, phonenumb,pno,txtamount,txtnarr,edname,ednumber;
     Button btnsub;
@@ -55,7 +53,7 @@ public class SendOtherWalletActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_other_wallet);
+        setContentView(R.layout.activity_deposit_wallets);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -128,28 +126,17 @@ public class SendOtherWalletActivity extends BaseActivity implements View.OnClic
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (phonenumb.getText().toString().length() == 11) {
 
-                    if (!(walletcode == null)) {
+
                         if (Utility.checkInternetConnection(getApplicationContext())) {
                             Utility.hideKeyboardFrom(getApplicationContext(), phonenumb);
                             prgDialog.show();
                             String mobno = phonenumb.getText().toString();
-                            mobno = "0"+mobno.substring(mobno.length() - 10);
-                            String usid = Utility.gettUtilUserId(getApplicationContext());
-                            String agentid = Utility.gettUtilAgentId(getApplicationContext());
-                            String mobnoo = Utility.gettUtilMobno(getApplicationContext());
-                            String mobileno = Utility.gettUtilAgentId(getApplicationContext());
+                            mobno = "234"+mobno.substring(mobno.length() - 10);
 
-                            String params = "1/"+usid+"/"+agentid+"/"+mobileno+"/"+walletcode+"/"+mobno;
-                            NameInquirySec(params);
+                           NameEnquiry(mobno);
 
                         }
-                    }
-                    else {
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "Please select a wallet ",
-                                Toast.LENGTH_LONG).show();
-                    }
+
                     // TODO Auto-generated method stub
                 }
             }
@@ -166,6 +153,137 @@ public class SendOtherWalletActivity extends BaseActivity implements View.OnClic
             }
         });
     }
+
+
+
+    private void NameEnquiry(String mobno) {
+        prgDialog.show();
+
+        ApiInterface apiService =
+                RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
+
+        try {
+            JSONObject paramObject = new JSONObject();
+
+            paramObject.put("beneficiaryAccount", mobno);
+
+
+
+
+
+            Call<String> call = apiService.getwalletnameenq(paramObject.toString());
+
+
+
+
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        // JSON Object
+
+                        SecurityLayer.Log("response..:", response.body());
+                        JSONObject obj = new JSONObject(response.body());
+                        //obj = Utility.onresp(obj,getApplicationContext());
+
+                        SecurityLayer.Log("decrypted_response", obj.toString());
+
+                        String respcode = obj.optString("responseCode");
+
+                        String responsemessage = obj.optString("responseMessage");
+
+
+                        JSONObject plan = obj.optJSONObject("data");
+                        //session.setString(SecurityLayer.KEY_APP_ID,appid);
+                        if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+                            if ((Utility.checkUserLocked(respcode))) {
+                                LogOut();
+                            }
+                            if (!(response.body() == null)) {
+                                if (respcode.equals("00")) {
+
+                                    if (!(plan == null)) {
+                                        acname = plan.optString("accountName");
+
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                "Account Name: " + acname,
+                                                Toast.LENGTH_LONG).show();
+                                        accountoname.setText(acname);
+                                    } else {
+
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                "This is not a valid account number.Please check again",
+                                                Toast.LENGTH_LONG).show();
+
+
+                                    }
+
+                                } else {
+
+
+                                }
+                            } else {
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        // TODO Auto-generated catch block
+                        if(!(getApplicationContext() == null)) {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                            // SecurityLayer.Log(e.toString());
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                    } catch (Exception e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        if(!(getApplicationContext() == null)) {
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                        // SecurityLayer.Log(e.toString());
+                    }
+                    try {
+                        if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
+                            prgDialog.dismiss();
+                        }
+                    } catch (final IllegalArgumentException e) {
+                        // Handle or log or ignore
+                    } catch (final Exception e) {
+                        // Handle or log or ignore
+                    } finally {
+                        //   prgDialog = null;
+                    }
+
+                    //   prgDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // Log error here since request failed
+                    SecurityLayer.Log("Throwable error",t.toString());
+
+
+                    if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
+                        prgDialog.dismiss();
+                    }
+                    if(!(getApplicationContext() == null)) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was an error processing your request",
+                                Toast.LENGTH_LONG).show();
+                        // SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                    }
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 
     @Override
@@ -237,50 +355,27 @@ public class SendOtherWalletActivity extends BaseActivity implements View.OnClic
             }
             String amou = txtamount.getText().toString();
             String narra = txtnarr.getText().toString();
-            String ednamee = edname.getText().toString();
-            String ednumbb = ednumber.getText().toString();
 
-            if (Utility.isNotNull(walletname)) {
+
+
                 if (Utility.isNotNull(phoneno)) {
                     if (Utility.isNotNull(amou)) {
                         if (Utility.isNotNull(narra)) {
-                            if (Utility.isNotNull(ednamee)) {
-                                if (Utility.isNotNull(ednumbb)) {
+
                                     if (Utility.isNotNull(acname)) {
 
+                                        phoneno = "234"+phoneno.substring(phoneno.length() - 10);
 
-                                       /* Bundle b = new Bundle();
-                                        b.putString("walletname", walletname);
-                                        b.putString("walletcode", walletcode);
-                                        b.putString("wphoneno", phoneno);
-                                        b.putString("txtname", acname);
-                                        b.putString("amou", amou);
-                                        b.putString("narra", narra);
-                                        b.putString("ednamee", ednamee);
-                                        b.putString("ednumbb", ednumbb);
 
-                                        Fragment fragment = new ConfirmOtherWallet();
 
-                                        fragment.setArguments(b);
-                                        FragmentManager fragmentManager = getFragmentManager();
-                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                        //  String tag = Integer.toString(title);
-                                        fragmentTransaction.replace(R.id.container_body, fragment, "Confirm Other Wallet");
-                                        fragmentTransaction.addToBackStack("Confirm Other Wallet");
-                                        ((FMobActivity) getApplicationContext())
-                                                .setActionBarTitle("Confirm Other Wallet");
-                                        fragmentTransaction.commit();*/
+                                        Intent intent  = new Intent(DepositToFmonieWallet.this,ConfirmFmoniWalletActivity.class);
 
-                                        Intent intent  = new Intent(SendOtherWalletActivity.this,ConfirmOtherWalletActivity.class);
 
-                                        intent.putExtra("walletname", walletname);
-                                        intent.putExtra("walletcode", walletcode);
                                         intent.putExtra("wphoneno", phoneno);
                                         intent.putExtra("txtname", acname);
                                         intent.putExtra("amou", amou);
                                         intent.putExtra("narra", narra);
-                                        intent.putExtra("ednamee", ednamee);
-                                        intent.putExtra("ednumbb", ednumbb);
+
 
 
                                         startActivity(intent);
@@ -290,18 +385,7 @@ public class SendOtherWalletActivity extends BaseActivity implements View.OnClic
                                                 "Please enter a valid phone number",
                                                 Toast.LENGTH_LONG).show();
                                     }
-                                }else {
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            "Please enter a valid value for Depositor Number",
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            } else {
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        "Please enter a valid value for Depositor Name",
-                                        Toast.LENGTH_LONG).show();
-                            }
+
                         } else {
                             Toast.makeText(
                                     getApplicationContext(),
@@ -320,12 +404,7 @@ public class SendOtherWalletActivity extends BaseActivity implements View.OnClic
                             "Please enter a value for Wallet Phone Number",
                             Toast.LENGTH_LONG).show();
                 }
-            } else {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Please select a mobile money operator",
-                        Toast.LENGTH_LONG).show();
-            }
+
         }
         if (view.getId() == R.id.textVipp) {
             //   SetDialog("Select Bank");
@@ -342,7 +421,7 @@ public class SendOtherWalletActivity extends BaseActivity implements View.OnClic
                     .setActionBarTitle("Select Wallets");
             fragmentTransaction.commit();*/
 
-            Intent intent  = new Intent(SendOtherWalletActivity.this,OtherWalletsActivity.class);
+            Intent intent  = new Intent(DepositToFmonieWallet.this,OtherWalletsActivity.class);
 
 
 
@@ -368,7 +447,7 @@ public class SendOtherWalletActivity extends BaseActivity implements View.OnClic
 
 
 
-            Intent intent  = new Intent(SendOtherWalletActivity.this,FTMenuActivity.class);
+            Intent intent  = new Intent(DepositToFmonieWallet.this,FTMenuActivity.class);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -387,7 +466,7 @@ public class SendOtherWalletActivity extends BaseActivity implements View.OnClic
     }
 
     private void NameInquirySec(String params) {
-prgDialog.show();
+
         String endpoint= "transfer/nameenq.action";
 
 

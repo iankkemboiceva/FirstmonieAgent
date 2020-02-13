@@ -148,12 +148,18 @@ private void checkPlayServices(){
             protected void onPostExecute(String msg) {
             /*    if (!TextUtils.isEmpty(regId)) {*/
 
-                    String ip = Utility.getIP(getApplicationContext());
-                    String mac = Utility.getMacAddress(getApplicationContext());
-                    String serial = Utility.getSerial();
-                    String version = Utility.getDevVersion();
-                    String devtype = Utility.getDevModel();
-                    String imei = Utility.getDevImei(getApplicationContext());
+                String ip = Utility.getIP(getApplicationContext());
+                String mac = Utility.getMacAddress(getApplicationContext());
+                String serial = "NA";
+                String version = Utility.getDevVersion();
+                String devtype = Utility.getDevModel();
+                String imei = "NA";
+                if (Build.VERSION.SDK_INT < 29) {
+
+                    serial = Utility.getSerial();
+
+                    imei = Utility.getDevImei(getApplicationContext());
+                }
                     if (Utility.checkInternetConnection(getApplicationContext())){
                         if (Utility.isNotNull(imei) && Utility.isNotNull(serial)) {
                             if(regId == null){
@@ -502,7 +508,7 @@ pDialog.hide();
                                 final   String mobno = phonenumber.getText().toString();
                                 String status = datas.optString("status");
                                 String store = datas.optString("store");
-                                Toast.makeText(getApplicationContext(),store,Toast.LENGTH_LONG).show();
+
 
                                 session.setString("STOREID",store);
                                 //    session.SetUserID(agid);

@@ -185,10 +185,18 @@ public class FinalConfirmCableTVActivity extends BaseActivity implements View.On
             reccustid.setText(txtcustid);
 
             if(Utility.checkStateCollect(serviceid)) {
-                recfee.setText(ApplicationConstants.KEY_NAIRA + "60.00");
+                recfee.setText(ApplicationConstants.KEY_NAIRA + "63.00");
                 recagcmn.setText(ApplicationConstants.KEY_NAIRA+"30.00");
 
-            }else {
+            }
+
+            else if(billid.equals("1480")){
+                recfee.setText(ApplicationConstants.KEY_NAIRA + "0.00");
+                recagcmn.setText(ApplicationConstants.KEY_NAIRA+stragcms);
+              //  recagcmn.setText(ApplicationConstants.KEY_NAIRA+"0.00");
+
+
+            } else{
                 recfee.setText(ApplicationConstants.KEY_NAIRA + strfee);
                 recagcmn.setText(ApplicationConstants.KEY_NAIRA+stragcms);
 

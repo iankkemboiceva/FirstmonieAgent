@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -151,9 +152,13 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
             strgender = intent.getStringExtra("gender");
             straddr = intent.getStringExtra("straddr");
 
+
+
         }
         step2 = (TextView) findViewById(R.id.tv2);
         step2.setOnClickListener(this);
+
+
 
         step1 = (TextView) findViewById(R.id.tv);
         step1.setOnClickListener(this);
@@ -235,7 +240,11 @@ lyupl.setVisibility(View.VISIBLE);
 
         prgDialog.show();
 
+
         String sessid = UUID.randomUUID().toString();
+
+
+
 
 
 
@@ -488,6 +497,16 @@ private void convertSignedImage(Bitmap origbit){
     thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
     String filename = "signed.jpg";
 
+    final File path = new File(Environment.getExternalStorageDirectory(), "FirstAgent");
+
+
+    // Make sure the path directory exists.
+    if (!path.exists()) {
+        // Make it, if it doesn't exit
+        path.mkdirs();
+        Log.v("was it crated", "created");
+    }
+
         finalFile = new File(Environment.getExternalStorageDirectory(),"FirstAgent/"+filename);
 
     FileOutputStream fo;
@@ -545,6 +564,16 @@ if(uploadpic) {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
             String filename = "camerapic.jpg";
+
+            final File path = new File(Environment.getExternalStorageDirectory(), "FirstAgent");
+
+
+            // Make sure the path directory exists.
+            if (!path.exists()) {
+                // Make it, if it doesn't exit
+                path.mkdirs();
+                Log.v("was it crated", "created");
+            }
             finalFile = new File(Environment.getExternalStorageDirectory(),"FirstAgent/"+filename);
             FileOutputStream fo;
             try {

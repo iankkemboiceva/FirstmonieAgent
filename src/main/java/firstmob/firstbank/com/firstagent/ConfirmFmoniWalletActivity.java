@@ -3,12 +3,8 @@ package firstmob.firstbank.com.firstagent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,17 +18,18 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 import okhttp3.OkHttpClient;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import security.EncryptTransactionPin;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnClickListener {
+public class ConfirmFmoniWalletActivity extends BaseActivity implements View.OnClickListener {
     TextView wphoneno,recname,recamo,recnarr,recsendnum,recsendnam,recwalletname,txtfee;
     Button btnsub;
     String amou ,narra, ednamee,ednumbb,txtname,walphnno,walletname,walletcode;
@@ -43,25 +40,8 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm_other_wallet);
+        setContentView(R.layout.activity_confirm_fmoni_wallet);
 
-        wphoneno = (TextView) findViewById(R.id.textViewcvv);
-        etpin = (EditText) findViewById(R.id.pin);
-        recwalletname = (TextView) findViewById(R.id.otwallet);
-        recamo = (TextView) findViewById(R.id.textViewrrs);
-        recnarr = (TextView) findViewById(R.id.textViewrr);
-
-        recsendnam = (TextView) findViewById(R.id.sendnammm);
-        recsendnum = (TextView) findViewById(R.id.sendno);
-        benefname = (TextView) findViewById(R.id.textViewcbyyname);
-        prgDialog2 = new ProgressDialog(this);
-        prgDialog2.setMessage("Loading....");
-        prgDialog2.setCancelable(false);
-        txtfee = (TextView) findViewById(R.id.txtfee);
-        btnsub = (Button) findViewById(R.id.button2);
-        btnsub.setOnClickListener(this);
-
-        session = new SessionManagement(this);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,28 +57,36 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
         ab.setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
 
         Intent intent = getIntent();
+
+        wphoneno = (TextView) findViewById(R.id.textViewcvv);
+        etpin = (EditText) findViewById(R.id.pin);
+
+        recamo = (TextView) findViewById(R.id.textViewrrs);
+        recnarr = (TextView) findViewById(R.id.textViewrr);
+
+
+        benefname = (TextView) findViewById(R.id.textViewcbyyname);
+
+        btnsub = (Button) findViewById(R.id.button2);
+        btnsub.setOnClickListener(this);
         if (intent != null) {
 
 
-            walletname = intent.getStringExtra("walletname");
-            walletcode = intent.getStringExtra("walletcode");
+
             walphnno = intent.getStringExtra("wphoneno");
             amou = intent.getStringExtra("amou");
             narra = intent.getStringExtra("narra");
-            ednamee = intent.getStringExtra("ednamee");
-            ednumbb = intent.getStringExtra("ednumbb");
+
             txtname = intent.getStringExtra("txtname");
 
             wphoneno.setText(walphnno);
-            recwalletname.setText(walletname);
+
             benefname.setText(txtname);
             recamo.setText(amou);
             recnarr.setText(narra);
 
-            recsendnam.setText(ednamee);
-            recsendnum.setText(ednumbb);
             amou = Utility.convertProperNumber(amou);
-            getFeeSec();
+
         }
 
         step1 = (TextView)findViewById(R.id.tv);
@@ -255,127 +243,39 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
                 if (Utility.isNotNull(walphnno)) {
                     if (Utility.isNotNull(amou)) {
                         if (Utility.isNotNull(narra)) {
-                            if (Utility.isNotNull(ednamee)) {
-                                if (Utility.isNotNull(ednumbb)) {
+
                                     if (Utility.isNotNull(agpin)) {
 
                                         String encrypted = null;
-                                        encrypted = Utility.b64_sha256(agpin);
-                                        OkHttpClient client = new OkHttpClient();
-                                        prgDialog2.show();
+
+                                            encrypted = Utility.b64_sha256(agpin);
+
+
                                         String usid = Utility.gettUtilUserId(getApplicationContext());
                                         String agentid = Utility.gettUtilAgentId(getApplicationContext());
                                         String mobnoo = Utility.gettUtilMobno(getApplicationContext());
-                                        String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/1/"+amou+"/"+walletcode+"/"+walphnno+"/"+txtname+"/"+narra;
+                                        String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/1/"+amou+"/"+walletcode+"/"+walphnno+"/"+txtname+"/"+narra+"/"+encrypted;
+                                        Intent intent  = new Intent(ConfirmFmoniWalletActivity.this,TransactionProcessingActivity.class);
 
-                                        Intent intent  = new Intent(ConfirmOtherWalletActivity.this,TransactionProcessingActivity.class);
 
-                                        intent.putExtra("recanno", walphnno);
                                         intent.putExtra("amou", amou);
                                         intent.putExtra("narra", narra);
-                                        intent.putExtra("ednamee", ednamee);
-                                        intent.putExtra("ednumbb", ednumbb);
+                                        intent.putExtra("phoneno", walphnno);
                                         intent.putExtra("txtname", txtname);
-                                        intent.putExtra("walletname", walletname);
-                                        intent.putExtra("walletcode", walletcode);
+
 
                                         intent.putExtra("params",params);
                                         intent.putExtra("txpin", encrypted);
-                                        intent.putExtra("serv","OTHERWALLETS");
+                                        intent.putExtra("serv","FMONIWALLET");
                                         startActivity(intent);
 
-                                    //    InterBankResp(params);
-                                       /* ApiInterface apiService =
-                                                ApiClient.getClient().create(ApiInterface.class);
-                                        String usid = Utility.gettUtilUserId(getApplicationContext());
-                                        String agentid = Utility.gettUtilAgentId(getApplicationContext());
-                                        String mobnoo = Utility.gettUtilMobno(getApplicationContext());
-
-                                        Call<InterBank> call = apiService.getInterBankResp("1",usid,agentid,"0000","1",amou,walletcode,walphnno,txtname,narra,encrypted);
-                                       //  SecurityLayer.Log("Request","1/"+usid+"/"+agentid+"9493818389/"+"1/"+amou+"/"+walletcode+"/"+walphnno+"/"+txtname+"/"+narra+"/"+encrypted);
-                                        call.enqueue(new Callback<InterBank>() {
-                                            @Override
-                                            public void onResponse(Call<InterBank>call, Response<InterBank> response) {
-                                                SecurityLayer.Log("Response",response.body().toString());
-                                                String responsemessage = response.body().getMessage();
-                                                String respcode = response.body().getRespCode();
-                                                SecurityLayer.Log("Response Message",responsemessage);
-
-                                                if(Utility.isNotNull(responsemessage) && Utility.isNotNull(respcode)) {
-                                                    if(respcode.equals("00")) {
-                                                      *//*  Bundle b = new Bundle();
-                                                        b.putString("recanno", walphnno);
-                                                        b.putString("amou", amou);
-                                                        b.putString("narra", narra);
-                                                        b.putString("ednamee", ednamee);
-                                                        b.putString("ednumbb", ednumbb);
-                                                        b.putString("txtname", txtname);
-                                                        b.putString("walletname", walletname);
-                                                        b.putString("walletcode",walletcode );
-                                                        Fragment fragment = new FinalConfSendOTB();
-
-                                                        fragment.setArguments(b);
-                                                        FragmentManager fragmentManager = getFragmentManager();
-                                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                                        //  String tag = Integer.toString(title);
-                                                        fragmentTransaction.replace(R.id.container_body, fragment, "Confirm Other Bank");
-                                                        fragmentTransaction.addToBackStack("Confirm Other Bank");
-                                                        ((FMobActivity) getApplicationContext())
-                                                                .setActionBarTitle("Confirm Other Bank");
-                                                        fragmentTransaction.commit();*//*
-                                                    }else {
-                                                        Toast.makeText(
-                                                                getApplicationContext(),
-                                                                " " + responsemessage,
-                                                                Toast.LENGTH_LONG).show();
-                                                    }
-
-                                                }else{
-                                                    Toast.makeText(
-                                                            getApplicationContext(),
-                                                            "There was an error on your request",
-                                                            Toast.LENGTH_LONG).show();
-
-                                                }
-                                                prgDialog2.dismiss();
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<InterBank>call, Throwable t) {
-                                                // Log error here since request failed
-                                                SecurityLayer.Log("throwable error",t.toString());
-
-
-                                                Toast.makeText(
-                                                        getApplicationContext(),
-                                                        "There was an error on your request",
-                                                        Toast.LENGTH_LONG).show();
-
-                                                prgDialog2.dismiss();
-                                            }
-                                        });*/
-                                                  /*  sDialog.dismissWithAnimation();
-                                                }
-                                            })
-                                            .show();*/
                                     }  else {
                                         Toast.makeText(
                                                 getApplicationContext(),
                                                 "Please enter a valid value for Agent PIN",
                                                 Toast.LENGTH_LONG).show();
                                     }
-                                }  else {
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            "Please enter a valid value for Depositor Number",
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            }else {
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        "Please enter a valid value for Depositor Name",
-                                        Toast.LENGTH_LONG).show();
-                            }
+
                         } else {
                             Toast.makeText(
                                     getApplicationContext(),
@@ -416,7 +316,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
 
 
 
-            Intent intent  = new Intent(ConfirmOtherWalletActivity.this,SendOtherWalletActivity.class);
+            Intent intent  = new Intent(ConfirmFmoniWalletActivity.this,SendOtherWalletActivity.class);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -439,7 +339,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
 
 
 
-            Intent intent  = new Intent(ConfirmOtherWalletActivity.this,FTMenuActivity.class);
+            Intent intent  = new Intent(ConfirmFmoniWalletActivity.this,FTMenuActivity.class);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -546,7 +446,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
                                             .setActionBarTitle("Confirm Other Bank");
                                     fragmentTransaction.commit();*/
 
-                                    Intent intent  = new Intent(ConfirmOtherWalletActivity.this,FinalConfOtherWalletsActivity.class);
+                                    Intent intent  = new Intent(ConfirmFmoniWalletActivity.this,FinalConfOtherWalletsActivity.class);
 
 
 

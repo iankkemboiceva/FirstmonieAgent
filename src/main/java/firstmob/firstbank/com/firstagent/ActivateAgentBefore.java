@@ -114,14 +114,85 @@ private void checkPlayServices(){
     GoogleApiAvailability api = GoogleApiAvailability.getInstance();
     int code = api.isGooglePlayServicesAvailable(getApplicationContext());
     if (code == ConnectionResult.SUCCESS) {
+        pDialog.show();
         // Do Your Stuff Here
-        registerInBackground();
+        //registerInBackground();
+        /*    if (!TextUtils.isEmpty(regId)) {*/
+
+                  /*  String ip = Utility.getIP(getApplicationContext());
+                    String mac = Utility.getMacAddress(getApplicationContext());*/
+
+                  /*  String version = Utility.getDevVersion();
+                    String devtype = Utility.getDevModel();*/
+        String imei = "NA";
+        String serial = "NA";
+        if (Utility.checkInternetConnection(getApplicationContext())){
+            if (Utility.isNotNull(imei) && Utility.isNotNull(serial)) {
+                if(regId == null){
+                    regId = "JKKS";
+                }
+
+
+
+
+                final   String agid = agentid.getText().toString();
+
+
+                String params = "1/"+agid;
+                RetroDevReg(params);
+
+            }
+        } else {
+
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Please ensure this device has an IMEI number",
+                    Toast.LENGTH_LONG).show();
+
+            pDialog.hide();
+
+        }
     } else {
         Toast.makeText(
                 getApplicationContext(),
                 "Please ensure you have installed Google Play Services"
                      , Toast.LENGTH_LONG).show();
-        registerInBackground();
+        pDialog.show();
+       // registerInBackground();
+        /*    if (!TextUtils.isEmpty(regId)) {*/
+
+                  /*  String ip = Utility.getIP(getApplicationContext());
+                    String mac = Utility.getMacAddress(getApplicationContext());*/
+        String serial = "NA";
+                  /*  String version = Utility.getDevVersion();
+                    String devtype = Utility.getDevModel();*/
+        String imei = "NA";
+        if (Utility.checkInternetConnection(getApplicationContext())){
+            if (Utility.isNotNull(imei) && Utility.isNotNull(serial)) {
+                if(regId == null){
+                    regId = "JKKS";
+                }
+
+
+
+
+                final   String agid = agentid.getText().toString();
+
+
+                String params = "1/"+agid;
+                RetroDevReg(params);
+
+            }
+        } else {
+
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Please ensure this device has an IMEI number",
+                    Toast.LENGTH_LONG).show();
+
+            pDialog.hide();
+
+        }
     }
 }
     private void registerInBackground() {
@@ -138,12 +209,12 @@ private void checkPlayServices(){
             protected void onPostExecute(String msg) {
             /*    if (!TextUtils.isEmpty(regId)) {*/
 
-                    String ip = Utility.getIP(getApplicationContext());
-                    String mac = Utility.getMacAddress(getApplicationContext());
-                    String serial = Utility.getSerial();
-                    String version = Utility.getDevVersion();
-                    String devtype = Utility.getDevModel();
-                    String imei = Utility.getDevImei(getApplicationContext());
+                  /*  String ip = Utility.getIP(getApplicationContext());
+                    String mac = Utility.getMacAddress(getApplicationContext());*/
+                    String serial = "NA";
+                  /*  String version = Utility.getDevVersion();
+                    String devtype = Utility.getDevModel();*/
+                    String imei = "NA";
                     if (Utility.checkInternetConnection(getApplicationContext())){
                         if (Utility.isNotNull(imei) && Utility.isNotNull(serial)) {
                             if(regId == null){
@@ -184,7 +255,8 @@ pDialog.hide();
 
                         if (Utility.checkInternetConnection(getApplicationContext())) {
                             if (Build.VERSION.SDK_INT >= 23) {
-                                insertDummyContactWrapper();
+                              //  insertDummyContactWrapper();
+                                checkPlayServices();
                             } else {
                                 // Pre-Marshmallow
                              //   registerInBackground();
@@ -304,6 +376,7 @@ pDialog.hide();
         String endpoint= "otp/generateotp.action/";
 
         String urlparams = "";
+        SecurityLayer.Log("genotp",params);
         try {
             urlparams = SecurityLayer.firstLogin(params,endpoint,getApplicationContext());
             //SecurityLayer.Log("cbcurl",url);

@@ -108,7 +108,7 @@ public class InboxActivity extends BaseActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inboxact);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-      //  mToolbar.setTitle("Inbox");
+        //  mToolbar.setTitle("Inbox");
         setSupportActionBar(mToolbar);
         // Get the ActionBar here to configure the way it behaves.
         final ActionBar ab = getSupportActionBar();
@@ -272,7 +272,7 @@ public class InboxActivity extends BaseActivity implements View.OnClickListener,
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-Log.v("Am i in","Yes");
+        Log.v("Am i in","Yes");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.inboxlistmenu, menu);
 
@@ -599,7 +599,7 @@ if(temp.size() == 0){
 
                                             lv.setAdapter(aAdpt);
 
-                                         //   registerForContextMenu(lv);
+                                            //   registerForContextMenu(lv);
                                         }
 
 
@@ -678,7 +678,7 @@ if(temp.size() == 0){
                 if(!(getApplicationContext() == null) && !(prgDialog2 == null) && prgDialog2.isShowing()) {
                     prgDialog2.dismiss();
                 }
-               SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getApplicationContext());
+                SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getApplicationContext());
 
             }
         });
@@ -709,7 +709,7 @@ if(temp.size() == 0){
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
-     //   String date = "Inbox : From- " + dayOfMonth + "/" + (monthOfYear) + "/" + year + " To " + dayOfMonthEnd + "/" + (monthOfYearEnd) + "/" + yearEnd;
+        //   String date = "Inbox : From- " + dayOfMonth + "/" + (monthOfYear) + "/" + year + " To " + dayOfMonthEnd + "/" + (monthOfYearEnd) + "/" + yearEnd;
 
         Calendar clfrom = Calendar.getInstance();
         Calendar clto = Calendar.getInstance();
@@ -851,9 +851,9 @@ if(temp.size() == 0){
     }
 
     *//*
- * after opening a connection to bluetooth printer device,
- * we have to listen and check if a data were sent to be printed.
- *//*
+     * after opening a connection to bluetooth printer device,
+     * we have to listen and check if a data were sent to be printed.
+     *//*
     void beginListenForData() {
         try {
             final Handler handler = new Handler();

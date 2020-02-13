@@ -3,12 +3,8 @@ package firstmob.firstbank.com.firstagent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,11 +24,10 @@ import rest.ApiSecurityClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import security.EncryptTransactionPin;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnClickListener {
+public class ConfirmFmonieWallet extends BaseActivity implements View.OnClickListener {
     TextView wphoneno,recname,recamo,recnarr,recsendnum,recsendnam,recwalletname,txtfee;
     Button btnsub;
     String amou ,narra, ednamee,ednumbb,txtname,walphnno,walletname,walletcode;
@@ -43,16 +38,15 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm_other_wallet);
+        setContentView(R.layout.activity_confirm_fmoni_wallet);
 
         wphoneno = (TextView) findViewById(R.id.textViewcvv);
         etpin = (EditText) findViewById(R.id.pin);
-        recwalletname = (TextView) findViewById(R.id.otwallet);
+
         recamo = (TextView) findViewById(R.id.textViewrrs);
         recnarr = (TextView) findViewById(R.id.textViewrr);
 
-        recsendnam = (TextView) findViewById(R.id.sendnammm);
-        recsendnum = (TextView) findViewById(R.id.sendno);
+
         benefname = (TextView) findViewById(R.id.textViewcbyyname);
         prgDialog2 = new ProgressDialog(this);
         prgDialog2.setMessage("Loading....");
@@ -80,25 +74,21 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
         if (intent != null) {
 
 
-            walletname = intent.getStringExtra("walletname");
-            walletcode = intent.getStringExtra("walletcode");
+
             walphnno = intent.getStringExtra("wphoneno");
             amou = intent.getStringExtra("amou");
             narra = intent.getStringExtra("narra");
-            ednamee = intent.getStringExtra("ednamee");
-            ednumbb = intent.getStringExtra("ednumbb");
+
             txtname = intent.getStringExtra("txtname");
 
             wphoneno.setText(walphnno);
-            recwalletname.setText(walletname);
+
             benefname.setText(txtname);
             recamo.setText(amou);
             recnarr.setText(narra);
 
-            recsendnam.setText(ednamee);
-            recsendnum.setText(ednumbb);
             amou = Utility.convertProperNumber(amou);
-            getFeeSec();
+
         }
 
         step1 = (TextView)findViewById(R.id.tv);
@@ -108,139 +98,6 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
     }
 
 
-
-    private void getFeeSec() {
-        prgDialog2.show();
-        String endpoint= "fee/getfee.action";
-
-
-        String usid = Utility.gettUtilUserId(getApplicationContext());
-        String agentid = Utility.gettUtilAgentId(getApplicationContext());
-
-        String params = "1/"+usid+"/"+agentid+"/DEPWALLET/"+amou;
-        String urlparams = "";
-        try {
-            urlparams = SecurityLayer.genURLCBC(params,endpoint,getApplicationContext());
-            //SecurityLayer.Log("cbcurl",url);
-            SecurityLayer.Log("RefURL",urlparams);
-            SecurityLayer.Log("refurl", urlparams);
-            SecurityLayer.Log("params", params);
-        } catch (Exception e) {
-            SecurityLayer.Log("encryptionerror",e.toString());
-        }
-
-
-
-
-
-        ApiInterface apiService =
-                ApiSecurityClient.getClient(getApplicationContext()).create(ApiInterface.class);
-
-
-        Call<String> call = apiService.setGenericRequestRaw(urlparams);
-
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                try {
-                    // JSON Object
-
-                    SecurityLayer.Log("response..:", response.body());
-                    JSONObject obj = new JSONObject(response.body());
-                    //obj = Utility.onresp(obj,getApplicationContext());
-                    obj = SecurityLayer.decryptTransaction(obj, getApplicationContext());
-                    SecurityLayer.Log("decrypted_response", obj.toString());
-
-                    String respcode = obj.optString("responseCode");
-                    String responsemessage = obj.optString("message");
-                    String respfee = obj.optString("fee");
-
-
-                    //session.setString(SecurityLayer.KEY_APP_ID,appid);
-
-
-                    if(!(response.body() == null)) {
-                        if (respcode.equals("00")) {
-
-                            SecurityLayer.Log("Response Message", responsemessage);
-
-//                                    SecurityLayer.Log("Respnse getResults",datas.toString());
-                            if (respfee == null || respfee.equals("")) {
-                                txtfee.setText("N/A");
-                            } else {
-                                respfee = Utility.returnNumberFormat(respfee);
-                                txtfee.setText(ApplicationConstants.KEY_NAIRA + respfee);
-                            }
-
-                        } else  if (respcode.equals("93")) {
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    responsemessage,
-                                    Toast.LENGTH_LONG).show();
-                            onBackPressed();
-                           /* Fragment fragment = new SendOtherWallet();
-                            String title = "Mobile Money Wallet";
-
-                            FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            //  String tag = Integer.toString(title);
-                            fragmentTransaction.replace(R.id.container_body, fragment,title);
-                            fragmentTransaction.addToBackStack(title);
-                            ((FMobActivity)getApplicationContext())
-                                    .setActionBarTitle(title);
-                            fragmentTransaction.commit();*/
-
-
-                        }
-                        else{
-                            btnsub.setVisibility(View.GONE);
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    responsemessage,
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        txtfee.setText("N/A");
-                    }
-
-
-
-                } catch (JSONException e) {
-                    SecurityLayer.Log("encryptionJSONException", e.toString());
-                    // TODO Auto-generated catch block
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
-                    // SecurityLayer.Log(e.toString());
-                    SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getApplicationContext());
-
-
-                } catch (Exception e) {
-                    SecurityLayer.Log("encryptionJSONException", e.toString());
-                    SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getApplicationContext());
-
-                    // SecurityLayer.Log(e.toString());
-                }
-                if(!(prgDialog2 == null) && prgDialog2.isShowing()) {
-                    prgDialog2.dismiss();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                // Log error here since request failed
-                SecurityLayer.Log("Throwable error",t.toString());
-                Toast.makeText(
-                        getApplicationContext(),
-                        "There was an error processing your request",
-                        Toast.LENGTH_LONG).show();
-                if(!(prgDialog2 == null) && prgDialog2.isShowing()) {
-                    prgDialog2.dismiss();
-                }
-                SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getApplicationContext());
-
-            }
-        });
-
-    }
 
 
 
@@ -266,25 +123,8 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
                                         String usid = Utility.gettUtilUserId(getApplicationContext());
                                         String agentid = Utility.gettUtilAgentId(getApplicationContext());
                                         String mobnoo = Utility.gettUtilMobno(getApplicationContext());
-                                        String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/1/"+amou+"/"+walletcode+"/"+walphnno+"/"+txtname+"/"+narra;
-
-                                        Intent intent  = new Intent(ConfirmOtherWalletActivity.this,TransactionProcessingActivity.class);
-
-                                        intent.putExtra("recanno", walphnno);
-                                        intent.putExtra("amou", amou);
-                                        intent.putExtra("narra", narra);
-                                        intent.putExtra("ednamee", ednamee);
-                                        intent.putExtra("ednumbb", ednumbb);
-                                        intent.putExtra("txtname", txtname);
-                                        intent.putExtra("walletname", walletname);
-                                        intent.putExtra("walletcode", walletcode);
-
-                                        intent.putExtra("params",params);
-                                        intent.putExtra("txpin", encrypted);
-                                        intent.putExtra("serv","OTHERWALLETS");
-                                        startActivity(intent);
-
-                                    //    InterBankResp(params);
+                                        String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/1/"+amou+"/"+walletcode+"/"+walphnno+"/"+txtname+"/"+narra+"/"+encrypted;
+                                        InterBankResp(params);
                                        /* ApiInterface apiService =
                                                 ApiClient.getClient().create(ApiInterface.class);
                                         String usid = Utility.gettUtilUserId(getApplicationContext());
@@ -416,7 +256,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
 
 
 
-            Intent intent  = new Intent(ConfirmOtherWalletActivity.this,SendOtherWalletActivity.class);
+            Intent intent  = new Intent(ConfirmFmonieWallet.this,SendOtherWalletActivity.class);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -439,7 +279,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
 
 
 
-            Intent intent  = new Intent(ConfirmOtherWalletActivity.this,FTMenuActivity.class);
+            Intent intent  = new Intent(ConfirmFmonieWallet.this,FTMenuActivity.class);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -546,7 +386,7 @@ public class ConfirmOtherWalletActivity extends BaseActivity implements View.OnC
                                             .setActionBarTitle("Confirm Other Bank");
                                     fragmentTransaction.commit();*/
 
-                                    Intent intent  = new Intent(ConfirmOtherWalletActivity.this,FinalConfOtherWalletsActivity.class);
+                                    Intent intent  = new Intent(ConfirmFmonieWallet.this,FinalConfOtherWalletsActivity.class);
 
 
 

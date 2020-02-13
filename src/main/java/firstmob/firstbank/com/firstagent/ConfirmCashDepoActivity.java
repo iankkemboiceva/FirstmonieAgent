@@ -329,7 +329,7 @@ public class ConfirmCashDepoActivity extends BaseActivity implements View.OnClic
                                     if (Utility.isNotNull(agpin)) {
                                         if(!(finalfee == null)){
 
-                                       //     if(dbamo <= dbagbal){
+
                                                 String encrypted = null;
                                                 encrypted = Utility.b64_sha256(agpin);
 
@@ -354,117 +354,9 @@ public class ConfirmCashDepoActivity extends BaseActivity implements View.OnClic
                                                 intent.putExtra("txtname", txtname);
                                                 intent.putExtra("txpin", encrypted);
                                                 startActivity(intent);
-                                            //    Fragment  fragment = new TransactingProcessing();
 
-                                               /* fragment.setArguments(b);
-                                                FragmentManager fragmentManager = getFragmentManager();
-                                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                                //  String tag = Integer.toString(title);
-                                                fragmentTransaction.replace(R.id.container_body, fragment,"Confirm Transfer");
-                                                fragmentTransaction.addToBackStack("Confirm Transfer");
-                                                ((FMobActivity)getApplicationContext())
-                                                        .setActionBarTitle("Confirm Transfer");
-                                                fragmentTransaction.commit();*/
-                                                //    IntraBankResp(params);
-                                      /*              Call<IntraBank> call = apiService.getIntraBankResp("1",usid,agentid,"0000","2",amou,recanno,txtname,narra,encrypted);
-                                                    call.enqueue(new Callback<IntraBank>() {
-                                                        @Override
-                                                        public void onResponse(Call<IntraBank>call, Response<IntraBank> response) {
-
-                                                        if(!(response.body() == null)) {
-                                                            String responsemessage = response.body().getMessage();
-                                                            String respcode = response.body().getRespCode();
-                                                            String agcmsn = response.body().getFee();
-                                                            SecurityLayer.Log("Response Message", responsemessage);
-                                                            IntraBankData datas = response.body().getResults();
-                                                            if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
-                                                                if (!(Utility.checkUserLocked(respcode))) {
-                                                            if(respcode.equals("00")){
-                                                                String totfee = "0.00";
-                                                                if(!(datas == null)){
-                                                                    totfee = datas.getfee();
-                                                                }
-                                                                Bundle b  = new Bundle();
-                                                                b.putString("recanno",recanno);
-                                                                b.putString("amou",amou);
-                                                                b.putString("narra",narra);
-                                                                b.putString("ednamee",ednamee);
-                                                                b.putString("ednumbb",ednumbb);
-                                                                b.putString("txtname",txtname);
-                                                                b.putString("agcmsn",agcmsn);
-                                                                b.putString("fee",totfee);
-                                                                b.putString("trantype","D");
-                                                                Fragment  fragment = new FinalConfDepoTrans();
-
-                                                                fragment.setArguments(b);
-                                                                FragmentManager fragmentManager = getFragmentManager();
-                                                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                                                //  String tag = Integer.toString(title);
-                                                                fragmentTransaction.replace(R.id.container_body, fragment,"Confirm Transfer");
-                                                                fragmentTransaction.addToBackStack("Confirm Transfer");
-                                                                ((FMobActivity)getApplicationContext())
-                                                                        .setActionBarTitle("Confirm Transfer");
-                                                                fragmentTransaction.commit();
-                                                            }else {
-
-
-                                                                Toast.makeText(
-                                                                        getApplicationContext(),
-                                                                        "" + responsemessage,
-                                                                        Toast.LENGTH_LONG).show();
-                                                            }
-                                                                } else {
-                                                                    getApplicationContext().finish();
-                                                                    startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-                                                                    Toast.makeText(
-                                                                            getApplicationContext(),
-                                                                            "You have been locked out of the app.Please call customer care for further details",
-                                                                            Toast.LENGTH_LONG).show();
-                                                                }
-                                                            } else {
-
-                                                                Toast.makeText(
-                                                                        getApplicationContext(),
-                                                                        "There was an error on your request",
-                                                                        Toast.LENGTH_LONG).show();
-
-
-                                                            }
-                                                        } else {
-
-                                                            Toast.makeText(
-                                                                    getApplicationContext(),
-                                                                    "There was an error on your request",
-                                                                    Toast.LENGTH_LONG).show();
-
-
-                                                        }
-                                                            prgDialog2.dismiss();
-                                                        }
-
-                                                        @Override
-                                                        public void onFailure(Call<IntraBank> call, Throwable t) {
-                                                            // Log error here since request failed
-                                                            SecurityLayer.Log("throwable error",t.toString());
-
-
-                                                            Toast.makeText(
-                                                                    getApplicationContext(),
-                                                                    "There was an error on your request",
-                                                                    Toast.LENGTH_LONG).show();
-
-
-
-                                                            prgDialog2.dismiss();
-                                                        }
-                                                    });*/
                                                 ClearPin();
-                                          /*  }  else {
-                                                Toast.makeText(
-                                                        getApplicationContext(),
-                                                        "The amount set is higher than your agent balance",
-                                                        Toast.LENGTH_LONG).show();
-                                            }*/
+
                                         }  else {
                                             Toast.makeText(
                                                     getApplicationContext(),

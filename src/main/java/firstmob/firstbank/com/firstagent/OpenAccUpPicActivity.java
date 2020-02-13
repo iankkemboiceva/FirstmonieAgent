@@ -238,6 +238,8 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
         return resizedBitmap;
     }
 
+
+
     private void runFaceContourDetection(final Bitmap myBitmap, final Bitmap origbit) {
 
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(origbit);
@@ -263,10 +265,10 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
                                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                                     myBitmap.compress(Bitmap.CompressFormat.JPEG,90,bytes);
 
-
-
-                                    final File path = new File(getFilesDir(), "FirstAgent");
                                     String filename = "facepic.jpg";
+
+                                    final File path = new File(Environment.getExternalStorageDirectory(), "FirstAgent");
+
 
                                     // Make sure the path directory exists.
                                     if (!path.exists()) {

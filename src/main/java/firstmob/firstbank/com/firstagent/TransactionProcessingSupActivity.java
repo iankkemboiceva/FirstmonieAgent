@@ -190,6 +190,7 @@ String refcode = plan.optString("reference");
                                     String insurance = plan.optString("insurance");
                                     String interestRate = plan.optString("interestRate");
                                     String repaymentAmount = plan.optString("repaymentAmount");
+                                    String repaymentdate = plan.optString("repaymentDate");
 
                                     Intent intent = new Intent(TransactionProcessingSupActivity.this, FinalConfirmLoanRequest.class);
                                     intent.putExtra("refcode", refcode);
@@ -197,6 +198,7 @@ String refcode = plan.optString("reference");
                                     intent.putExtra("reqamo", amou);
                                     intent.putExtra("insurance", insurance);
                                     intent.putExtra("irate", interestRate);
+                                    intent.putExtra("repaydate", repaymentdate);
 
                                     startActivity(intent);
 

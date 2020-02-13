@@ -42,11 +42,6 @@
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
-
-        <activity
-            android:name=".TransactionProcessingSupActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name" />
         <activity
             android:name=".BTDeviceList"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -62,11 +57,6 @@
         </activity>
         <activity
             android:name=".BluetoothPrinter"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="Inbox" />
-
-        <activity
-            android:name=".FinalConfirmLoanRequest"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Inbox" />
         <activity
@@ -283,6 +273,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".TransactionProcessingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".TransactionProcessingSupActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".FinalConfirmLoanRequest"
             android:screenOrientation="portrait" />
         <activity
             android:name=".FinalConfDepoActivity"

@@ -234,56 +234,6 @@ public class FinalConfSendOTBActivity extends BaseActivity implements View.OnCli
 
 
 
-/*
-        mUsbManager = (UsbManager) getApplicationContext().getSystemService(Context.USB_SERVICE);
-        mDeviceList = mUsbManager.getDeviceList();
-
-        mContext = this.getApplicationContext().getApplicationContext();
-
-        mDeviceIterator = mDeviceList.values().iterator();
-
-
-
-        Toast.makeText(getApplicationContext(), "Device List Size: " + String.valueOf(mDeviceList.size()), Toast.LENGTH_SHORT).show();
-
-        String usbDevice = "";
-        Log.v("Device List Size",Integer.toString(mDeviceList.size()));
-        while (mDeviceIterator.hasNext()) {
-            UsbDevice usbDevice1 = mDeviceIterator.next();
-            usbDevice += "\n" +
-                    "DeviceID: " + usbDevice1.getDeviceId() + "\n" +
-                    "DeviceName: " + usbDevice1.getDeviceName() + "\n" +
-                    "Protocol: " + usbDevice1.getDeviceProtocol() + "\n" +
-                    //"Product Name: " + usbDevice1.getProductName() +"\n" +
-                    // "Manufacturer Name: " + usbDevice1.getManufacturerName() + "\n" +
-                    "DeviceClass: " + usbDevice1.getDeviceClass() + " - " + translateDeviceClass(usbDevice1.getDeviceClass()) + "\n" +
-                    "DeviceSubClass: " + usbDevice1.getDeviceSubclass() + "\n" +
-                    "VendorID: " + usbDevice1.getVendorId() + "\n" +
-                    "ProductID: " + usbDevice1.getProductId() + "\n";
-
-            int interfaceCount = usbDevice1.getInterfaceCount();
-            Toast.makeText(getApplicationContext(), "INTERFACE COUNT: " + String.valueOf(interfaceCount), Toast.LENGTH_SHORT).show();
-
-            mDevice = usbDevice1;
-
-            if (mDevice == null) {
-                Toast.makeText(getApplicationContext(), "mDevice is null", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(getApplicationContext(), "mDevice is not null", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-
-        mPermissionIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(ACTION_USB_PERMISSION), 0);
-        IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
-        getApplicationContext().registerReceiver(mUsbReceiver, filter);
-        HashMap<String, UsbDevice> deviceList = mUsbManager.getDeviceList();
-        if(mDeviceList.size() > 0) {
-            mUsbManager.requestPermission(mDevice, mPermissionIntent);
-        }else{
-            Toast.makeText(getApplicationContext(), "No USB printers have connected", Toast.LENGTH_SHORT).show();
-        }*/
-
         edagid = (TextView) findViewById(R.id.txtagid);
         edagname = (TextView) findViewById(R.id.txtgname);
         edattid = (TextView) findViewById(R.id.txtattid);

@@ -53,9 +53,9 @@ import java.util.UUID;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClickListener {
-    TextView reqamo,repamo,insurance,irate,txtrfcd;
+    TextView reqamo,repamo,insurance,irate,txtrfcd,txrepaydate;
     Button btnsub;
-    String txtcustid, amou ,narra, ednamee,ednumbb,serviceid,billid,strfee,strtref,stragcms;
+    String txtcustid, amou ,narra, ednamee,ednumbb,serviceid,billid,strfee,strtref,stragcms,repaydate;
     ProgressDialog prgDialog,prgDialog2;
     String telcoop;
     EditText amon, edacc,pno,txtamount,txtnarr,edname,ednumber;
@@ -124,6 +124,7 @@ public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClic
 
         repamo = (TextView) findViewById(R.id.repayamo);
         insurance = (TextView) findViewById(R.id.insurance);
+        txrepaydate = (TextView) findViewById(R.id.txtrpdate);
 
         irate = (TextView) findViewById(R.id.irate);
 
@@ -151,6 +152,9 @@ public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClic
             String strreqamo = intent.getStringExtra("reqamo");
             String strinsurance = intent.getStringExtra("insurance");
             String strirate = intent.getStringExtra("irate");
+            repaydate = intent.getStringExtra("repaydate");
+            repaydate = Utility.convertLonaReq(repaydate);
+            txrepaydate.setText(repaydate);
             txtrfcd.setText(strtref);
 
 
@@ -301,7 +305,7 @@ public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClic
             finish();
 
 
-            Intent i = new Intent(getApplicationContext(), FMobActivity.class);
+            Intent i = new Intent(getApplicationContext(), SupHomeActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             // Staring Login Activity
             startActivity(i);

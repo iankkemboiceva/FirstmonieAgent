@@ -59,7 +59,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class FinalConfDepoActivity extends BaseActivity implements View.OnClickListener {
     TextView recacno,recname,recamo,recnarr,recsendnum,recsendnam,recfee,recagcmn,txtrfcd,recdatetimee;
     Button btnsub;
-    String recanno, amou ,narra, ednamee,ednumbb,txtname,strfee,stragcms ;
+    String recanno, amou ,narra, ednamee,ednumbb,txtname,strfee,stragcms;
     ProgressDialog prgDialog,prgDialog2;
     RelativeLayout rlsendname,rlsendno;
     EditText etpin;
@@ -429,37 +429,6 @@ RelativeLayout rlsave,rlshare;
 
         addJpgSignatureToGallery(finalBitmap);
 
-       /* String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
-        File myDir = new File(root+"/saved_images_1");
-        myDir.mkdirs();
-        String fname = image_name;
-        File file = new File(myDir, fname);
-        if (file.exists()) file.delete();
-        Log.i("LOAD", root + fname);
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-*/
-
-
-/*
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-        {
-            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            File f = new File("file://"+ Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
-            Uri contentUri = Uri.fromFile(f);
-            mediaScanIntent.setData(contentUri);
-            this.sendBroadcast(mediaScanIntent);
-        }
-        else
-        {
-            sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
-        }*/
         rlaccom.setVisibility(View.VISIBLE);
         rlagfee.setVisibility(View.VISIBLE);
     }

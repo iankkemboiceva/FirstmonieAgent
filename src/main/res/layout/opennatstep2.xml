@@ -421,7 +421,7 @@
                                 android:textColor="@color/black" />
 
                             <EditText
-                                android:id="@+id/straddr"
+                                android:id="@+id/houseno"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
@@ -457,7 +457,7 @@
                                 android:textColor="@color/black" />
 
                             <EditText
-                                android:id="@+id/hmaddr"
+                                android:id="@+id/streetadrr"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="left|center"

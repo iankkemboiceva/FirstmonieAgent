@@ -207,7 +207,7 @@ public class FragmentSupDrawer extends Fragment implements View.OnClickListener 
      //   tvmobno = (TextView) layout.findViewById(R.id.sdf2);
         tvlastl = (TextView) layout.findViewById(R.id.sdf2);
         tvusid = (TextView) layout.findViewById(R.id.txuserid);
-        String useridd = session.getString("ADMINID");
+        String useridd = session.getString("SUPERID");
         tvusid.setText(useridd);
         String strlastl = Utility.getLastl(getActivity());
 
@@ -268,7 +268,7 @@ public class FragmentSupDrawer extends Fragment implements View.OnClickListener 
         HashMap<String, String> sessname = session.getUserDetails();
         String sesn = sessname.get(SessionManagement.KEY_USERID);
 String custname = session.getString(SessionManagement.KEY_CUSTNAME);
-tv.setText("Admin ID");
+tv.setText("Supervisor ID");
 
 
       /*  if(!(names == null || names.equals(" "))){

@@ -148,4 +148,31 @@ public interface ApiInterface {
     Call<String> getsup(@Body String params);
 
 
+    @Headers("Content-Type: application/json")
+    @POST("wallettxns/app/walletdeposit/enquiry.action")
+    Call<String> getwalletnameenq(@Body String params);
+
+    @Headers("Content-Type: application/json")
+    @POST("wallettxns/app/secure/walletdeposit/deposit.action")
+    Call<String> walletdeposit(@Body String params);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("accountopen/app/bvn/validatebvn.action")
+    Call<String> validatebvn(@Body String params);
+
+    @Headers("Content-Type: application/json")
+    @POST("wallettxns/app/walletdeposit/validatetoken.action")
+    Call<String> validatetoken(@Body String params);
+
+    @Headers("Content-Type: application/json")
+    @POST("accountopen/app/bvn/openaccount.action")
+    Call<String> bvnaccopen(@Body String params);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("accountopen/app/core/openaccount.action")
+    Call<String> nonbvnaccopen(@Body String params);
+
+
 }

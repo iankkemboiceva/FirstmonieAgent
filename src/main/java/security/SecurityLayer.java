@@ -3,11 +3,15 @@ package security;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import javax.crypto.KeyGenerator;
@@ -18,6 +22,7 @@ import firstmob.firstbank.com.firstagent.SessionManagement;
 import firstmob.firstbank.com.firstagent.Utility;
 
 
+import static firstmob.firstbank.com.firstagent.Utility.generateHashString;
 import static security.AESCBCEncryption.base64Decode;
 import static security.AESCBCEncryption.base64Encode;
 import static security.AESCBCEncryption.decrypt;
@@ -51,7 +56,7 @@ public class SecurityLayer {
             String vers = "2.0.0";
             String year = Utility.getAppVersion(context);
             String hexkey = getrandkey();
-            String imei = Utility.getDevImei(context);
+            String imei = "NA";
             String session_id = UUID.randomUUID().toString();
             SessionManagement session = new SessionManagement(context);
             session.setString(KEY_SESSION_ID, session_id);
@@ -59,7 +64,7 @@ public class SecurityLayer {
             Log("Session ID is " + session_id);
             finpoint = sb.append(ApplicationConstants.NET_URL + endpoint)
                     .append(toHex(encrypt(key, initVector, params)))
-                    .append("/" + Utility.generateHashString(params))
+                    .append("/" + generateHashString(params))
                     .append("/" + toHex(hexkey))
                     .append(ApplicationConstants.CH_KEY)
                     .append("/" + ApplicationConstants.APP_ID)
@@ -101,7 +106,7 @@ public class SecurityLayer {
             StringBuffer sb = new StringBuffer();
             String vers = "2.0.0";
             String year = Utility.getAppVersion(context);
-            String imei = Utility.getDevImei(context);
+            String imei ="NA";
 
             String hexkey = getrandkey();
             try {
@@ -112,7 +117,7 @@ public class SecurityLayer {
 
             finpoint = sb.append(ApplicationConstants.NET_URL + endpoint)
                     .append(toHex(encrypt(key, initVector, params)))
-                    .append("/" + Utility.generateHashString(params))
+                    .append("/" + generateHashString(params))
                     .append("/" + hexkey)
                     .append(ApplicationConstants.CH_KEY)
                     .append("/" + ApplicationConstants.APP_OUTSIDEID)
@@ -182,7 +187,7 @@ session.setString("NWAPPID",encappid);
             SecurityLayer.Log("sessioniv [" + sessioniv + "]");
             SecurityLayer.Log("finalresp [" + finalresp + "]");
 
-            String gen = Utility.generateHashString(finalresp);
+            String gen = generateHashString(finalresp);
             SecurityLayer.Log("Hashing Status [" + gen.equals(dhash) + "]");
 
             decjsonobj.put("pkey_dec", pkey_dec);
@@ -228,7 +233,7 @@ session.setString("NWAPPID",encappid);
             SecurityLayer.Log("appid gott", encappid);
             StringBuffer sb = new StringBuffer();
 
-            String imei = Utility.getDevImei(context);
+            String imei = "NA";
 
             byte[] randomKey = base64Decode(skey);
             byte[] randomSIV = base64Decode(siv);
@@ -249,7 +254,7 @@ SecurityLayer.Log("encappid",encappid);
 
             finpoint = sb.append(ApplicationConstants.NET_URL + endpoint)
                     .append(toHex(encryptedUrl))
-                    .append("/" + Utility.generateHashString(params))
+                    .append("/" + generateHashString(params))
                     .append("/" + encryptedpkey)
                     .append(ApplicationConstants.CH_KEY)
                     .append("/" + encappid)
@@ -301,7 +306,7 @@ SecurityLayer.Log("encappid",encappid);
             Log("sessioniv [" + sessioniv + "]");
             Log("finalresp [" + finalresp + "]");
 
-            String gen = Utility.generateHashString(finalresp);
+            String gen = generateHashString(finalresp);
             Log("Hashing Status [" + gen.equals(dhash) + "]");
 
             decjsonobj.put("sessionkey", sessionkey);
@@ -314,6 +319,56 @@ SecurityLayer.Log("encappid",encappid);
         return new JSONObject(finalresp);
 
     }
+
+    public static String encryptdata(String value,Context ct){
+
+        SessionManagement session = new SessionManagement(ct);
+
+        String skey = session.getString(SecurityLayer.KEY_SKEY);
+        SecurityLayer.Log("skey", skey);
+        String siv = session.getString(SecurityLayer.KEY_SIV);
+        SecurityLayer.Log("siv", siv);
+
+
+        return AESCBCEncryption.encrypt(base64Decode(skey), base64Decode(siv), value);
+
+    }
+
+    public static Map<String, Object> getSortedMap(JSONObject data){
+        Map<String, Object> map = new TreeMap<>();
+        Iterator<String> keyIterator = data.keys();
+        while(keyIterator.hasNext()){
+            String key=keyIterator.next();
+            try {
+                map.put(key, data.get(key));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return map;
+    }
+
+    public static String getSortedStringToHash(Map<String, Object> map){
+        StringBuilder strToHash = new StringBuilder();
+        Iterator<String> keyIterator = map.keySet().iterator();
+        while(keyIterator.hasNext()){
+            String key=keyIterator.next();
+            strToHash.append(map.get(key));
+        }
+        return strToHash.toString();
+    }
+    public static String gethasheddata(JSONObject data){
+        Map<String, Object> map = getSortedMap(data);
+        String strToHash = getSortedStringToHash(map);
+        String hashedBody = "";
+        try {
+            hashedBody = generateHashString(strToHash);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return  hashedBody;
+    }
+
     public static String genURLCBC(String params,String endpoint,  Context c) {
         String finpoint = "";
         if(Utility.checkInternetConnection(c)) {
@@ -385,7 +440,7 @@ SecurityLayer.Log("Imei chosen",imei);
                 encryptedrandomIV = toHex(AESCBCEncryption.encrypt(base64Decode(pkey), base64Decode(piv), AESCBCEncryption.base64Encode(AESCBCEncryption.generateIV())));
                 encryptedUrl = toHex(AESCBCEncryption.encrypt(base64Decode(skey), base64Decode(siv), params));
 
-                hash = Utility.generateHashString(params);
+                hash = generateHashString(params);
                 encryptedimei = toHex(AESCBCEncryption.encrypt(base64Decode(skey), base64Decode(siv), imei));
                 fsess = toHex(AESCBCEncryption.encrypt(base64Decode(skey), base64Decode(siv), fsess));
                // year = toHex(year);
@@ -444,7 +499,7 @@ SecurityLayer.Log("Imei chosen",imei);
 
 
             System.out.println("finalresp [" + finalresp + "]");
-            String gen = Utility.generateHashString(finalresp);
+            String gen = generateHashString(finalresp);
             System.out.println("Hashing Status [" + gen.equals(dhash) + "]");
 
             decjsonobj.put("pkey_dec", "");

@@ -116,26 +116,7 @@ Spinner spstore;
         NameInquirySec();
 
         spstore.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            /*
-                onItemSelected
-                    void onItemSelected (AdapterView<?> parent,
-                                    View view,
-                                    int position,
-                                    long id)
 
-                    Callback method to be invoked when an item in this view has been selected.
-                    This callback is invoked only when the newly selected position is different
-                    from the previously selected position or if there was no selected item.
-
-                    Impelmenters can call getItemAtPosition(position) if they need to access the
-                    data associated with the selected item.
-
-                    Parameters
-                        parent AdapterView: The AdapterView where the selection happened
-                        view View: The view within the AdapterView that was clicked
-                        position int: The position of the view in the adapter
-                        id long: The row id of the item that is selected
-            */
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // Get the spinner selected item text
@@ -144,24 +125,14 @@ Spinner spstore;
                NameInquirySec();
             }
 
-            /*
-                onNothingSelected
-
-                    void onNothingSelected (AdapterView<?> parent)
-                    Callback method to be invoked when the selection disappears from this view.
-                    The selection can disappear for instance when touch is activated or when
-                    the adapter becomes empty.
-
-                    Parameters
-                        parent AdapterView: The AdapterView that now contains no selected item.
-            */
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
 
-
+String rp = Utility.convertLonaReq("2020-02-13T08:27:30");
+Toast.makeText(getApplicationContext(),rp,Toast.LENGTH_LONG).show();
 
 
     }
@@ -315,6 +286,8 @@ prgDialog.show();
                                 SecurityLayer.Log("Response Message", responsemessage);
 
                                 amolimit = plan.optString("creditLimit");
+                                amolimit = Utility.roundto2dp(amolimit);
+
 
                                 txelig.setText("Congratulations,you are eligible for a loan upto "+amolimit+ApplicationConstants.KEY_NAIRA);
 lyamo.setVisibility(View.VISIBLE);

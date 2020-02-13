@@ -30,7 +30,7 @@ public class Splash extends Activity {
         gm = (TextView) findViewById(R.id.gm);
 
         session.putURL(NET_URL);
-      /* if(!(Utility.isEmulator())) {
+     /*  if(!(Utility.isEmulator())) {
            if(!(Utility.isRooted())) {*/
                 new Handler().postDelayed(new Runnable() {
 

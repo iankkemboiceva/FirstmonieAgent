@@ -1,8 +1,10 @@
 package firstmob.firstbank.com.firstagent;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -35,13 +37,15 @@ import retrofit2.Response;
 import security.SecurityLayer;
 
 
-public class OtherBankPage extends Fragment {
+public class OtherBankPage extends DialogFragment {
     ListView lv;
     OTBRetroAdapt aAdpt;
     String bankname,bankcode;
     ProgressDialog prgDialog;
     List<GetBanksData> planetsList = new ArrayList<GetBanksData>();
     SessionManagement session;
+
+    private OnFragmentCommunicationListener mListener;
     public OtherBankPage() {
         // Required empty public constructor
     }
@@ -84,27 +88,38 @@ public class OtherBankPage extends Fragment {
 
                 String bankname = planetsList.get(position).getBankName();
                 String bankcode = planetsList.get(position).getBankCode();
-                Bundle b  = new Bundle();
-                b.putString("bankname",bankname);
-                b.putString("bankcode",bankcode);
-                Fragment  fragment = new SendOTB();
 
-                fragment.setArguments(b);
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                //  String tag = Integer.toString(title);
-                fragmentTransaction.replace(R.id.container_body, fragment,"Other Banks");
-                fragmentTransaction.addToBackStack("Other Banks");
-                ((FMobActivity)getActivity())
-                        .setActionBarTitle("Other Banks");
-                fragmentTransaction.commit();
 
+dismiss();
+
+mListener.setBankInfo(bankname,bankcode);
             }
         });
         return root;
     }
 
+    public interface OnFragmentCommunicationListener {
+        void setBankInfo(String bankname,String bankcode);
 
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentCommunicationListener) {
+            mListener = (OnFragmentCommunicationListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentCommunicationListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
     public void StartChartAct(int i){
 
@@ -360,12 +375,12 @@ public class OtherBankPage extends Fragment {
                         // TODO Auto-generated catch block
                         Toast.makeText(getActivity(), getActivity().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
                         // SecurityLayer.Log(e.toString());
-                        ((FMobActivity) getActivity()).SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getActivity());
+                       // ((FMobActivity) getActivity()).SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getActivity());
 
 
                     } catch (Exception e) {
                         SecurityLayer.Log("encryptionJSONException", e.toString());
-                        ((FMobActivity) getActivity()).SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getActivity());
+                        //((FMobActivity) getActivity()).SetForceOutDialog(getString(R.string.forceout),getString(R.string.forceouterr),getActivity());
 
                         // SecurityLayer.Log(e.toString());
                     }

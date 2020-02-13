@@ -34,7 +34,11 @@ import org.json.JSONObject;
 import java.util.Date;
 import java.util.HashMap;
 
-
+import rest.ApiInterface;
+import rest.ApiSecurityClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -110,7 +114,7 @@ public class FMobActivity extends BaseActivity implements FragmentDrawer.Fragmen
     }
 
 
- /* @Override
+  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
       MenuInflater inflater = getMenuInflater();
@@ -118,7 +122,7 @@ public class FMobActivity extends BaseActivity implements FragmentDrawer.Fragmen
           inflater.inflate(R.menu.main, menu);
 
       return true;
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -221,9 +225,9 @@ showEditDialog("MYPERF");
 
               /*  fragment = new ChangeACName();
                 title = "My Profile";*/
-           //     showEditDialog("PROF");
-                Intent ip = new Intent(FMobActivity.this, ChangeAcNameActivity.class);
-                startActivity(ip);
+             //   showEditDialog("PROF");
+
+                startActivity(new Intent(this, ChangeAcNameActivity.class));
                 break;
             case 3:
 
