@@ -812,6 +812,11 @@ fslash = arg;
 		 }
 		 return fins;
 	 }
+	public static String lnroundto2dp(String number){
+		DecimalFormat df = new DecimalFormat("0.00");
+		Double dbnumber = Double.parseDouble(number);
+		return df.format(dbnumber);
+	}
 	public static String getencpin(String finpin) {
 
 

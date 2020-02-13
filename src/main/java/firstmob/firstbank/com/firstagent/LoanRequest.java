@@ -131,8 +131,7 @@ Spinner spstore;
             }
         });
 
-String rp = Utility.convertLonaReq("2020-02-13T08:27:30");
-Toast.makeText(getApplicationContext(),rp,Toast.LENGTH_LONG).show();
+
 
 
     }
@@ -202,16 +201,21 @@ Toast.makeText(getApplicationContext(),rp,Toast.LENGTH_LONG).show();
             String amont = amon.getText().toString();
             String storeid  = storelist.get(spstore.getSelectedItemPosition()).getstoreid();
             if(Utility.isNotNull(amont)) {
-                Double inpamo = Double.parseDouble(amont);
-                Double dbamolimit = Double.parseDouble(amolimit);
-                if(inpamo<=dbamolimit) {
 
-                    Intent intent = new Intent(LoanRequest.this, ConfirmLoanRequest.class);
-                    intent.putExtra("amount", amont);
-                    intent.putExtra("storeid", storeid);
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(getApplicationContext(),"Kindly enter an amount below your loan limit",Toast.LENGTH_LONG).show();
+                Double inpamo = Double.parseDouble(amont);
+                if(inpamo >= 100) {
+                    Double dbamolimit = Double.parseDouble(amolimit);
+                    if (inpamo <= dbamolimit) {
+
+                        Intent intent = new Intent(LoanRequest.this, ConfirmLoanRequest.class);
+                        intent.putExtra("amount", amont);
+                        intent.putExtra("storeid", storeid);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Kindly enter an amount below your loan limit", Toast.LENGTH_LONG).show();
+                    }
+                }else {
+                    Toast.makeText(getApplicationContext(), "Please enter credit amount greater than 100"+ApplicationConstants.KEY_NAIRA, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -286,7 +290,7 @@ prgDialog.show();
                                 SecurityLayer.Log("Response Message", responsemessage);
 
                                 amolimit = plan.optString("creditLimit");
-                                amolimit = Utility.roundto2dp(amolimit);
+                                amolimit = Utility.lnroundto2dp(amolimit);
 
 
                                 txelig.setText("Congratulations,you are eligible for a loan upto "+amolimit+ApplicationConstants.KEY_NAIRA);
