@@ -180,15 +180,17 @@
                                 android:textSize="14sp"
                                 android:textColor="@color/black" />
 
-                            <Spinner
-                                android:id="@+id/spstore"
-                                style="@style/SpinnerAppTheme"
-                                android:layout_marginTop="20dp"
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:textColor="@color/black"
+                               android:layout_marginTop="10dp"
+                               android:id="@+id/storid"
+                               android:textSize="16sp"
 
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                               android:layout_gravity="center_horizontal"
+                               android:layout_height="wrap_content" />
 
-                            </Spinner>
+
 
                             <TextView
                                 android:id="@+id/txtelig"
