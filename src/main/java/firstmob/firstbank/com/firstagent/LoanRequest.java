@@ -58,13 +58,13 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
 
     TextView accountoname;
     String depositid;
-    String acname;
+    String acname,storeidd;
     String amolimit = "NA";
     RelativeLayout rlid,lybut;
     LinearLayout lyamo;
-Spinner spstore;
+
     ProgressDialog prgDialog;
-    TextView txelig;
+    TextView txelig,txstorename;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +86,7 @@ Spinner spstore;
 
         rlid = (RelativeLayout)findViewById(R.id.rlid);
         accountoname = (TextView) findViewById(R.id.cname);
+        txstorename = (TextView) findViewById(R.id.storid);
         txelig = (TextView) findViewById(R.id.txtelig);
 
 
@@ -103,7 +104,7 @@ Spinner spstore;
         txtamount.setOnFocusChangeListener(ofcListener);
 
 
-        spstore = (Spinner) findViewById(R.id.spstore);
+
 
 
         SetStores();
@@ -115,21 +116,6 @@ Spinner spstore;
 
         NameInquirySec();
 
-        spstore.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // Get the spinner selected item text
-                String selectedItemText = (String) adapterView.getItemAtPosition(i);
-                // Display the selected item into the TextView
-               NameInquirySec();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
 
 
@@ -199,7 +185,7 @@ Spinner spstore;
         }
         if (view.getId() == R.id.button2) {
             String amont = amon.getText().toString();
-            String storeid  = storelist.get(spstore.getSelectedItemPosition()).getstoreid();
+            String storeid  = storeidd;
             if(Utility.isNotNull(amont)) {
 
                 Double inpamo = Double.parseDouble(amont);
@@ -242,7 +228,7 @@ prgDialog.show();
 
 
 
-        String storeid  = storelist.get(spstore.getSelectedItemPosition()).getstoreid();
+
 
          String adminid = session.getString("SUPERID");
         ApiInterface apiService =
@@ -254,7 +240,7 @@ prgDialog.show();
 
             paramObject.put("userId", adminid);
             paramObject.put("channel", "1");
-            paramObject.put("storeId", storeid);
+            paramObject.put("storeId", storeidd);
 
             Call<String> call = apiService.loaneligibility(paramObject.toString());
 
@@ -464,20 +450,10 @@ lybut.setVisibility(View.VISIBLE);
                 if (!(storelist == null)) {
                     if (storelist.size() > 0) {
 
+storeidd = storelist.get(0).getstoreid();
+String storename = storelist.get(0).getstorename();
+txstorename.setText(storename);
 
-
-                        Collections.sort(storelist, new Comparator<GetStores>() {
-                            public int compare(GetStores d1, GetStores d2) {
-                                return d1.getstorename().compareTo(d2.getstorename());
-                            }
-                        });
-
-
-                        //  Collections.swap(planetsList,0,planetsList.size() -1);
-                        maradapt = new ArrayAdapter<GetStores>(this, R.layout.my_spinner, storelist);
-                        maradapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spstore.setAdapter(maradapt);
-                        spstore.setSelection(storelist.size() -1);
                     } else {
                         Toast.makeText(
                                 getApplicationContext(),

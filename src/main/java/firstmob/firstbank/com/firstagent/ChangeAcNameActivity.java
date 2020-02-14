@@ -40,6 +40,7 @@ public class ChangeAcNameActivity extends BaseActivity implements View.OnClickLi
     CheckBox chkb,chkus,chkast,chktpin,chkbal;
 
     String numb;
+    String type = "ATT";
     boolean initdisp = false;
 
     String upLoadServerUri = null;
@@ -175,6 +176,9 @@ public class ChangeAcNameActivity extends BaseActivity implements View.OnClickLi
 
 
         upLoadServerUri = "";
+        if(!(getIntent() == null)){
+            type = getIntent().getExtras().getString("type");
+        }
 
 
 
@@ -212,8 +216,9 @@ public class ChangeAcNameActivity extends BaseActivity implements View.OnClickLi
             fragmentTransaction.commit();
             ((FMobActivity)getActivity())
                     .setActionBarTitle("Change Pin");*/
-
-            startActivity(new Intent(getApplicationContext(), ChangePinActivity.class));
+            Intent mIntent = new Intent(getApplicationContext(), ChangePinActivity.class);
+            mIntent.putExtra("type", type);
+            startActivity(mIntent);
 
         }
 

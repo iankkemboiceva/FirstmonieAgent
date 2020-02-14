@@ -46,6 +46,7 @@ public class ChangePinActivity extends BaseActivity implements View.OnClickListe
     Button btnok;
     SessionManagement session;
     ProgressDialog prgDialog2;
+    boolean blchk = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +79,13 @@ public class ChangePinActivity extends BaseActivity implements View.OnClickListe
         pDialog = new ProgressDialog(this);
         pDialog.setTitle("Loading");
         pDialog.setCancelable(false);
+
+        String type = getIntent().getExtras().getString("type");
+        if(!(type == null ) || type.equals("")){
+            if(type.equals("SUP")){
+                blchk = true;
+            }
+        }
     }
 
     @Override
@@ -123,7 +131,12 @@ public class ChangePinActivity extends BaseActivity implements View.OnClickListe
                                         encrypted2 = Utility.b64_sha256(npin);
                                         ApiInterface apiService =
                                                 ApiClient.getClient().create(ApiInterface.class);
-                                        String usid = Utility.gettUtilUserId(getApplicationContext());
+                                        String usid = "NA";
+                                        if(blchk){
+                                            usid = session.getString("SUPERID");
+                                        }else {
+                                            usid = Utility.gettUtilUserId(getApplicationContext());
+                                        }
                                         String agentid = Utility.gettUtilAgentId(getApplicationContext());
                                         String mobnoo = Utility.gettUtilMobno(getApplicationContext());
                                         SecurityLayer.Log("Chg Pin URL", "1/" + usid + "/" + agentid + "/" + "0000/" + encrypted1 + "/" + encrypted2);

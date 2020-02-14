@@ -187,8 +187,9 @@ public class SupHomeActivity extends BaseSupActivity implements FragmentSupDrawe
 
 
             case 2:
-
-                startActivity(new Intent(getApplicationContext(), ChangeAcNameActivity.class));
+                Intent intchgnm = new Intent(getApplicationContext(), ChangeAcNameActivity.class);
+                intchgnm.putExtra("type", "SUP");
+                startActivity(intchgnm);
                 break;
             case 3:
 
