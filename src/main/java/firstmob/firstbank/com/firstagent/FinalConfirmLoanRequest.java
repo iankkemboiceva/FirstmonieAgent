@@ -163,7 +163,7 @@ public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClic
 
 
             insurance.setText(ApplicationConstants.KEY_NAIRA+strinsurance);
-            irate.setText(strirate);
+            irate.setText(strirate+"%");
 
 
         /*   try {
