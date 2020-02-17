@@ -122,6 +122,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
     String strfname,strlname,strmidnm,stryob,stremail,strhmdd,strmobn,strsalut,strmarst,strgender,strcity,strstate,straddr;
     TextView step2, step1, step3, step4;
     FileCompressor mCompressor;
+    String txtstreetno;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,6 +172,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
             strstate = intent.getStringExtra("state");
             strgender = intent.getStringExtra("gender");
             straddr = intent.getStringExtra("straddr");
+            txtstreetno = intent.getStringExtra("streetno");
         }
         String getsign = session.getString("CUSTSIGNPATH");
         Bitmap bitmapsign = BitmapFactory.decodeFile(getsign);
@@ -1368,7 +1370,7 @@ if(session.getString("ISBVN").equals("Y")) {
             paramObject.put("pin", pin);
             paramObject.put("otp", otpp);
             paramObject.put("bvn", strhmdd);
-            paramObject.put("street", straddr);
+            paramObject.put("street", txtstreetno);
 
 
             SecurityLayer.Log("plain params",paramObject.toString());
@@ -1528,14 +1530,14 @@ if(session.getString("ISBVN").equals("Y")) {
             paramObject.put("gender", strgender);
             paramObject.put("state", strstate);
             paramObject.put("city", strcity);
-            paramObject.put("address", strhmdd);
+            paramObject.put("address", straddr);
             paramObject.put("phone", strmobn);
             paramObject.put("mandateCard", refnumber);
             paramObject.put("userId", usid);
             paramObject.put("pin", pin);
             paramObject.put("otp", otpp);
             paramObject.put("bvn", "");
-            paramObject.put("street", straddr);
+            paramObject.put("street", txtstreetno);
 
             SecurityLayer.Log("plain params",paramObject.toString());
 

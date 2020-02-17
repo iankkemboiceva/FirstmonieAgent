@@ -460,6 +460,44 @@ android:layout_gravity="center"
 
                                     </Spinner>
                                 </RelativeLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_marginTop="10dp"
+                                    android:id="@+id/lyhomeaddr"
+
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="left|center"
+                                        android:layout_weight="1.5"
+
+                                        android:text="Street Number"
+                                        android:textColor="@color/black" />
+
+                                    <EditText
+                                        android:id="@+id/streetadrr"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="left|center"
+                                        android:layout_weight="2"
+                                        android:inputType="number"
+                                        android:hint="Street Number"
+                                        android:background="@android:color/transparent"
+
+                                        android:textSize="14sp" />
+
+                                </LinearLayout>
+                                <View
+                                    android:layout_below="@+id/lyhomeaddr"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginLeft="2dp"
+
+
+                                    android:background="@color/divcolor" />
                                 <RelativeLayout
 
 

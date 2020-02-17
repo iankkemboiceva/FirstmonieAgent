@@ -111,6 +111,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
     // directory name to store captured images and videos
     private static final String IMAGE_DIRECTORY_NAME = "Hello Camera";
     FileCompressor mCompressor;
+    String txtstreetno;
     private Uri fileUri;
 
     @Override
@@ -152,6 +153,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
             strhmdd = intent.getStringExtra("hmadd");
             strmobn = intent.getStringExtra("mobn");
             strsalut = intent.getStringExtra("salut");
+            txtstreetno = intent.getStringExtra("streetno");
             strmarst = intent.getStringExtra("marstatus");
             strcity = intent.getStringExtra("city");
             strstate = intent.getStringExtra("state");
@@ -546,6 +548,7 @@ public class OpenAccUpPicActivity extends BaseActivity implements View.OnClickLi
                 intent.putExtra("gender", strgender);
                 intent.putExtra("city", strcity);
                 intent.putExtra("state", strstate);
+                intent.putExtra("streetno", txtstreetno);
 
                 intent.putExtra("straddr", straddr);
 

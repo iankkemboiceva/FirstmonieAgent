@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
     Button btnconfirm;
     Spinner sp1;
     RelativeLayout rlbvn;
+    EditText streetno;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,7 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
         txtstrstate = (TextView)findViewById(R.id.txtstrstate);
         txtstrgender = (TextView)findViewById(R.id.txtstrgender);
         txtstraddr = (TextView)findViewById(R.id.txtstraddr);
+        streetno = (EditText) findViewById(R.id.streetadrr);
 
         rlbvn = (RelativeLayout) findViewById(R.id.title);
 
@@ -163,52 +166,60 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.button2) {
-            Intent intent  = new Intent(OpenAccBVNConfirm.this,OpenAccUpPicActivity.class);
+
+            String txtstreetno = streetno.getText().toString();
+            if (Utility.isNotNull(txtstreetno)) {
+                Intent intent = new Intent(OpenAccBVNConfirm.this, OpenAccUpPicActivity.class);
 
 
+                if (strmarst.equals("Single")) {
+                    strmarst = "UNMARR";
+                }
+                if (strmarst.equals("Married")) {
+                    strmarst = "MARR";
+                }
+
+                intent.putExtra("fname", strfname);
+                intent.putExtra("lname", strlname);
+                intent.putExtra("midname", strmidnm);
+                intent.putExtra("yob", stryob);
+                intent.putExtra("gender", strgender);
+                intent.putExtra("city", strcity);
+                intent.putExtra("state", strstate);
+                intent.putExtra("straddr", straddr);
+                intent.putExtra("streetno", txtstreetno);
+                intent.putExtra("email", stremail);
+                intent.putExtra("hmadd", strhmdd);
+                intent.putExtra("mobn", strmobn);
+
+                intent.putExtra("marstatus", strmarst);
+
+                if (Utility.isNotNull(strsalut) || strsalut.equals("")) {
+                    if (!(sp1.getSelectedItemPosition() == 0)) {
+                        strsalut = sp1.getSelectedItem().toString();
+                        intent.putExtra("salut", strsalut);
 
 
-            if(strmarst.equals("Single")){
-                strmarst = "UNMARR";
-            }
-            if(strmarst.equals("Married")){
-                strmarst = "MARR";
-            }
-            Toast.makeText(getApplicationContext(),stryob,Toast.LENGTH_LONG).show();
-            intent.putExtra("fname", strfname);
-            intent.putExtra("lname", strlname);
-            intent.putExtra("midname", strmidnm);
-            intent.putExtra("yob", stryob);
-            intent.putExtra("gender", strgender);
-            intent.putExtra("city", strcity);
-            intent.putExtra("state", strstate);
-            intent.putExtra("straddr", straddr);
-            intent.putExtra("email", stremail);
-            intent.putExtra("hmadd", strhmdd);
-            intent.putExtra("mobn", strmobn);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "Please select a valid Title",
+                                Toast.LENGTH_LONG).show();
+                    }
 
-            intent.putExtra("marstatus", strmarst);
+                } else {
 
-            if(Utility.isNotNull(strsalut) || strsalut.equals("")){
-                if(!(sp1.getSelectedItemPosition() == 0)) {
-                    strsalut = sp1.getSelectedItem().toString();
                     intent.putExtra("salut", strsalut);
 
 
                     startActivity(intent);
-                }else {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Please select a valid Title",
-                            Toast.LENGTH_LONG).show();
                 }
-
-            }else {
-
-                intent.putExtra("salut", strsalut);
-
-
-                startActivity(intent);
+            }else{
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Please select a street number",
+                        Toast.LENGTH_LONG).show();
             }
         }
     }

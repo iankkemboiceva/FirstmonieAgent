@@ -83,6 +83,7 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
     static Hashtable<String, String> data1;
     String paramdata = "";
     ProgressDialog prgDialog, prgDialog7;
+    String txtstreetno;
     TextView tnc;
     List<String> mobopname = new ArrayList<String>();
     List<String> mobopid = new ArrayList<String>();
@@ -151,6 +152,7 @@ public class OpenAccCustPicActivity extends BaseActivity implements View.OnClick
             strstate = intent.getStringExtra("state");
             strgender = intent.getStringExtra("gender");
             straddr = intent.getStringExtra("straddr");
+            txtstreetno = intent.getStringExtra("streetno");
 
 
 
@@ -333,6 +335,7 @@ lyupl.setVisibility(View.VISIBLE);
                                     intent.putExtra("gender", strgender);
                                     intent.putExtra("city", strcity);
                                     intent.putExtra("state", strstate);
+                                    intent.putExtra("streetno", txtstreetno);
 
 
                                     startActivity(intent);
