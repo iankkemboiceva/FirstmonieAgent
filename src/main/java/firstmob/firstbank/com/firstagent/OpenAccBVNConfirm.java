@@ -38,8 +38,9 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
     List<GetStatesData> planetsList = new ArrayList<GetStatesData>();
     List<GetStatesData> arrangelist = new ArrayList<GetStatesData>();
     List<GetCitiesData> citylist = new ArrayList<GetCitiesData>();
+    ArrayAdapter<GetStatesData> mobadapt;
     Button btnconfirm;
-    Spinner sp1;
+    Spinner sp1,sp3;
     RelativeLayout rlbvn;
     EditText streetno;
     @Override
@@ -72,6 +73,10 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
         streetno = (EditText) findViewById(R.id.streetadrr);
 
         rlbvn = (RelativeLayout) findViewById(R.id.title);
+
+        sp3 = (Spinner)findViewById(R.id.spin3);
+
+        PopStates();
 
 
 
@@ -169,6 +174,9 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
 
             String txtstreetno = streetno.getText().toString();
             if (Utility.isNotNull(txtstreetno)) {
+                if(!(sp3.getSelectedItemPosition() == 0)){
+                    String strstates = arrangelist.get(sp3.getSelectedItemPosition()).getstateCode();
+                    strcity = citylist.get(sp3.getSelectedItemPosition()-1).getcitycode();
                 Intent intent = new Intent(OpenAccBVNConfirm.this, OpenAccUpPicActivity.class);
 
 
@@ -185,7 +193,7 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
                 intent.putExtra("yob", stryob);
                 intent.putExtra("gender", strgender);
                 intent.putExtra("city", strcity);
-                intent.putExtra("state", strstate);
+                intent.putExtra("state", strstates);
                 intent.putExtra("straddr", straddr);
                 intent.putExtra("streetno", txtstreetno);
                 intent.putExtra("email", stremail);
@@ -218,6 +226,12 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
             }else{
                 Toast.makeText(
                         getApplicationContext(),
+                        "Please select a valid state",
+                        Toast.LENGTH_LONG).show();
+            }
+            }else{
+                Toast.makeText(
+                        getApplicationContext(),
                         "Please select a street number",
                         Toast.LENGTH_LONG).show();
             }
@@ -225,7 +239,88 @@ public class OpenAccBVNConfirm extends AppCompatActivity implements View.OnClick
     }
 
 
+    private void PopStates(){
+        String jsarray = "[{'id':'1','stateName':'Abia','stateCode':'23','cityName':'Umuahia','cityCode':'158'},{'id':'2','stateName':'Adamawa','stateCode':'04','cityName':'Yola','cityCode':'166'},{'id':'3','stateName':'Akwa Ibom','stateCode':'01','cityName':'Uyo','cityCode':'161'},{'id':'4','stateName':'Anambra','stateCode':'02','cityName':'Awka','cityCode':'024'},{'id':'5','stateName':'Bauchi','stateCode':'03','cityName':'Bauchi','cityCode':'029'},{'id':'6','stateName':'Bayelsa','stateCode':'32','cityName':'Yenagoa','cityCode':'174'},{'id':'7','stateName':'Benue','stateCode':'05','cityName':'Makurdi','cityCode':'103'},{'id':'8','stateName':'Borno','stateCode':'06','cityName':'Maiduguri','cityCode':'102'},{'id':'9','stateName':'Cross River','stateCode':'07','cityName':'Calabar','cityCode':'033'},{'id':'10','stateName':'Delta','stateCode':'09','cityName':'Asaba','cityCode':'022'},{'id':'11','stateName':'Ebonyi','stateCode':'33','cityName':'Abakaliki','cityCode':'172'},{'id':'12','stateName':'Edo','stateCode':'EDO','cityName':'Benin City','cityCode':'030'},{'id':'13','stateName':'Ekiti','stateCode':'34','cityName':'Ado - Ekiti','cityCode':'008'},{'id':'14','stateName':'Enugu','stateCode':'25','cityName':'Enugu','cityCode':'048'},{'id':'15','stateName':'Gombe','stateCode':'35','cityName':'Gombe','cityCode':'057'},{'id':'16','stateName':'Imo','stateCode':'10','cityName':'Owerri','cityCode':'138'},{'id':'17','stateName':'Jigawa','stateCode':'26','cityName':'Dutse','cityCode':'038'},{'id':'18','stateName':'Kaduna','stateCode':'11','cityName':'Kaduna','cityCode':'087'},{'id':'19','stateName':'Kano','stateCode':'12','cityName':'Kano','cityCode':'090'},{'id':'20','stateName':'Katsina','stateCode':'13','cityName':'Katsina','cityCode':'092'},{'id':'21','stateName':'Kebbi','stateCode':'27','cityName':'Birnin Kebbi','cityCode':'032'},{'id':'22','stateName':'Kogi','stateCode':'28','cityName':'Lokoja','cityCode':'101'},{'id':'23','stateName':'Kwara','stateCode':'14','cityName':'Ilorin','cityCode':'077'},{'id':'24','stateName':'Lagos','stateCode':'15','cityName':'Ikeja','cityCode':'099'},{'id':'25','stateName':'Nasarawa','stateCode':'36','cityName':'Lafia','cityCode':'098'},{'id':'26','stateName':'Niger','stateCode':'16','cityName':'Minna','cityCode':'108'},{'id':'27','stateName':'Ogun','stateCode':'17','cityName':'Abeokuta','cityCode':'005'},{'id':'28','stateName':'Ondo','stateCode':'18','cityName':'Akure','cityCode':'016'},{'id':'29','stateName':'Osun','stateCode':'29','cityName':'Oshogbo','cityCode':'133'},{'id':'30','stateName':'Oyo','stateCode':'19','cityName':'Ibadan','cityCode':'060'},{'id':'31','stateName':'Plateau','stateCode':'20','cityName':'Jos','cityCode':'086'},{'id':'32','stateName':'Rivers','stateCode':'21','cityName':'Port Harcourt','cityCode':'142'},{'id':'33','stateName':'Sokoto','stateCode':'22','cityName':'Sokoto','cityCode':'150'},{'id':'34','stateName':'Taraba','stateCode':'30','cityName':'Jalingo','cityCode':'085'},{'id':'35','stateName':'Yobe','stateCode':'31','cityName':'Damaturu','cityCode':'035'},{'id':'36','stateName':'Zamfara','stateCode':'37','cityName':'Gusau','cityCode':'058'}]";
+        JSONArray plan = null;
+        try {
+            plan = new JSONArray(jsarray);
 
+
+            if(plan.length() > 0){
+
+
+                JSONObject json_data = null;
+
+                for (int i = 0; i < plan.length(); i++) {
+                    json_data = plan.getJSONObject(i);
+                    //String accid = json_data.getString("benacid");
+
+
+
+
+                    String statecode = json_data.optString("stateCode");
+                    String statename = json_data.optString("stateName");
+                    String citycode = json_data.optString("cityCode");
+                    String cityname = json_data.optString("cityName");
+
+                    SecurityLayer.Log("State Name", statename);
+                    planetsList.add(new GetStatesData(statecode,statename));
+                    citylist.add(new GetCitiesData(citycode,cityname));
+
+
+
+                }
+                if(!(planetsList == null)) {
+                    if(planetsList.size() > 0) {
+                        int index = 0;
+                        Collections.sort(planetsList, new Comparator<GetStatesData>(){
+                            public int compare(GetStatesData d1, GetStatesData d2){
+                                return d1.getstateName().compareTo(d2.getstateName());
+                            }
+                        });
+                        GetStatesData sa = new GetStatesData("0000","Select State");
+
+                        arrangelist.add(sa);
+                        for(int sd = 0;sd < planetsList.size();sd++){
+                            arrangelist.add(planetsList.get(sd));
+                            if(Utility.isNotNull(strstate)) {
+                                String strstt = planetsList.get(sd).getstateCode();
+                                if(strstt.equals(strstate)){
+                                    index = sd +1;
+                                }
+
+                            }
+                        }
+                        //  Collections.swap(planetsList,0,planetsList.size() -1);
+                        mobadapt = new ArrayAdapter<GetStatesData>(OpenAccBVNConfirm.this, R.layout.my_spinner, arrangelist);
+                        mobadapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        sp3.setAdapter(mobadapt);
+                        if(Utility.isNotNull(strstate)) {
+                            sp3.setSelection(index);
+                            Log.v("I am in",strstate);
+                            Log.v("State index",Integer.toString(index));
+
+                        }
+                        //   sp3.setSelection(planetsList.size() -1);
+                    }else{
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "No states available  ",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+
+
+
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
 
 }

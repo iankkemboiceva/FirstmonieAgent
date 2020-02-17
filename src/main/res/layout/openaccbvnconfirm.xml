@@ -295,7 +295,7 @@ android:layout_gravity="center"
 
                                 <RelativeLayout
 
-
+android:visibility="gone"
                                     android:id="@+id/rlagfee"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -498,6 +498,44 @@ android:layout_gravity="center"
 
 
                                     android:background="@color/divcolor" />
+
+                                <RelativeLayout
+
+
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="2dp"
+
+
+                                    android:orientation="vertical"
+
+
+
+
+                                    >
+
+                                    <TextView
+                                        android:id="@+id/state"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
+                                        android:textAppearance="?android:attr/textAppearanceMedium"
+
+                                        android:text="Origin State"
+                                        android:textColor="@color/black"
+                                        android:textSize="12sp"
+
+
+                                        />
+                                    <Spinner
+                                        android:id="@+id/spin3"
+                                        style="@style/SpinnerAppTheme"
+                                        android:layout_below="@+id/state"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                    </Spinner>
+                                </RelativeLayout>
                                 <RelativeLayout
 
 
