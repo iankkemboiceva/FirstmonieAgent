@@ -52,6 +52,7 @@ public class DialogSignInFragment extends DialogFragment implements View.OnClick
     ImageView imv;
     SessionManagement session;
     String finpin;
+    public static final String AGMOB = "agmobno";
     private PinLockListener mPinLockListener = new PinLockListener() {
         @Override
         public void onComplete(String pin) {
@@ -179,6 +180,19 @@ public class DialogSignInFragment extends DialogFragment implements View.OnClick
                                 String status = datas.optString("status");
                                 String cntopen = datas.optString("canOpenAccount");
                                 String store = datas.optString("store");
+                                String userid = datas.optString("userId");
+                                String username = datas.optString("userName");
+                                String email = datas.optString("email");
+                                String lastl = datas.optString("lastLoggedIn");
+                                String mobno = datas.optString("mobileNo");
+
+
+
+                                session.SetUserID(userid);
+                                session.putCustName(username);
+                                session.putEmail(email);
+                                session.putLastl(lastl);
+                                session.setString(AGMOB,mobno);
                                 session.setString(SessionManagement.KEY_SETCNTOPEN,cntopen);
                                 if(status.equals("F")) {
                                     getActivity().finish();

@@ -166,8 +166,8 @@ public class TransactionProcessingSupActivity extends BaseActivity implements Vi
                         // JSON Object
 
                         SecurityLayer.Log("response..:", response.body());
-                    //  String jsstr = "{\"message\":\"00\",\"responseCode\":\"Success\",\"data\":{\"reference\":\"00001068CEVAAGCRED\",\"insurance\":\"1000.0\",\"interestRate\":\"0.0\",\"repaymentAmount\":\"11000.0\"},\"fee\":\"0.0\",\"commission\":\"0.0\"}";
-                        JSONObject obj = new JSONObject(response.body());
+                      String jsstr = "{\"message\":\"00\",\"responseCode\":\"Success\",\"data\":{\"reference\":\"00001068CEVAAGCRED\",\"insurance\":\"1000.0\",\"interestRate\":\"0.0\",\"repaymentAmount\":\"11000.0\"},\"fee\":\"0.0\",\"commission\":\"0.0\"}";
+                        JSONObject obj = new JSONObject(jsstr);
                         //obj = Utility.onresp(obj,getApplicationContext());
 
                         SecurityLayer.Log("decrypted_response", obj.toString());

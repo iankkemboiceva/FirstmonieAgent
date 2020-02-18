@@ -181,7 +181,7 @@ public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClic
         repissue = (Button) findViewById(R.id.reportiss);
         repissue.setOnClickListener(this);
 
-
+        relativeLayout=(LinearLayout)findViewById(R.id.receipt);
 
 
         rlsave = (RelativeLayout) findViewById(R.id.rlsave);
@@ -199,13 +199,13 @@ public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClic
                 bitmap=layout_to_image.convert_layout();
 
                 String filename = "ShareRec"+System.currentTimeMillis()+".jpg";
-                if(Utility.checkPermission(FinalConfirmLoanRequest.this)) {
+              //  if(Utility.checkPermission(FinalConfirmLoanRequest.this)) {
                     saveImage(bitmap, filename);
                     Toast.makeText(
                             getApplicationContext(),
                             "Receipt downloaded successfully to gallery",
                             Toast.LENGTH_LONG).show();
-                }
+             //   }
 
 
             }
@@ -215,13 +215,14 @@ public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClic
             @Override
             public void onClick(View view) {
 
-                layout_to_image=new Layout_to_Image(getApplicationContext(),relativeLayout);
+               /* layout_to_image=new Layout_to_Image(getApplicationContext(),relativeLayout);
 
                 //now call the main working function ;) and hold the returned image in bitmap
 
-                bitmap=layout_to_image.convert_layout();
+                bitmap=layout_to_image.convert_layout();*/
+                Bitmap bmp = convertLayoutToImage();
                 if(Utility.checkWriteStoragePermission(FinalConfirmLoanRequest.this)) {
-                    shareImage(getImageUri(getApplicationContext(), bitmap));
+                    shareImage(getImageUri(getApplicationContext(), bmp));
                 }
 
 
@@ -283,9 +284,21 @@ public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClic
 
 
 
-        relativeLayout=(LinearLayout)findViewById(R.id.receipt);
 
 
+
+    }
+
+    private Bitmap convertLayoutToImage() {
+        LinearLayout linearView = relativeLayout;
+
+        linearView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        linearView.layout(0, 0, linearView.getMeasuredWidth(), linearView.getMeasuredHeight());
+
+        linearView.setDrawingCacheEnabled(true);
+        linearView.buildDrawingCache();
+        return linearView.getDrawingCache();// creates bitmap and returns the same
     }
 
     @Override
@@ -833,7 +846,7 @@ public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClic
         canvas.drawColor(Color.WHITE);
         canvas.drawBitmap(bitmap, 0, 0, null);
         OutputStream stream = new FileOutputStream(photo);
-        newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+      //  newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
         stream.close();
 
 
