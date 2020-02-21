@@ -180,10 +180,10 @@ public class FMobActivity extends BaseActivity implements FragmentDrawer.Fragmen
        boolean checklg = true;
         switch (position) {
            case 40:
-               if( list == null){
+
                    fragment = new NewHomeGrid();
-               }
-               else{
+
+              /* else{
                    SecurityLayer.Log("View type chosen",list);
 
 if(list.equals("N") || list.equals("grid")) {
@@ -191,22 +191,14 @@ if(list.equals("N") || list.equals("grid")) {
 }
                if(list.equals("list")) {
                    fragment = new HomeAccountFragNewUI();
-               }}
+               }}*/
                 title = "Welcome";
 
                 break;
             case 0:
 
-                if( list == null){
                     fragment = new NewHomeGrid();
-                }else {
-                    if (list.equals("N") || list.equals("grid")) {
-                        fragment = new NewHomeGrid();
-                    }
-                    if (list.equals("list")) {
-                        fragment = new HomeAccountFragNewUI();
-                    }
-                }
+
                 title = "Welcome";
 
                 break;

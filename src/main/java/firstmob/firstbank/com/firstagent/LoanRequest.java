@@ -2,9 +2,11 @@ package firstmob.firstbank.com.firstagent;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -184,19 +187,31 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
 
         }
         if (view.getId() == R.id.button2) {
-            String amont = amon.getText().toString();
-            String storeid  = storeidd;
+            final String amont = amon.getText().toString();
+            final String storeid  = storeidd;
             if(Utility.isNotNull(amont)) {
 
                 Double inpamo = Double.parseDouble(amont);
                 if(inpamo >= 100) {
                     Double dbamolimit = Double.parseDouble(amolimit);
                     if (inpamo <= dbamolimit) {
+                        WebView webView = new WebView(getApplicationContext());
+                        webView.loadUrl("file:///android_asset/agentcredittc.html");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoanRequest.this);
+                        builder.setTitle("Terms and Conditions")
+                                .setView(webView)
+                                .setNeutralButton("Reject", null)
+                                .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(LoanRequest.this, ConfirmLoanRequest.class);
+                                        intent.putExtra("amount", amont);
+                                        intent.putExtra("storeid", storeid);
+                                        startActivity(intent);
+                                    }
+                                })
+                                .show();
 
-                        Intent intent = new Intent(LoanRequest.this, ConfirmLoanRequest.class);
-                        intent.putExtra("amount", amont);
-                        intent.putExtra("storeid", storeid);
-                        startActivity(intent);
                     } else {
                         Toast.makeText(getApplicationContext(), "Kindly enter an amount below your loan limit", Toast.LENGTH_LONG).show();
                     }
