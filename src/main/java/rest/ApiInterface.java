@@ -174,5 +174,9 @@ public interface ApiInterface {
     @POST("accountopen/app/core/openaccount.action")
     Call<String> nonbvnaccopen(@Body String params);
 
+    @Headers("Content-Type: application/json")
+    @POST("loanconfirm.action")
+    Call<String> loanconfirm(@Body String params);
+
 
 }

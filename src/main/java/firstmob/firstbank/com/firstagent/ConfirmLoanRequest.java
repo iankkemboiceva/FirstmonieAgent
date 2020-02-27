@@ -83,6 +83,8 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
             recamo.setText(amou + ApplicationConstants.KEY_NAIRA);
         }
 
+        ConfirmRequest();
+
 
     }
 
@@ -107,7 +109,7 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
         if (view.getId() == R.id.button2) {
             String pin = etpin.getText().toString();
             if (Utility.isNotNull(pin)) {
-                //ConfirmRequest(pin);
+
                 String adminid = session.getString("SUPERID");
 
 
@@ -240,7 +242,7 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
     }
 
 
-    private void ConfirmRequest(String pin) {
+    private void ConfirmRequest() {
         prgDialog2.show();
 
 
@@ -248,20 +250,22 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
                 RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
         String adminid = session.getString("SUPERID");
 
-        String encpin = Utility.b64_sha256(pin);
+
 
         try {
             JSONObject paramObject = new JSONObject();
+
+
 
             paramObject.put("userId", adminid);
             paramObject.put("channel", "1");
             paramObject.put("storeId", storeid);
             paramObject.put("amount", amou);
-            paramObject.put("pin", encpin);
 
 
 
-            Call<String> call = apiService.loanrequest(paramObject.toString());
+
+            Call<String> call = apiService.loanconfirm(paramObject.toString());
 
 
             call.enqueue(new Callback<String>() {
