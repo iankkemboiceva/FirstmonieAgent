@@ -175,7 +175,7 @@ public interface ApiInterface {
     Call<String> nonbvnaccopen(@Body String params);
 
     @Headers("Content-Type: application/json")
-    @POST("loanconfirm.action")
+    @POST("loan/loanconfirm.action")
     Call<String> loanconfirm(@Body String params);
 
 

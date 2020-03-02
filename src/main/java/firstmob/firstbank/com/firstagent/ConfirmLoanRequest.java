@@ -32,7 +32,7 @@ import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickListener {
-    TextView recacno, recname, recamo, recnarr, txtfee, acbal;
+    TextView recacno, recname, recamo, recnarr, txtfee, acbal,txinsur,txrepay,txirate;
     Button btnsub;
     String recanno, amou, narra, ednamee, ednumbb, txtname, finalfee = null, agbalance, storeid;
     ProgressDialog prgDialog2;
@@ -40,6 +40,7 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
     private FirebaseAnalytics mFirebaseAnalytics;
     TextView step1;
     SessionManagement session;
+    ProgressDialog prgDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,11 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
         recamo = (TextView) findViewById(R.id.txloamount);
         recnarr = (TextView) findViewById(R.id.textViewrr);
         txtfee = (TextView) findViewById(R.id.txtfee);
+
+        txrepay = (TextView) findViewById(R.id.txrpyy);
+        txinsur = (TextView) findViewById(R.id.txinsurance);
+        txirate = (TextView) findViewById(R.id.txtirate);
+
         step1 = (TextView) findViewById(R.id.tv);
         step1.setOnClickListener(this);
 
@@ -72,6 +78,10 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
         prgDialog2 = new ProgressDialog(this);
         prgDialog2.setMessage("Loading....");
         prgDialog2.setCancelable(false);
+
+        prgDialog = new ProgressDialog(this);
+        prgDialog.setMessage("Loading ....");
+        prgDialog.setCancelable(false);
 
         btnsub = (Button) findViewById(R.id.button2);
         btnsub.setOnClickListener(this);
@@ -83,7 +93,9 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
             recamo.setText(amou + ApplicationConstants.KEY_NAIRA);
         }
 
-        ConfirmRequest();
+        GetLoanDetails();
+
+
 
 
     }
@@ -109,7 +121,7 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
         if (view.getId() == R.id.button2) {
             String pin = etpin.getText().toString();
             if (Utility.isNotNull(pin)) {
-
+                //ConfirmRequest(pin);
                 String adminid = session.getString("SUPERID");
 
 
@@ -242,7 +254,7 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
     }
 
 
-    private void ConfirmRequest() {
+    private void ConfirmRequest(String pin) {
         prgDialog2.show();
 
 
@@ -250,22 +262,20 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
                 RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
         String adminid = session.getString("SUPERID");
 
-
+        String encpin = Utility.b64_sha256(pin);
 
         try {
             JSONObject paramObject = new JSONObject();
-
-
 
             paramObject.put("userId", adminid);
             paramObject.put("channel", "1");
             paramObject.put("storeId", storeid);
             paramObject.put("amount", amou);
+            paramObject.put("pin", encpin);
 
 
 
-
-            Call<String> call = apiService.loanconfirm(paramObject.toString());
+            Call<String> call = apiService.loanrequest(paramObject.toString());
 
 
             call.enqueue(new Callback<String>() {
@@ -385,6 +395,125 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
                 "You have been locked out of the app.Please call customer care for further details",
                 Toast.LENGTH_LONG).show();
         // Toast.makeText(getApplicationContext(), "You have logged out successfully", Toast.LENGTH_LONG).show();
+
+    }
+
+     private void GetLoanDetails() {
+        prgDialog.show();
+
+        String adminid = session.getString("SUPERID");
+        ApiInterface apiService =
+                RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
+
+        try {
+            JSONObject paramObject = new JSONObject();
+
+
+            paramObject.put("userId", adminid);
+            paramObject.put("channel", "1");
+            paramObject.put("storeId", storeid);
+            paramObject.put("amount", amou);
+
+            Call<String> call = apiService.loanconfirm(paramObject.toString());
+
+
+
+
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        // JSON Object
+
+                        SecurityLayer.Log("response..:", response.body());
+                        JSONObject obj = new JSONObject(response.body());
+                        //obj = Utility.onresp(obj,getApplicationContext());
+
+                        SecurityLayer.Log("decrypted_response", obj.toString());
+
+                        String respcode = obj.optString("responseCode");
+
+                        String responsemessage = obj.optString("message");
+
+
+                        JSONObject plan = obj.optJSONObject("data");
+                        //session.setString(SecurityLayer.KEY_APP_ID,appid);
+                        if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+                            if ((Utility.checkUserLocked(respcode))) {
+                                LogOut();
+                            }
+                            if (!(response.body() == null)) {
+                                if (respcode.equals("00") || respcode.equals("Success")) {
+
+
+                                    String insurance = plan.optString("insurance");
+                                    String principal = plan.optString("principal");
+                                    String interestRate = plan.optString("interestRate");
+
+                                    String repaymentDate = plan.optString("repaymentDate");
+
+                                    txinsur.setText(insurance);
+txrepay.setText(repaymentDate);
+txirate.setText(interestRate);
+                                    if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
+                                        prgDialog.dismiss();
+                                    }
+
+                                } else {
+
+
+                                }
+                            } else {
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        // TODO Auto-generated catch block
+                        if(!(getApplicationContext() == null)) {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                            // SecurityLayer.Log(e.toString());
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                    } catch (Exception e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        if(!(getApplicationContext() == null)) {
+                            SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                        }
+                        // SecurityLayer.Log(e.toString());
+                    }
+
+                        if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
+                            prgDialog.dismiss();
+                        }
+
+
+                    //   prgDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // Log error here since request failed
+                    SecurityLayer.Log("Throwable error",t.toString());
+
+
+                    if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
+                        prgDialog.dismiss();
+                    }
+                    if(!(getApplicationContext() == null)) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was an error processing your request",
+                                Toast.LENGTH_LONG).show();
+                        SetForceOutDialog(getString(R.string.forceout), getString(R.string.forceouterr), getApplicationContext());
+                    }
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 }

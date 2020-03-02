@@ -42,6 +42,7 @@ import java.util.ListIterator;
 
 import model.GetStatesData;
 import model.GetStores;
+import model.ObservableWebView;
 import rest.ApiInterface;
 import rest.ApiSecurityClient;
 import rest.RetrofitInstance;
@@ -195,8 +196,12 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
                 if(inpamo >= 100) {
                     Double dbamolimit = Double.parseDouble(amolimit);
                     if (inpamo <= dbamolimit) {
-                        WebView webView = new WebView(getApplicationContext());
+                       boolean blchkend = false;
+                        final ObservableWebView webView = new ObservableWebView(getApplicationContext());
+
                         webView.loadUrl("file:///android_asset/agentcredittc.html");
+
+
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoanRequest.this);
                         builder.setTitle("Terms and Conditions")
                                 .setView(webView)
@@ -209,8 +214,42 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
                                         intent.putExtra("storeid", storeid);
                                         startActivity(intent);
                                     }
-                                })
-                                .show();
+                                });
+
+                        AlertDialog dialog = builder.show();
+
+                        final Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+
+                        button.setVisibility(View.GONE);
+
+
+
+                        webView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
+
+                            @Override
+                            public void onScroll(int l, int t, int oldl, int oldt) {
+                                if(t> oldt){
+                                    //Do stuff
+                                    System.out.println("Swipe UP");
+                                    //Do stuff
+                                }
+                                else if(t< oldt){
+                                    System.out.println("Swipe Down");
+                                }
+
+                                int height = (int) Math.floor(webView.getContentHeight() * webView.getScale());
+                                int webViewHeight = webView.getHeight();
+                                int cutoff = height - webViewHeight - 10; // Don't be too strict on the cutoff point
+                                if (t >= cutoff) {
+                                    button.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            @Override
+                            public void onScroll(int l, int t) {
+
+                            }
+                        });
 
                     } else {
                         Toast.makeText(getApplicationContext(), "Kindly enter an amount below your loan limit", Toast.LENGTH_LONG).show();
@@ -233,7 +272,6 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
                 .negativeText("Close")
                 .show();
     }
-
 
 
     private void NameInquirySec() {
