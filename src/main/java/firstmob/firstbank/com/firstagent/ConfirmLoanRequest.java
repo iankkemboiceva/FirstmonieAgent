@@ -448,13 +448,13 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
 
                                     String insurance = plan.optString("insurance");
                                     String principal = plan.optString("principal");
-                                    String interestRate = plan.optString("interestRate");
+                                    String interest = plan.optString("interest");
 
                                     String repaymentDate = plan.optString("repaymentDate");
 
                                     txinsur.setText(insurance);
 txrepay.setText(repaymentDate);
-txirate.setText(interestRate);
+txirate.setText(interest+ApplicationConstants.KEY_NAIRA);
                                     if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
                                         prgDialog.dismiss();
                                     }
