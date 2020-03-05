@@ -870,9 +870,10 @@ android:layout_margin="5dp"
                             </android.support.design.widget.TextInputLayout>
                         </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_below="@+id/rl5"
+                            android:orientation="vertical"
                             android:layout_height="wrap_content">
                             <Button
                                 android:id="@+id/button2"
@@ -887,7 +888,22 @@ android:layout_margin="5dp"
                                 android:layout_marginTop="10dip"
                                 android:layout_marginBottom="10dip"
                                 android:textColor="@color/white" />
-                        </RelativeLayout>
+
+
+                            <Button
+                                android:id="@+id/decline"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="30dp"
+                                android:layout_marginLeft="30dp"
+                                android:background="@drawable/mybutton"
+                                android:padding="5dp"
+                                android:text="DECLINE"
+                                android:filterTouchesWhenObscured ="true"
+                                android:layout_marginTop="10dip"
+                                android:layout_marginBottom="10dip"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
 
 
 

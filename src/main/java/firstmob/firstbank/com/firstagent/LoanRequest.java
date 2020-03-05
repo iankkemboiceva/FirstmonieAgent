@@ -202,10 +202,16 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
                         webView.loadUrl("file:///android_asset/agentcredittc.html");
 
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(LoanRequest.this);
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(LoanRequest.this);
                         builder.setTitle("Terms and Conditions")
                                 .setView(webView)
-                                .setNeutralButton("Reject", null)
+                                .setNeutralButton("Reject", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(getApplicationContext(),"Sorry, the application cannot continue",Toast.LENGTH_LONG).show();
+                                    finish();
+                                    }
+                                })
                                 .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {

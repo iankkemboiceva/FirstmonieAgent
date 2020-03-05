@@ -33,7 +33,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickListener {
     TextView recacno, recname, recamo, recnarr, txtfee, acbal,txinsur,txrepay,txirate;
-    Button btnsub;
+    Button btnsub,btndecline;
     String recanno, amou, narra, ednamee, ednumbb, txtname, finalfee = null, agbalance, storeid;
     ProgressDialog prgDialog2;
     EditText etpin;
@@ -86,6 +86,12 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
         btnsub = (Button) findViewById(R.id.button2);
         btnsub.setOnClickListener(this);
 
+
+        btnsub = (Button) findViewById(R.id.button2);
+        btnsub.setOnClickListener(this);
+
+        btndecline = (Button) findViewById(R.id.decline);
+        btndecline.setOnClickListener(this);
         Intent intent = getIntent();
         if (intent != null) {
             amou = intent.getStringExtra("amount");
@@ -143,19 +149,16 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
             }
 
         }
-        if (view.getId() == R.id.tv) {
-         /*   Fragment  fragment = new CashDepo();
+        if (view.getId() == R.id.decline) {
+            Toast.makeText(getApplicationContext(),"Sorry, the application cannot continue",Toast.LENGTH_LONG).show();
+
+            finish();
 
 
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //  String tag = Integer.toString(title);
-            fragmentTransaction.replace(R.id.container_body, fragment,"Cash Depo");
-            fragmentTransaction.addToBackStack("Cash Depo");
-            ((FMobActivity)getApplicationContext())
-                    .setActionBarTitle("Cash Depo");
-            fragmentTransaction.commit();*/
-
+            Intent i = new Intent(ConfirmLoanRequest.this, SupHomeActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            // Staring Login Activity
+            startActivity(i);
 
 
         }
