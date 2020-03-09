@@ -32,7 +32,7 @@ import security.SecurityLayer;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickListener {
-    TextView recacno, recname, recamo, recnarr, txtfee, acbal,txinsur,txrepay,txirate;
+    TextView recacno, recname, recamo, recnarr, txtfee, acbal,txinsur,txrepay,txirate,txrepayamo;
     Button btnsub,btndecline;
     String recanno, amou, narra, ednamee, ednumbb, txtname, finalfee = null, agbalance, storeid;
     ProgressDialog prgDialog2;
@@ -70,6 +70,8 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
         txrepay = (TextView) findViewById(R.id.txrpyy);
         txinsur = (TextView) findViewById(R.id.txinsurance);
         txirate = (TextView) findViewById(R.id.txtirate);
+
+        txrepayamo = (TextView) findViewById(R.id.txrpamount);
 
         step1 = (TextView) findViewById(R.id.tv);
         step1.setOnClickListener(this);
@@ -454,10 +456,12 @@ public class ConfirmLoanRequest extends BaseSupActivity implements View.OnClickL
                                     String interest = plan.optString("interest");
 
                                     String repaymentDate = plan.optString("repaymentDate");
+                                    String repayamo = plan.optString("repaymentAmount");
 
                                     txinsur.setText(insurance);
 txrepay.setText(repaymentDate);
 txirate.setText(interest+ApplicationConstants.KEY_NAIRA);
+txrepayamo.setText(repayamo+ApplicationConstants.KEY_NAIRA);
                                     if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
                                         prgDialog.dismiss();
                                     }
