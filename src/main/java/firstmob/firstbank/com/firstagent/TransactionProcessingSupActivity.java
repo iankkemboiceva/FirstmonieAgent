@@ -188,7 +188,7 @@ public class TransactionProcessingSupActivity extends BaseActivity implements Vi
 
 String refcode = plan.optString("reference");
                                     String insurance = plan.optString("insurance");
-                                    String interestRate = plan.optString("interestRate");
+                                    String interest = plan.optString("interest");
                                     String repaymentAmount = plan.optString("repaymentAmount");
                                     String repaymentdate = plan.optString("repaymentDate");
 
@@ -197,7 +197,7 @@ String refcode = plan.optString("reference");
                                     intent.putExtra("repamo", repaymentAmount);
                                     intent.putExtra("reqamo", amou);
                                     intent.putExtra("insurance", insurance);
-                                    intent.putExtra("irate", interestRate);
+                                    intent.putExtra("interest", interest);
                                     intent.putExtra("repaydate", repaymentdate);
 
                                     startActivity(intent);

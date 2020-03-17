@@ -151,7 +151,7 @@ public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClic
             String strrepamo = intent.getStringExtra("repamo");
             String strreqamo = intent.getStringExtra("reqamo");
             String strinsurance = intent.getStringExtra("insurance");
-            String strirate = intent.getStringExtra("irate");
+            String strirate = intent.getStringExtra("interest");
             repaydate = intent.getStringExtra("repaydate");
             repaydate = Utility.convertLonaReq(repaydate);
             txrepaydate.setText(repaydate);
@@ -163,7 +163,7 @@ public class FinalConfirmLoanRequest extends BaseActivity implements View.OnClic
 
 
             insurance.setText(ApplicationConstants.KEY_NAIRA+strinsurance);
-            irate.setText(strirate+"%");
+            irate.setText(strirate);
 
 
         /*   try {
