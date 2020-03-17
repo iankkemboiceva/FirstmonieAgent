@@ -103,8 +103,8 @@ public class ChooseBVNorNoBVN extends BaseActivity {
         planetsList.clear();
 
 
-        planetsList.add(new OTBList("Account Opening with BVN","057"));
-        planetsList.add(new OTBList("Account Opening without BVN","058"));
+        planetsList.add(new OTBList("BVN Account Opening","057"));
+        planetsList.add(new OTBList("Open Wallet","058"));
 
         aAdpt = new DepoMenuAdapt(planetsList, this);
         lv.setAdapter(aAdpt);

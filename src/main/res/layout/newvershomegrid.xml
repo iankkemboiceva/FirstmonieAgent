@@ -294,7 +294,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Open Account"
+                        android:text="Open Account/Wallet"
                         android:paddingTop="17dp"
                         android:textColor="@color/white"
                         android:layout_below="@+id/imgtacc"

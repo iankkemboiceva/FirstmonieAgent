@@ -32,7 +32,7 @@
                 android:layout_marginRight="20dp"
                 android:textSize="14sp"
                 android:textColor="@color/colorPrimary"
-                android:text="Please choose the method of account opening to proceed with"/>
+                android:text="Please select a choice below to proceed"/>
             <ListView
                 android:id="@+id/lv"
                 android:paddingLeft="10dp"
