@@ -115,7 +115,13 @@ public class FinalConfAccountOpening extends BaseActivity implements View.OnClic
 
 
             accountno = intent.getStringExtra("accountno");
-
+            String isbvn = intent.getStringExtra("isbvn");
+            TextView title = (TextView) findViewById(R.id.textView1);
+            TextView accnotitle = (TextView) findViewById(R.id.textViewcv);
+            if(!(isbvn.equals("Y"))){
+                title.setText("WALLET OPENED SUCCESSFULLY");
+                accnotitle.setText("Wallet Number");
+            }
             reccustid.setText(accountno);
 
         /*   try {

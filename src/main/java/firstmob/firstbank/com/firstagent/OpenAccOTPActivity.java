@@ -324,6 +324,8 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
                                     finish();
                                     Intent i = new Intent(OpenAccOTPActivity.this, FinalConfAccountOpening.class);
                                     i.putExtra("accountno", acno);
+                                    i.putExtra("isbvn", session.getString("ISBVN"));
+
                                     startActivity(i);
 
                                 } else {
@@ -1264,6 +1266,7 @@ if(session.getString("ISBVN").equals("Y")) {
                                     finish();
                                     Intent i = new Intent(OpenAccOTPActivity.this, FinalConfAccountOpening.class);
                                     i.putExtra("accountno", acno);
+                                    i.putExtra("isbvn", session.getString("ISBVN"));
                                     startActivity(i);
 
 
@@ -1433,6 +1436,7 @@ if(session.getString("ISBVN").equals("Y")) {
                                     finish();
                                     Intent i = new Intent(OpenAccOTPActivity.this, FinalConfAccountOpening.class);
                                     i.putExtra("accountno", acno);
+                                    i.putExtra("isbvn", session.getString("ISBVN"));
                                     startActivity(i);
 
 
@@ -1602,6 +1606,7 @@ if(session.getString("ISBVN").equals("Y")) {
                                     finish();
                                     Intent i = new Intent(OpenAccOTPActivity.this, FinalConfAccountOpening.class);
                                     i.putExtra("accountno", acno);
+                                    i.putExtra("isbvn", session.getString("ISBVN"));
                                     startActivity(i);
 
 
