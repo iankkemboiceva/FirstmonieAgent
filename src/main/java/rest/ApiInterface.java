@@ -149,7 +149,7 @@ public interface ApiInterface {
     Call<String> validatetoken(@Body String params);
 
     @Headers("Content-Type: application/json")
-    @POST("accountopen/app/bvn/openaccount.action")
+    @POST("accountopen/app/bvn/walletaccount.action")
     Call<String> bvnaccopen(@Body String params);
 
 

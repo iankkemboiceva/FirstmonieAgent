@@ -667,6 +667,12 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
 
             if (Utility.isNotNull(edotp)) {
                 if (Utility.isNotNull(edpin)) {
+                    if(session.getString("ISBVN").equals("N")) {
+
+                        String  encrypted = Utility.b64_sha256(edpin);
+                        BVNAccOpenMicro(edotp,encrypted);
+
+                    }else {
 
             String getsign = session.getString("CUSTSIGNPATH");
             Bitmap bitmapsign = BitmapFactory.decodeFile(getsign);
@@ -709,48 +715,15 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
             finalFile = new File(Environment.getExternalStorageDirectory(), "/FirstAgent/base64fl.txt");
 
 
-/*String edotp = otp.getText().toString();
-                String edpin = pin.getText().toString();
-String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/"+strsalut+"/"+strfname+"/"+strlname+"/"+strmidnm+"/"+strmarst+"/"+stryob+"/"+stremail+"/"+strgender+"/"+strstate+"/"+strcity+"/"+strhmdd+"/"+strmobn+"/N/"+edotp+"/"+edpin;
-   */            // {channel}/{userId}/{merchantId}/{mobileNumber}/{salutation}/{firstName}/{lastName}/{midName}/{maritalStatus}/{dob}/{email}/{gender}/{state}/{city}/{address}/{phone}/{mandateCard}/{otp}/{pin}
-            //   invokeAccOTP(params);
-            //  uploadImage(file);
 
-           new AsyncUplImg().execute("");
 
-/*
-                    if (!(getApplicationContext() == null)) {
-                        prgDialog.dismiss();
+
+
+
+
+                        new AsyncUplImg().execute("");
                     }
-                    String usid = Utility.gettUtilUserId(getApplicationContext());
-                    String agentid = Utility.gettUtilAgentId(getApplicationContext());
-                    String mobnoo = Utility.gettUtilMobno(getApplicationContext());
 
-
-
-                    String encrypted = Utility.b64_sha256(edpin);
-
-
-                    finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted+"/"+straddr;
-                    //  finparams = "1/" + usid + "/" + agentid + "/" + mobnoo + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + strhmdd + "/" + strmobn + "/" + refnumber + "/" + edotp + "/" + encrypted;
-                    SecurityLayer.Log("Before InvokeAcc");
-
-                    String bvnparams = "1/" + usid + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + straddr + "/" + strmobn + "/" + refnumber + "/" + strmobn + "/" + edotp + "/" + encrypted;
-
-
-                            refnumber = "12121212";
-
-                    //   {channel}/{userId}/{salutation}/{firstName}/{lastName}/{midName}/{maritalStatus}/{dob}/{email}/{gender}/{state}/{city}/{address}/{phone}/{mandateCard}/{bvn}/{otp}/{pin}
-                    if (!((refnumber == null))) {
-                        if (!(refnumber.equals(""))) {
-                            if(session.getString("ISBVN").equals("Y")) {
-
-                                BVNOpenAcc(bvnparams);
-                            }else{
-                                invokeAccOTP(finparams);
-                            }
-                        }*//**//*
-                    }*/
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter a valid value for PIN", Toast.LENGTH_LONG).show();
                 }
@@ -1352,6 +1325,7 @@ if(session.getString("ISBVN").equals("Y")) {
                 RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
 
         try {
+             String refno = "12345";
             JSONObject paramObject = new JSONObject();
           //  String bvnparams = "1/" + usid + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + straddr + "/" + strmobn + "/" + refnumber + "/" + strhmdd + "/" + edotp + "/" + encrypted;
 
@@ -1368,7 +1342,7 @@ if(session.getString("ISBVN").equals("Y")) {
             paramObject.put("city", strcity);
             paramObject.put("address", straddr);
             paramObject.put("phone", strmobn);
-            paramObject.put("mandateCard", refnumber);
+            paramObject.put("mandateCard", refno);
             paramObject.put("userId", usid);
             paramObject.put("pin", pin);
             paramObject.put("otp", otpp);

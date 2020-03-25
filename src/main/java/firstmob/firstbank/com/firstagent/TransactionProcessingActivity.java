@@ -67,7 +67,7 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
     private IndicatorDots mIndicatorDots;
     Button btnconfirm;
     ProgressDialog pro ;
-    String finpin;
+    String finpin,finalparams;
     SessionManagement session;
     private PinLockListener mPinLockListener = new PinLockListener() {
         @Override
@@ -136,8 +136,9 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                 strfee = intent.getStringExtra("fee");
                 txpin = intent.getStringExtra("txpin");
                 newparams = params;
-                Log.v("Params",newparams+"/"+txpin);
-                IntraDepoBankResp(newparams+"/"+txpin);
+                finalparams = newparams+"/"+txpin+"/"+ednamee;
+                Log.v("Params",finalparams);
+                IntraDepoBankResp(finalparams);
 
             }
             if(serv.equals("CASHTRAN")) {
@@ -154,8 +155,10 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                 strfee = intent.getStringExtra("fee");
                 txpin = intent.getStringExtra("txpin");
                 newparams = params;
-                Log.v("Params",newparams+"/"+txpin);
-                IntraTranBankResp(newparams+"/"+txpin);
+
+finalparams = newparams+"/"+txpin+"/"+ednamee;
+                Log.v("Params",finalparams);
+                IntraTranBankResp(finalparams);
 
             }
 
@@ -237,10 +240,11 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                 String params  = intent.getStringExtra("params");
                 txpin = intent.getStringExtra("txpin");
                 newparams = params;
-                Log.v("Params",newparams+"/"+txpin);
+                finalparams = newparams+"/"+txpin+"/"+ednamee;
+                Log.v("Params",finalparams);
 
 
-                InterBankResp(newparams+"/"+txpin);
+                InterBankResp(finalparams);
 
             }
             if(serv.equals("OTHERWALLETS")) {
@@ -303,7 +307,7 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
 
     private void IntraTranBankResp(String params) {
         prgDialog2.show();
-        String endpoint= "transfer/intrabank.action";
+        String endpoint= "transfer/intrabanksendername.action";
 
 
         String usid = Utility.gettUtilUserId(getApplicationContext());
@@ -681,7 +685,7 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
     }
     private void IntraDepoBankResp(String params) {
         prgDialog2.show();
-        String endpoint = "transfer/intrabank.action";
+        String endpoint = "transfer/intrabanksendername.action";
 
 
         String usid = Utility.gettUtilUserId(getApplicationContext());
@@ -982,7 +986,7 @@ public class TransactionProcessingActivity extends BaseActivity implements View.
                     SecurityLayer.Log("Enc Pin",encrypted);
 
 
-                    String finalparams = newparams+"/"+encrypted;
+
                     dialog.dismiss();
                     if(serv.equals("CASHDEPO")) {
 
@@ -1040,7 +1044,7 @@ setAlertDialog();
 
     private void InterBankResp(String params) {
         prgDialog2.show();
-        String endpoint= "transfer/interbank.action";
+        String endpoint= "transfer/interbankwithsendername.action";
 
 
         String usid = Utility.gettUtilUserId(getApplicationContext());

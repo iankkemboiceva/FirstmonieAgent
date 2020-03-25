@@ -185,8 +185,7 @@ public class ConfirmSendOTBActivity extends BaseActivity implements View.OnClick
                                             //   Call<InterBank> call = apiService.getInterBankResp("1",usid,agentid,"0000","1",amou,bankcode,recanno,txtname,narra,encrypted);
                                             String params = "1/"+usid+"/"+agentid+"/"+mobnoo+"/1/"+amou+"/"+bankcode+"/"+recanno+"/"+txtname+"/"+narra;
 
-
-                                            Intent intent  = new Intent(ConfirmSendOTBActivity.this,TransactionProcessingActivity.class);
+    Intent intent  = new Intent(ConfirmSendOTBActivity.this,TransactionProcessingActivity.class);
 
                                             intent.putExtra("recanno", recanno);
                                             intent.putExtra("amou", amou);
