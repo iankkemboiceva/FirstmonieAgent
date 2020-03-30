@@ -329,13 +329,15 @@ onKeyMetric();
 			//	checkInternetConnection();
 
 		//	startActivity(new Intent(getApplicationContext(),SupHomeActivity.class));
+			String userid = Utility.gettUtilUserId(getApplicationContext());
+session.setString("SUPERID",userid);
+			showEditDialog();
 
-		//	showEditDialog();
 
-			GetSup();
 		}
 
 	}
+
 
 	private void GetSup() {
 		pro.show();

@@ -179,4 +179,8 @@ public interface ApiInterface {
     Call<String> loanconfirm(@Body String params);
 
 
+    @Headers("Content-Type: application/json")
+    @POST("sup/getstores")
+    Call<String> getstores(@Body String params);
+
 }

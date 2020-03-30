@@ -69,6 +69,7 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
 
     ProgressDialog prgDialog;
     TextView txelig,txstorename;
+    Spinner spstore;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,8 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
         ab.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
         ab.setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
 
+
+        spstore = (Spinner) findViewById(R.id.spstore);
         rlid = (RelativeLayout)findViewById(R.id.rlid);
         accountoname = (TextView) findViewById(R.id.cname);
         txstorename = (TextView) findViewById(R.id.storid);
@@ -107,18 +110,65 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
         View.OnFocusChangeListener ofcListener = new MyFocusChangeListener();
         txtamount.setOnFocusChangeListener(ofcListener);
 
+GetStores();
 
 
 
+        spstore.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /*
+                onItemSelected
+                    void onItemSelected (AdapterView<?> parent,
+                                    View view,
+                                    int position,
+                                    long id)
 
-        SetStores();
+                    Callback method to be invoked when an item in this view has been selected.
+                    This callback is invoked only when the newly selected position is different
+                    from the previously selected position or if there was no selected item.
+
+                    Impelmenters can call getItemAtPosition(position) if they need to access the
+                    data associated with the selected item.
+
+                    Parameters
+                        parent AdapterView: The AdapterView where the selection happened
+                        view View: The view within the AdapterView that was clicked
+                        position int: The position of the view in the adapter
+                        id long: The row id of the item that is selected
+            */
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // Get the spinner selected item text
+                String selectedItemText = (String) adapterView.getItemAtPosition(i);
+                // Display the selected item into the TextView
+                NameInquirySec(storelist.get(i).getstoreid());
+            }
+
+            /*
+                onNothingSelected
+
+                    void onNothingSelected (AdapterView<?> parent)
+                    Callback method to be invoked when the selection disappears from this view.
+                    The selection can disappear for instance when touch is activated or when
+                    the adapter becomes empty.
+
+                    Parameters
+                        parent AdapterView: The AdapterView that now contains no selected item.
+            */
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        //  SetStores();
 
 
 
         btnsub = (Button)findViewById(R.id.button2);
         btnsub.setOnClickListener(this);
 
-        NameInquirySec();
+      //  NameInquirySec();
 
 
 
@@ -280,7 +330,7 @@ public class LoanRequest extends BaseSupActivity implements View.OnClickListener
     }
 
 
-    private void NameInquirySec() {
+    private void NameInquirySec(String storeid) {
 prgDialog.show();
 
 
@@ -299,7 +349,7 @@ prgDialog.show();
 
             paramObject.put("userId", adminid);
             paramObject.put("channel", "1");
-            paramObject.put("storeId", storeidd);
+            paramObject.put("storeId", storeid);
 
             Call<String> call = apiService.loaneligibility(paramObject.toString());
 
@@ -509,9 +559,20 @@ lybut.setVisibility(View.VISIBLE);
                 if (!(storelist == null)) {
                     if (storelist.size() > 0) {
 
-storeidd = storelist.get(0).getstoreid();
-String storename = storelist.get(0).getstorename();
-txstorename.setText(storename);
+
+
+                        Collections.sort(storelist, new Comparator<GetStores>() {
+                            public int compare(GetStores d1, GetStores d2) {
+                                return d1.getstorename().compareTo(d2.getstorename());
+                            }
+                        });
+
+
+                        //  Collections.swap(planetsList,0,planetsList.size() -1);
+                        maradapt = new ArrayAdapter<GetStores>(this, R.layout.my_spinner, storelist);
+                        maradapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spstore.setAdapter(maradapt);
+                        spstore.setSelection(storelist.size() -1);
 
                     } else {
                         Toast.makeText(
@@ -527,4 +588,162 @@ txstorename.setText(storename);
         }
 
     }
+
+    private void GetStores() {
+        prgDialog.show();
+
+
+
+
+
+
+        //	String storeid = session.getString("STOREID");
+
+        String userid = Utility.gettUtilUserId(getApplicationContext());
+        ApiInterface apiService =
+                RetrofitInstance.getClient(getApplicationContext()).create(ApiInterface.class);
+
+        try {
+            JSONObject paramObject = new JSONObject();
+
+            paramObject.put("loginuserId", userid);
+            paramObject.put("channel", "1");
+
+
+
+
+
+            Call<String> call = apiService.getstores(paramObject.toString());
+
+
+
+
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        // JSON Object
+
+                        SecurityLayer.Log("response..:", response.body());
+                        JSONObject obj = new JSONObject(response.body());
+                        //obj = Utility.onresp(obj,getApplicationContext());
+
+                        SecurityLayer.Log("decrypted_response", obj.toString());
+
+                        String respcode = obj.optString("responseCode");
+
+                        String responsemessage = obj.optString("responseMessage");
+
+
+
+                        JSONObject datasrp = obj.optJSONObject("data");
+                        JSONArray datas = datasrp.optJSONArray("stores");
+                        //session.setString(SecurityLayer.KEY_APP_ID,appid);
+                        if (Utility.isNotNull(respcode) && Utility.isNotNull(respcode)) {
+
+                            List<String> listItems = new ArrayList<String>();
+                            int counter = 0;
+                            if (!(response.body() == null)) {
+                                if (respcode.equals("00")) {
+
+                                    JSONObject json_data = null;
+                                    for (int i = 0; i < datas.length(); i++) {
+                                        json_data = datas.getJSONObject(i);
+                                        String strid = json_data.optString("storeId");
+                                        String strname = json_data.optString("storeName");
+                                        storelist.add(new GetStores(strid, strname));
+
+                                    }
+
+                                    if (!(storelist == null)) {
+                                        if (storelist.size() > 0) {
+
+
+                                            Collections.sort(storelist, new Comparator<GetStores>() {
+                                                public int compare(GetStores d1, GetStores d2) {
+                                                    return d1.getstorename().compareTo(d2.getstorename());
+                                                }
+                                            });
+
+
+                                            //  Collections.swap(planetsList,0,planetsList.size() -1);
+                                            maradapt = new ArrayAdapter<GetStores>(LoanRequest.this, R.layout.my_spinner, storelist);
+                                            maradapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                            spstore.setAdapter(maradapt);
+                                            spstore.setSelection(storelist.size() -1);
+                                        } else {
+                                            Toast.makeText(
+                                                    getApplicationContext(),
+                                                    "No stores available  ",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+
+
+                                } else {
+
+                                    Toast.makeText(
+                                            getApplicationContext(), responsemessage,
+                                            Toast.LENGTH_LONG).show();
+
+
+                                }
+                            } else {
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        // TODO Auto-generated catch block
+                        if(!(getApplicationContext() == null)) {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getText(R.string.conn_error), Toast.LENGTH_LONG).show();
+                            // SecurityLayer.Log(e.toString());
+                        }
+                    } catch (Exception e) {
+                        SecurityLayer.Log("encryptionJSONException", e.toString());
+                        if(!(getApplicationContext() == null)) {
+                        }
+                        // SecurityLayer.Log(e.toString());
+                    }
+                    try {
+                        if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
+                            prgDialog.dismiss();
+                        }
+                    } catch (final IllegalArgumentException e) {
+                        // Handle or log or ignore
+                    } catch (final Exception e) {
+                        // Handle or log or ignore
+                    } finally {
+                        //   prgDialog = null;
+                    }
+
+                    //   prgDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // Log error here since request failed
+                    SecurityLayer.Log("Throwable error",t.toString());
+
+
+                    if ((prgDialog != null) && prgDialog.isShowing() && !(getApplicationContext() == null)) {
+                        prgDialog.dismiss();
+                    }
+                    if(!(getApplicationContext() == null)) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was an error processing your request",
+                                Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

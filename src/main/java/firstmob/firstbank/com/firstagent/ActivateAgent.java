@@ -514,7 +514,7 @@ pDialog.hide();
                                 //    session.SetUserID(agid);
                                 session.SetAgentID(agent);
                                 session.setString(AGMOB,mobno);
-                                JSONArray admusers = datas.optJSONArray("adminUsers");
+                              /*  JSONArray admusers = datas.optJSONArray("adminUsers");
                                 JSONObject json_data = null;
                                 for (int i = 0; i < admusers.length(); i++) {
                                     json_data = admusers.getJSONObject(i);
@@ -523,7 +523,7 @@ pDialog.hide();
                                     if(role.equals("MA")){
                                         session.setString("ADMINID",superid);
                                     }
-                                }
+                                }*/
                                 if(status.equals("F")) {
                                     finish();
                                     Intent mIntent = new Intent(getApplicationContext(), ForceChangePin.class);
