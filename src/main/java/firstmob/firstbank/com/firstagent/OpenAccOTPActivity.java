@@ -670,7 +670,7 @@ public class OpenAccOTPActivity extends BaseActivity implements View.OnClickList
                     if(session.getString("ISBVN").equals("N")) {
 
                         String  encrypted = Utility.b64_sha256(edpin);
-                        BVNAccOpenMicro(edotp,encrypted);
+                        AccOpenMicro(edotp,encrypted);
 
                     }else {
 
@@ -1497,7 +1497,7 @@ if(session.getString("ISBVN").equals("Y")) {
             JSONObject paramObject = new JSONObject();
             //  String bvnparams = "1/" + usid + "/" + strsalut + "/" + strfname + "/" + strlname + "/" + strmidnm + "/" + strmarst + "/" + stryob + "/" + stremail + "/" + strgender + "/" + strstate + "/" + strcity + "/" + straddr + "/" + strmobn + "/" + refnumber + "/" + strhmdd + "/" + edotp + "/" + encrypted;
 
-
+String refno = "12345";
             paramObject.put("channel", "1");
             paramObject.put("salutation", strsalut);
             paramObject.put("firstName", strfname);
@@ -1510,7 +1510,7 @@ if(session.getString("ISBVN").equals("Y")) {
             paramObject.put("city", strcity);
             paramObject.put("address", straddr);
             paramObject.put("phone", strmobn);
-            paramObject.put("mandateCard", refnumber);
+            paramObject.put("mandateCard", refno);
             paramObject.put("userId", usid);
             paramObject.put("pin", pin);
             paramObject.put("otp", otpp);

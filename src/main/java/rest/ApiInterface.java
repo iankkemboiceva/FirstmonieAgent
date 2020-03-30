@@ -150,12 +150,12 @@ public interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST("accountopen/app/bvn/walletaccount.action")
-    Call<String> bvnaccopen(@Body String params);
+    Call<String> nonbvnaccopen(@Body String params);
 
 
     @Headers("Content-Type: application/json")
-    @POST("accountopen/app/core/openaccount.action")
-    Call<String> nonbvnaccopen(@Body String params);
+    @POST("accountopen/app/bvn/openaccount.action")
+    Call<String> bvnaccopen(@Body String params);
 
 
 }
